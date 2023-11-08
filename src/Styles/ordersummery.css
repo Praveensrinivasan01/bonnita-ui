@@ -1,0 +1,110 @@
+
+
+::selection {
+  background: rgba(187, 134, 252, 0.5);
+  color: #fff;
+}
+
+
+
+.orderSummery .topic {
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color:  #22272c;
+}
+
+.content123 input {
+  display: none;
+}
+
+.content123 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content123 .list {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 20%;
+  margin-right: 50px;
+}
+
+.content123 .list label {
+  cursor: pointer;
+  height: 60px;
+  line-height: 60px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #22272c ;
+  padding-left: 25px;
+  transition: all 0.5s ease;
+  z-index: 10;
+}
+
+#MyOrder:checked ~ .list label.MyOrder,
+#Mycoupons:checked ~ .list label.Mycoupons,
+#AllNotification:checked ~ .list label.AllNotification,
+#Whishlist:checked ~ .list label.Whishlist,
+#Profile:checked ~ .list label.Profile {
+  color: #22272c;
+}
+
+.content123 .slider {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 60px;
+  width: 100%;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+
+  background: #bb86fc;
+}
+
+/*   */
+
+.content123 .text-content {
+  width: 80%;
+  height: 100%;
+  color: #000;
+}
+
+.content123 .text {
+  display: none;
+}
+
+.content123 .text .title {
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.orderSummery .text p {
+  text-align: justify;
+}
+
+.content123 .text-content .MyOrder {
+  display: block;
+}
+
+#MyOrder:checked ~ .text-content .MyOrder,
+#Mycoupons:checked ~ .text-content .Mycoupons,
+#AllNotification:checked ~ .text-content .AllNotification,
+#Whishlist:checked ~ .text-content .Whishlist,
+#Profile:checked ~ .text-content .Profile {
+  display: block;
+}
+
+#Mycoupons:checked ~ .text-content .MyOrder,
+#AllNotification:checked ~ .text-content .MyOrder,
+#Whishlist:checked ~ .text-content .MyOrder,
+#Profile:checked ~ .text-content .MyOrder {
+  display: none;
+}
+
+.content123 .list label:hover {
+  color: #bb86fc;
+}

@@ -1,0 +1,71 @@
+.AboutUs h3{
+    color: #1D1D1D;
+    font-size: 34px;
+    font-weight: 400;
+}
+
+.AboutUs p{
+    color: #777;
+    text-align: justify;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+
+}
+
+.AboutUs .button1{
+    color: #582938;
+    font-size: 16px;
+    font-weight: 400;
+    border: 1px solid #582938;
+}
+
+
+.button1 { 
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400 ;
+    padding: 10px 20px;
+    letter-spacing: 1.4px;
+    z-index: 2;
+  }
+
+  .button1:hover{
+    color: #fff;
+
+  }
+
+  .button1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:0;
+    height: 100%;
+    z-index: -1;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+
+  .button1:hover::before {
+    width: 100%;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    /* color: #fff; */
+  }
+
+  .button1.color-2::before {
+    background-color: #0d0d0d;
+    
+  }
+
+
+  

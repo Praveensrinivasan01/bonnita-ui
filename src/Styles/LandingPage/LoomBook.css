@@ -1,0 +1,20 @@
+.LoomBook {
+  background-color: #9b7f88 !important;
+  margin-top: 12em;
+}
+
+.LoomBook h4 {
+  color: #fff;
+  font-size: 34px;
+  font-weight: 400;
+}
+
+.centerImg img {
+  margin-top: -20%;
+}
+
+@media only screen and (max-width: 600px) {
+  .centerImg img {
+    margin-top: 8%;
+  }
+}

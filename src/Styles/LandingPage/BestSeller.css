@@ -1,0 +1,9 @@
+
+.onHover{
+    color:"#777" !important;
+    font-size:'18px' !important;
+    font-Weight:"600" !important;
+}
+.onHover:hover{
+    color: #ee7b7b;
+  }

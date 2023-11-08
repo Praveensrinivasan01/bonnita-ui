@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Give+You+Glory&family=Lexend:wght@400;500;600;700;800&display=swap");
+
+.CaroselBgImg {
+  background-image: url("../../Assets/LandingPageImages/surprised-curly-woman-beret-looks-left-charming-lady-pink-sweater-sunglasses-green-skirt-holds-grey-handbag.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 73vh;
+  margin-top: 7%;
+}
+
+.CaroselBgImg1 {
+  background-image: url("../../Assets/LandingPageImages/two-excited-friends-having-great-time-together.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 73vh;
+  margin-top: 7%;
+}
+
+.CaroselBgImg2 {
+  background-image: url("../../Assets/LandingPageImages/beautiful-casual-woman-fashion-set.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 73vh;
+  margin-top: 7%;
+}
+
+.CaroselContent  h4 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.CaroselContent  h3 {
+  font-size: 56px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.CaroselContent  span {
+  font-size: 66px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+
+.carosel {
+  padding-bottom: 7em;
+}
+
+.button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 12px 33px 12px 33px;
+  letter-spacing: 1.4px;
+  z-index: 2;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  z-index: -1;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.button:hover::before {
+  width: 100%;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.button.color-1 {
+  background-color: #ee7b7b;
+  color: #fff;
+}
+.button.color-1::before {
+  background-color: #0d0d0d;
+}
+
+.arrow-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgba(200, 200, 200, 0.6); /* Grey with fade */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.arrow-button:hover {
+  background-color: rgba(
+    100,
+    100,
+    100,
+    0.6
+  ); /* Darker grey with fade on hover */
+}
+
+.arrow {
+  font-size: 30px; /* Adjust the size of the arrow */
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+@media only screen and (max-width: 991px) {
+  .CaroselBgImg {
+    height: 30vh;
+    margin-top: 12%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .CaroselBgImg {
+    height: 30vh;
+    margin-top: 30%;
+  }
+
+  .carosel {
+    padding-bottom: 4em;
+  }
+
+  .CaroselBgImg h4 {
+    font-size: 24px;
+  }
+  .CaroselBgImg h3 {
+    font-size: 26px;
+  }
+
+  .CaroselBgImg span {
+    font-size: 33px;
+  }
+  .arrow-button {
+    height: 40px;
+    width: 40px;
+    font-size: 20px;
+    top: 65%;
+  }
+}

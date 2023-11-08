@@ -1,0 +1,107 @@
+.currency-switcher {
+    position: relative;
+    margin: 0px auto;
+    width: 168px;
+}
+
+div.dropdown {
+    position: relative;
+    width: 130px;
+}
+
+div.dropdown:after {
+    content: "";
+    position: absolute;
+    margin: 0;
+    width: 16px;
+    height: 17px;
+    top: 15px;
+    right: 10px;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+div.dropdown.open:after {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+div.dropdown>div.caption {
+    /* background: #F8F9FB; */
+    border-radius: 12px;
+    cursor: pointer;
+    /* padding: 12.5px 15px 12.5px 60px; */
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.3px;
+}
+
+div.dropdown>div.list {
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0px 12px 24px rgba(21, 18, 51, 0.13);
+    opacity: 0;
+    overflow: hidden;
+    -webkit-transition: all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity 0.1s linear;
+    transition: all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity 0.1s linear;
+    -webkit-transform: scale(0.85);
+    transform: scale(0.85);
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    top: 32px;
+    z-index: -1;
+    visibility: hidden;
+    padding: 10px 0;
+}
+
+div.dropdown.open>div.list {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+    z-index: 1;
+    visibility: visible;
+}
+
+div.dropdown>div.list>div.item {
+    padding:  12px 22px 22px 12px ;
+    cursor: pointer;
+    -webkit-transition: .3s;
+    transition: .3s;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.3px;
+}
+
+div.dropdown>div.list>div.item.selected {
+    /* background: rgba(36, 60, 187, 0.2); */
+    pointer-events: none;
+}
+
+div.dropdown>div.list>div.item:hover {
+    background: #F8F9FB;
+}
+
+div.dropdown>div.caption img,
+div.dropdown>div.list>div.item img,
+div.dropdown>div.caption svg,
+div.dropdown>div.list>div.item svg {
+    position: absolute;
+    margin-top: 2.5px;
+    left: 15px;
+}
+
+div.dropdown>div.list>div.item span,
+div.dropdown>div.caption span {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    color: #243CBB;
+    position: absolute;
+    right: 36px;
+}
+
+div.dropdown>div.list>div.item span {
+    right: 20px;
+}

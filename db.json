@@ -1,0 +1,164 @@
+{
+  "productDetails": [
+      {
+          "id": 1,
+          "NEW": "NEW",
+          "title": "Genuine Leather",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 5,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/detail-1.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% Genuine Leather",
+              "Lining": "100% cotton"
+          },
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, Dresses, Short"
+          }
+      },
+      {
+          "id": 2,
+          "NEW": "NEW",
+          "title": "Vegan Leather",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 4,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/detail-1.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% Vegan Leather",
+              "Lining": "100% Vegan Leather"
+          },    
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, Dresses, Short"
+          }
+      },
+      {
+          "id": 3,
+          "NEW": "NEW",
+          "title": "Cloth",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 2,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/product-35.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% cotton",
+              "Lining": "100% cotton"
+          },
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, Dresses, Short"
+          }
+      },
+      {
+          "id": 4,
+          "NEW": "NEW",
+          "title": "Natural Cane",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 5,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/product-35.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% Natural Cane",
+              "Lining": "100% Natural Cane"
+          },
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, "
+          }
+      },
+      {
+          "id": 5,
+          "NEW": "Sale",
+          "title": "Genuine Leather",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 4,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/detail-1.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% Natural Cane",
+              "Lining": "100% Natural Cane"
+          },
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, "
+          }
+      },
+      {
+          "id": 6,
+          "NEW": "Sale",
+          "title": "Cloth",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 3,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/product-35.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% Natural Cane",
+              "Lining": "100% Natural Cane"
+          },
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, "
+          }
+      },
+      {
+          "id": 7,
+          "NEW": "Sale",
+          "title": "Vegan Leather",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 5,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/detail-1.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% Natural Cane",
+              "Lining": "100% Natural Cane"
+          },
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, "
+          }
+      },
+      {
+          "id": 8,
+          "NEW": "Sale",
+          "title": "Natural Cane",
+          "price": "₹306.50",
+          "discount": "₹400.50",
+          "rating": 3,
+          "imageURL": "https://repcobank.s3.ap-south-1.amazonaws.com/product-35.jpg",
+          "Description": "Long coat made of wool blend fabric. Lapel collar and long sleeves and pronounced shoulders. Flap pockets at front. Back vent. Front double breasted button closure.",
+          "AdditionalInformation":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+          "Information": {
+              "OuterShell": "100% Natural Cane",
+              "Lining": "100% Natural Cane"
+          },
+          "productInfo": {
+              "SKU": "2U897423",
+              "Categories": "Womens",
+              "Tag": "Women, "
+          }
+      }
+  ]
+}

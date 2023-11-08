@@ -1,0 +1,97 @@
+.CaroselForQuries {
+  background-color: #fff !important;
+}
+
+.CaroselForQuries p {
+  color: #1d1d1d;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 40px;
+}
+
+.CaroselForQuries h6 {
+  color: #582938;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+.CaroselForQuries span {
+  color: #777;
+}
+
+.bgForm {
+  background-image: url("../../Assets/LandingPageImages/FormBG.png");
+  margin-top: -40px !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 100px;
+}
+
+.bgForm h3{
+  color: #FFF;
+font-size: 34px;
+font-weight: 300;
+}
+
+.bgForm h4{
+  color: #FFF;
+text-align: center;
+
+font-size: 20px;
+font-weight: 400;
+}
+
+.lable{
+  color: #fff;
+  font-size: 20px;
+}
+
+.form-control {
+  background: transparent !important;
+  border: none;
+  border-bottom: 1.5px solid #777 !important; /* Adjust the border color as needed */
+  border-radius: 0;
+  padding: 0.375rem 0;
+  /* color: #fff !important; */
+
+  transition: border-color 0.2s;
+}
+
+.form-floating > .form-control-plaintext ~ label::after,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-select ~ label::after {
+  position: absolute;
+  inset: 1rem 0.375rem;
+  z-index: -1;
+  height: 1.5em;
+  content: "";
+  /* color: #FFF; */
+  background-color: transparent;
+  /* border-radius: var(--bs-border-radius); */
+}
+
+.form-control:focus {
+    /* color: #fff !important; */
+    background-color: transparent;
+    border-color:none;
+    outline: 0;
+    box-shadow:none;
+}
+
+.bgForm .button{
+  background: #582938;
+}
+
+@media only screen and (max-width: 600px) {
+  .CaroselForQuries p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  
+  .CaroselForQuries h6 {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
