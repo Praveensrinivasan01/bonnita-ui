@@ -104,9 +104,9 @@ const Latest = () => {
               <div className="product-img">
                 <SingleProduct products={latest}/>
                 <ul className="product-icon">
-                  <li>
+                  {/* <li>
                       <FontAwesomeIcon icon={faShare} />
-                  </li>
+                  </li> */}
                   <li>
                       <FontAwesomeIcon icon={faHeart} style={{cursor:"pointer"}} onClick={() => {
                          notify5(latest)

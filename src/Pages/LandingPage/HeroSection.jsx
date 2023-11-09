@@ -35,7 +35,7 @@ export const HeroSection = () => {
     <div className='carosel'>
     <Slider {...settings}>
 
-        <div className='CaroselBgImg CaroselContent d-flex flex-column justify-content-center align-items-center' >
+        <div className='CaroselBgImg CaroselContent d-flex flex-column justify-content-center align-items-center ' >
         <h4 className='text-light mt-md-4 pt-md-5' data-aos="fade-left" data-aos-duration="1700">SUMMER SALE 2023</h4>
          <h3 className='text-light mt-md-3' data-aos="fade-right" data-aos-duration="1900">New Arrivals <span>Collections</span></h3>
          <Button btnName={"SHOP NOW"} link={"/shop"} btnStyle={"button color-1  text-light mt-md-4"} linkNeeded={"yes"} />  

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { CurrencyDollar, ArrowsExpand } from 'react-bootstrap-icons'
-import { Get, Post } from '../../Commons/httpService'
+import { AuthGet, Get, Post } from '../../Commons/httpService'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom'; 
 
 function ProductForm() {
   const navigate = useNavigate();
@@ -25,8 +26,8 @@ function ProductForm() {
   const [rightSideImage, setRightSideImage] = useState(null);
   const [backSideImage, setBackSideImage] = useState(null);
   const [dropDown, setDropDown] = useState([])
-  const [dropDown2, setDropDown2] = useState([])
-
+  const [dropDown2,setDropDown2] = useState([])
+  const {id}=useParams()
   const [file, setFile] = useState({
     front: [],
     back: [],
@@ -34,28 +35,36 @@ function ProductForm() {
     right: [],
   });
 
-  const handleFileChange = (e, type) => {
+  const handleFileChange = (e, type,api) => {
     if (e) {
       switch (type) {
         case "frontSideImage":
-          setFrontSidetImage(URL.createObjectURL(e.target.files[0]))
+          setFrontSidetImage(api?e:URL.createObjectURL(e.target.files[0]))
+          if(!api){
           file?.front.pop()
           file?.front.push(e.target.files[0])
+          }
           break;
         case "backSideImage":
-          setBackSideImage(URL.createObjectURL(e.target.files[0]))
+          setBackSideImage(api?e:URL.createObjectURL(e.target.files[0]))
+          if(!api){
           file?.back.pop()
           file?.back.push(e.target.files[0])
+          }
           break;
         case "leftSideImage":
-          setLeftSideImage(URL.createObjectURL(e.target.files[0]))
+          setLeftSideImage(api?e:URL.createObjectURL(e.target.files[0]))
+          if(!api){
           file?.left.pop()
           file?.left.push(e.target.files[0])
+          }
           break;
         case "rightSideImage":
-          setRightSideImage(URL.createObjectURL(e.target.files[0]))
+          setRightSideImage(api?e:URL.createObjectURL(e.target.files[0]))
+          if(!api){
           file?.right.pop()
           file?.right.push(e.target.files[0])
+          }
           break;
       }
     }
@@ -63,20 +72,62 @@ function ProductForm() {
 
   useEffect(() => {
     getDropDownData()
+    
   }, [])
+const getproductdetails=async()=>{
+await AuthGet('product/product-mapping/'+id,'admin').then((res)=>{
+  debugger
+  console.log('res::: ', res);
+  if (res.statusCode==200) {
+    let resData=res.data
+  setProductName(resData.name)
+  setDescription(resData.description)
+  setproductCode(resData.code)
+  handleCategoryChange(resData.category_id)
+  setFeatures(resData.features)
+  setMrp(resData.mrp)
+  setPrice(resData.selling_price)
+  setQuantity(resData.quantity)
+  setAboutItems(resData.about)
+  setLength(resData.size?.split('/')[0])
+  setWidth(resData.size?.split('/')[1])
+  setColorName(resData.color)
+  setColor(resData.color)
+  let file=resData?.imageDetails?.[0]
+  handleFileChange(file.front_side,"frontSideImage",'api');
+  handleFileChange(file.back_side,"backSideImage",'api');
+  handleFileChange(file.left_side,"leftSideImage",'api');
+  handleFileChange( file.right_side,"rightSideImage",'api');
+  }
+}).catch((err)=>{
+  console.log('err::: ', err);
+})
+
+
+
+
+}
+  
+
+
+
+
+
+
 
   const getDropDownData = async () => {
     let dropDownRes = await axios.get("http://localhost:8000/api/product/category-mapping");
-
+debugger
     if (dropDownRes.data.statusCode === 200) {
       setDropDown(dropDownRes.data.data)
       console.log("VALUE", dropDownRes.data.data);
+      getproductdetails()
     }
   }
 
 const handleCategoryChange = ( id ) => {
   setCategory(id)
-  let subcategory = dropDown.find((e) => e.category_id)?.subcategories
+  let subcategory = dropDown.find((e) => e.category_id==id)?.subcategories
   setDropDown2(subcategory)
 }
 
@@ -262,9 +313,9 @@ console.log("CHECK", category)
               >
                 <option value={null}>Choose a category</option>
                 {
-                  dropDown.map((e) => {
+                 dropDown ? dropDown?.map((e) => {
                     return <option value={e?.category_id}>{e?.category_name}</option>
-                  })
+                  }):''
                 }
               </select>
             </div> 
@@ -278,9 +329,9 @@ console.log("CHECK", category)
               >
                 <option value={null}>Choose a Subcategory</option>
                 {
-                  dropDown2.map((e) => {
+                  dropDown2?dropDown2.map((e) => {
                     return <option value={e?.subcategory_id}>{e?.subcategory_name}</option>
-                  })
+                  }):''
                 }
               </select>
             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import "../../Styles/Billingdetails.css";
 import { placeOrder } from "../../Zustand/placeOrderdetails";
 import axios from "axios";
@@ -10,13 +10,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { increment } from "../../Zustand/cartStore";
 import { useCurrencyStore } from "../../Zustand/currency";
+import { AuthGet } from "../../Commons/httpService";
 
 
 const Billingdetails = () => {
   const path = window.location.pathname;
   const [productInfo, setProductInfo] = useState(null);
   const detailsOfPlaceOrder = placeOrder((state) => state.placeOrder);
-  const currentsite=''
+  const currentsite=window.location.href
+  const {orderid}=useParams()
 
   const currencyType = useCurrencyStore((state) => state?.currencyCode)
   const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
@@ -50,7 +52,7 @@ const Billingdetails = () => {
       );
       console.warn(response);
       if (response.status == 200) {
-        opencf(response.data.data.payment_session_id);
+        opencf(response.data.data.payment_session_id,data.id);
       }
       console.log("Payment success:", response.data);
     } catch (error) {
@@ -58,10 +60,11 @@ const Billingdetails = () => {
     }
   };
 
-  let opencf = (session) => {
+  let opencf = (session,oi) => {
+    debugger
     let checkoutOptions = {
       paymentSessionId: session,
-      returnUrl: currentsite,
+      returnUrl: currentsite+'/'+oi,
     };
     cashfree.checkout(checkoutOptions).then(function (result) {
       if (result.error) {
@@ -72,6 +75,21 @@ const Billingdetails = () => {
       }
     });
   };
+
+ let ordersave=async()=>{
+  debugger
+await AuthGet('order/get-paydata/'+orderid,'customer_token').then((res)=>{
+  if(res.statusCode==200){
+    console.warn(res)
+  }
+})
+ }
+
+  useEffect(()=>{
+if(orderid){
+  ordersave()
+}
+  },[])
 
   console.log(detailsOfPlaceOrder, "dajdjlsljNLJn");
   const state2 = loginStore((state) => state.login);

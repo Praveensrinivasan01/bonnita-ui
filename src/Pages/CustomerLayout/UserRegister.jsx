@@ -172,9 +172,9 @@ const UserRegister = () => {
                   placeholder="Enter Phone Number"
                   value={mobile}
                   onChange={(e) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                    if (e.target.value.length <= 10) {
-                    setMobile(e.target.value);
+                    const phNumber = e.target.value.replace(/[^0-9]/g, "");
+                    if (phNumber.length <= 10) {
+                    setMobile(`+91${phNumber}`);
                     }
                   }}
                   className="w-full px-3 py-3 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"

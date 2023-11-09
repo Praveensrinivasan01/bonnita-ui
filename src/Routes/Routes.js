@@ -93,6 +93,10 @@ export const Routes = () => {
             element: <Billingdetails />,
           },
           {
+            path: "/billingdetails/:orderid",
+            element: <Billingdetails />,
+          },
+          {
             path: "/userRegister",
             element: <UserRegister />,
           },
