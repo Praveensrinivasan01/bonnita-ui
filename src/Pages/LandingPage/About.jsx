@@ -12,7 +12,7 @@ const About = () => {
         <div className="col-lg-4 d-lg-block d-md-none d-block" >
           <img src={leftImg} alt="#" className="img-fluid " />
         </div>
-        <div className="col-lg-4 mx-auto my-auto" >
+        <div className="col-lg-4 mx-auto my-auto p-md-1 p-3" >
           <h3 className="text-center mt-md-0 mt-3 mb-md-5" data-aos="fade-left" data-aos-duration="1700">About</h3>
           <p className="pt-3" data-aos="fade-right" data-aos-duration="600">
             Established in the year 2022.There is revolution happening in the
@@ -24,12 +24,12 @@ const About = () => {
             Indian fashion lovers in vogue, Bonnita launched its brand in India
             with the sent office global fashion trends.
           </p>
-          <p className="pt-3" data-aos="fade-right" data-aos-duration="1800">
+          {/* <p className="pt-3" data-aos="fade-right" data-aos-duration="1800">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
-          </p>
+          </p> */}
           <div className="text-center">
              {/* <a href="#" className='button1 color-2 mt-4' data-aos="fade-left" data-aos-duration="1700">LET’S CONNECT</a> */}
              <Button btnName={"LET’S CONNECT"} btnStyle={"button1 color-2 mt-4"} />   

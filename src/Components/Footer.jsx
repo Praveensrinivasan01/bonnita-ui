@@ -5,7 +5,7 @@ import Logo from "../Assets/Logo/LogoForBonnitaaa.jpg";
 
 const Footer = () => {
   return (
-    <div className="FooterBgColor">
+    <div className="FooterBgColor d-md-block d-none">
       <div className="">
         <div className="row ps-md-5 pe-md-5">
           <div className="col-md-4 d-flex justify-content-center gap-4 mx-auto my-auto">

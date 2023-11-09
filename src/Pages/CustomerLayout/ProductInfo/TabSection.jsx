@@ -84,7 +84,7 @@ const TabSection = ({ id }) => {
             }`}
             onClick={() => setActiveTab("additional-information")}
           >
-            <h4 className="inner fs-5 fw-medium">Additional information</h4>
+            <h4 className="inner fs-md-5 fs-6 fw-medium">Additional information</h4>
           </li>
           <li
             className={`tab-item item-tab-title   ${
@@ -92,7 +92,7 @@ const TabSection = ({ id }) => {
             }`}
             onClick={() => setActiveTab("customer-previews")}
           >
-            <h4 className="inner  fs-5 fw-medium">Customer Reviews</h4>
+            <h4 className="inner  fs-md-5 fs-6 fw-medium">Customer Reviews</h4>
           </li>
         </ul>
         <div
@@ -105,7 +105,7 @@ const TabSection = ({ id }) => {
             <div className="row">
               <div className="col-md-6">
                 <h5 className="title">Description</h5>
-                <p>
+                <p className="fs-md-5 fs-6">
                   {description[0]?.description}
                 </p>
               </div>
@@ -144,7 +144,7 @@ const TabSection = ({ id }) => {
           }}
         >
           <div className="tab-content">
-            <div className="item-tab-content review pt-3 ps-4 ">
+            <div className="item-tab-content review pt-3 ps-md-4 ">
               {review.length ? review?.map((rev) => {
                 return <>
                   <div className="customer-review">
@@ -174,7 +174,7 @@ const TabSection = ({ id }) => {
               }
               <hr className="ps-4" />
               <div className="container pt-4">
-              <form className="col-6 border-1 rounded-3 p-4 mt-3" onSubmit={handleReview}>
+              <form className="col-lg-6 col-md-8 col-12 border-1 rounded-3 p-4 mt-3" onSubmit={handleReview}>
                   {/* <div className="mb-3">
                     <label
                       for="exampleFormControlInput1"

@@ -42,5 +42,13 @@
     background-color: #ee7b7b;
   }
 
+  @media screen and (max-width: 600px) {
+    .button1 { 
+      padding: 12px ;
+      font-size: 10px;
+    }
+
+  }
+
 
   

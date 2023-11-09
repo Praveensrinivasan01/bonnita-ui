@@ -34,7 +34,7 @@ const Queries = () => {
   }, [])
 
   const getCustomerFeedBacks = async () => {
-
+    console.log("feedbacks call")
     const response = await axios.post(`${process.env.REACT_APP_API_URL}/landingpage/get-feedbacks`)
     console.log(response?.data?.data, 'customer feedbacks')
     if (response?.data?.statusCode === 200) {

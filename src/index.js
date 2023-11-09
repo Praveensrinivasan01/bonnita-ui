@@ -16,13 +16,7 @@ Axios.interceptors.request.use(
    <div class="preloader">
     <div class="">
       <div class="loader">
-      
-      
- 
           <div class="loading">Loading</div>
-       
-       
-        
       </div>
       </div>
     </div>`

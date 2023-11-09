@@ -33,8 +33,9 @@ const Wishlist = () => {
   };
 
   const stateOfFav = wishList((state)=>state.wishList)
+
   const notify = (products) => {
-    increment(products,state2Id);
+    
   };
   
   const getCategories = async () => {
@@ -75,7 +76,7 @@ const Wishlist = () => {
         </h4>
         <h3 className="mt-3 mb-3 fs-3 fw-medium"> Favourites</h3>
       </div>
-      <div className="row tableForAddtoCart mt-3 p-3 rounded-0">
+      <div className="row tableForAddtoCart mt-3 p-3 rounded-0 d-md-flex d-none">
         <div className="col-5 fw-semibold fs-5">Product</div>
         <div className="col-2 fw-semibold fs-5">Price</div>
         <div className="col-5 fw-semibold fs-5">Stock</div>
@@ -90,18 +91,19 @@ const Wishlist = () => {
       {
         favData?.map((wishlist)=>(
       <div className="row tableForAddtoCart border-top-0 rounded-0 py-4 d-flex align-items-center">
-        <div className="col-5 d-flex align-items-center">
-          <img src={wishlist?.front_side} className="img-fluid w-25 pe-3" />
+        <div className="col-md-5 d-flex align-items-center">
+          <img src={wishlist?.front_side} className="img-fluid w-28 md:w-36 pe-3" />
           {wishlist.name}
         </div>
-        <div className="col-2 text-dark">{wishlist.mrp}</div>
-        <div className="col-5 ">
-        <div className="d-flex justify-content-between align-items-center col-lg-8 col-10">
+        <div className="col-md-2 col-5 text-dark">{wishlist.mrp}</div>
+        <div className="col-md-5 col-7 ">
+        <div className="d-flex justify-content-between align-items-center col-lg-8 col-md-10 col-12">
 
           <span className="" style={{ color: Instock ? "#20C86D" : "#777" }}>
             Instock
           </span>
-          <Button btnName={"Add to Cart"} btnStyle={"button1  color-2"} functionName={notify} parameter={wishlist}/>
+          {/* <Button btnName={"Add to Cart"} btnStyle={"button1  color-2"} functionName={notify} parameter={wishlist}/> */}
+          <button className="button1 color-2" onClick={()=>increment(wishlist,state2)} >Add to Cart</button>
           <FontAwesomeIcon
                   icon={faTrash}
                   style={{ cursor: "pointer", ...iconStyles1 }}

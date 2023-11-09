@@ -4,14 +4,14 @@
     width: 168px;
 }
 
-div.dropdown {
+/* div.dropdown {
     position: relative;
     width: 130px;
-}
+} */
 
 div.dropdown:after {
     content: "";
-    position: absolute;
+    /* position: absolute; */
     margin: 0;
     width: 16px;
     height: 17px;
@@ -87,9 +87,17 @@ div.dropdown>div.caption img,
 div.dropdown>div.list>div.item img,
 div.dropdown>div.caption svg,
 div.dropdown>div.list>div.item svg {
-    position: absolute;
+    /* position: absolute; */
     margin-top: 2.5px;
     left: 15px;
+}
+
+.caption img{
+    width: 20px;
+}
+
+.list img{
+    width: 20px;
 }
 
 div.dropdown>div.list>div.item span,
@@ -98,10 +106,40 @@ div.dropdown>div.caption span {
     font-size: 14px;
     letter-spacing: 0.3px;
     color: #243CBB;
-    position: absolute;
+    /* position: absolute; */
     right: 36px;
 }
 
 div.dropdown>div.list>div.item span {
     right: 20px;
 }
+
+@media only screen and (max-width: 600px) {
+    .currency-switcher {
+        width: 55px;
+    }
+
+    .caption img{
+        width: 15px;
+        height: 14px;
+    }
+    
+    .list img{
+        width: 15px;
+        height: 14px;
+    }
+
+    div.dropdown>div.list>div.item span,
+div.dropdown>div.caption span {
+    font-size: 10px;
+}
+
+div.dropdown>div.list>div.item {
+    padding:  6px  12px ;
+}
+div.currency {
+    width: 90px;
+}
+
+}
+

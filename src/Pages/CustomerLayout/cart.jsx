@@ -44,7 +44,7 @@ const Cart = () => {
   const state2 = loginStore((state) => state.login);
   const state2Id = state2?.id;
 
-  const [cartData , setCartData] = useState()
+  const [cartData, setCartData] = useState();
 
   const getCategories = async () => {
     if (state2Id) {
@@ -55,8 +55,8 @@ const Cart = () => {
         .then((res) => {
           if (res?.data?.statusCode === 200) {
             addToPlaceOrder(res?.data?.data);
-            console.log(res?.data?.data,"data")
-            setCartData(res?.data?.data)
+            console.log(res?.data?.data, "data");
+            setCartData(res?.data?.data);
           }
         });
     }
@@ -73,17 +73,17 @@ const Cart = () => {
             removeAllCart(cartdata);
           }
         });
-        const response1 = await axios
+      const response1 = await axios
         .get(
           `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2Id}`
         )
         .then((res) => {
           if (res?.data?.statusCode === 200) {
             addToPlaceOrder(res?.data?.data);
-            setCartData(res?.data?.data)
-          }else{
-            setCartData(null)
-           addToPlaceOrder(null)
+            setCartData(res?.data?.data);
+          } else {
+            setCartData(null);
+            addToPlaceOrder(null);
           }
         });
     } else {
@@ -94,13 +94,13 @@ const Cart = () => {
   useEffect(() => {
     deleteData();
     getCategories();
-  },[]);
+  }, []);
 
   console.log(cartData, "CartData");
 
   const Instock = 1;
   return (
-    <div className=" container-md PaddingTop">
+    <div className=" container-md PaddingTop overflow-auto">
       {cartData?.length ? (
         <>
           <div>
@@ -112,7 +112,7 @@ const Cart = () => {
             </h4>
             <h3 className="mt-3 mb-3 fs-3 fw-medium">My Cart</h3>
           </div>
-          <div className="row tableForAddtoCart mt-3 p-3 rounded-0">
+          <div className="row tableForAddtoCart mt-3 p-3 rounded-0 d-md-flex d-none">
             <div className="col-5 fw-semibold fs-5">Product</div>
             <div className="col-2 fw-semibold fs-5">price</div>
             <div className="col-5 fw-semibold fs-5">Stock</div>
@@ -125,52 +125,52 @@ const Cart = () => {
       )}
 
       {cartData?.map((cartDetails) => (
-        <div className="row tableForAddtoCart border-top-0 rounded-0 py-4 d-flex align-items-center">
-          <div className="col-5 d-flex align-items-center">
-            <img src={cartDetails.front_side} className="img-fluid w-25 pe-3" />
-            {cartDetails.name}
+        <div className="row tableForAddtoCart border-top-0 rounded-0 py-4 px-2 d-flex align-items-center">
+          <div className="col-md-5 d-flex align-items-center">
+            <img src={cartDetails.front_side} className="img-fluid w-28 md:w-36 pe-3" />
+            <p className="">{cartDetails.name}</p>
           </div>
-          <div className="col-2">₹{cartDetails.selling_price}</div>
-          <div className="col-5">
+          <div className="col-md-2 col-3"><p><span>₹</span>{cartDetails.selling_price}</p></div>
+          <div className="col-md-5 col-6">
             <span className="d-flex align-items-center">
-              <span
+              <p
                 className=""
                 style={{ color: Instock ? "#20C86D" : "#777" }}
               >
                 Instock
-              </span>{" "}
+              </p>{" "}
               <FontAwesomeIcon
                 icon={faMinus}
                 style={{ ...iconStyle, cursor: "pointer" }}
-                className="rounded-1 ms-md-4"
+                className="rounded-1 ms-4"
                 onClick={() => {
-                  decrement(cartDetails,state2);
+                  decrement(cartDetails, state2);
                 }}
               />
               <span className=" ms-3 me-3 text-center " style={CountStyle}>
                 {cartDetails.cart_quantity}
-                {console.log(cartDetails.cart_quantity,"quantity")}
+                {console.log(cartDetails.cart_quantity, "quantity")}
               </span>{" "}
               <FontAwesomeIcon
                 icon={faPlus}
                 style={{ ...iconStyle, cursor: "pointer" }}
                 className="rounded-1"
                 onClick={() => {
-                  increment(cartDetails,state2);
+                  increment(cartDetails, state2);
                 }}
               />{" "}
               <FontAwesomeIcon
                 icon={faTrash}
                 style={{ cursor: "pointer", ...iconStyles1 }}
                 onClick={() => deleteData(cartDetails)}
-                className="ms-md-4"
+                className="ms-4"
               />
             </span>
           </div>
         </div>
       ))}
       {cartData?.length ? (
-        <div className="text-end mb-4 mt-4">
+        <div className="text-end mb-4 pb-5 mt-4">
           <Button
             btnName={"PLACE ORDER"}
             btnStyle={"button1  color-2"}

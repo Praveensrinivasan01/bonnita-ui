@@ -20,6 +20,7 @@ import { loginStore, logout } from "../Zustand/loginStore";
 import axios from "axios";
 import CurrencySwitcher from "./CurrencySwitcher";
 import { clearData } from "../Zustand/userDetails";
+import CustomNavBar from "./CustomNavBar";
 
 const Header = () => {
   const [toggler, setToggler] = useState(true);
@@ -32,29 +33,29 @@ const Header = () => {
     0
   );
   const state2 = loginStore((state) => state?.login);
-  const [totalQuantity ,setTotalQuantity ] = useState([totalQuantity12])
+  const [totalQuantity, setTotalQuantity] = useState([totalQuantity12]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (state2?.id) {
-          const response1 = await axios.get(
-            `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
-          );
-          if (response1) {
-            const total = response1?.data?.data?.reduce(
-              (total, item) => total + item.cart_quantity,
-              0
-            );
-            console.log(total, "total");
-            setTotalCart(total);
-            setTotalQuantity((prevTotal) => prevTotal + total);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
+    // const fetchData = async () => {
+    //   try {
+    //     if (state2?.id) {
+    //       const response1 = await axios.get(
+    //         `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
+    //       );
+    //       if (response1) {
+    //         const total = response1?.data?.data?.reduce(
+    //           (total, item) => total + item.cart_quantity,
+    //           0
+    //         );
+    //         console.log(total, "total");
+    //         setTotalCart(total);
+    //         setTotalQuantity((prevTotal) => prevTotal + total);
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching data: ", error);
+    //   }
+    // };
 
     const fetchDataFav = async () => {
       try {
@@ -81,19 +82,46 @@ const Header = () => {
       fetchData();
       fetchDataFav();
     }
-  }, [totalFav,state2?.id,]);
+  }, [totalFav, state2?.id]);
 
-  console.log(totalCart, "totalCart");
+  useEffect(() => {
+    fetchData();
+  }, [totalFav]);
+
+  const fetchData = async () => {
+    try {
+      if (state2?.id) {
+        const response1 = await axios.get(
+          `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
+        );
+        if (response1) {
+          const total = response1?.data?.data?.reduce(
+            (total, item) => total + item.cart_quantity,
+            0
+          );
+          console.log(total, "total");
+          setTotalCart(total);
+          setTotalQuantity((prevTotal) => prevTotal + total);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
   const totalQuantity1 = state1.reduce(
     (total, item) => total + item.fav_quantity,
     0
   );
 
-  const handleClearStorage = ()=>{
-    logout()
-    clearData()
-  }
+  // if(!state2.id){
+  //   setToggle(true)
+  // }
+
+  const handleClearStorage = () => {
+    logout();
+    clearData();
+  };
 
   // console.log(state2.id);
   const path1 = useLocation();
@@ -104,9 +132,11 @@ const Header = () => {
         <div id="site-header-inner" className="">
           <nav className="stroke">
             {toggler && (
-              <div className="flex items-center justify-between gap-4 bg-black px-4 py-3 text-white ">
-                <p className="text-sm font-medium">Call Us: +91 00 00000000</p>
-                <p className="text-sm font-medium">
+              <div className="flex items-center justify-between gap-md-4 bg-black px-4 py-3 text-white ">
+                <p className="md:text-sm text-xs font-medium col-md-2 col-6">
+                  Call Us: +91 00 00000000
+                </p>
+                <p className="text-sm text-xs  font-medium">
                   Get Up to 50% Off on Wallets !!{" "}
                   <Link
                     to=""
@@ -154,8 +184,44 @@ const Header = () => {
                     Home
                   </Link>
                 </li>
+
                 {path1.pathname[1] ? (
-                  <>{null}</>
+                  <>
+                    {state2?.id ? (
+                      <div className="d-md-none d-block">
+                        <li>
+                          <Link to="" className="d-md-none d-block">
+                            <p className="m-0 fw-medium">Acount Details</p>
+                          </Link>
+                        </li>
+
+                        <li className="d-md-none d-block">
+                          <Link>
+                            <p
+                              className="m-0 fw-medium"
+                              onClick={handleClearStorage}
+                              style={{ cursor: "pointer" }}
+                            >
+                              LogOut
+                            </p>
+                          </Link>
+                        </li>
+                      </div>
+                    ) : (
+                      <div className="d-md-none d-block">
+                        <li>
+                          <Link to="/userRegister">
+                            <p className="m-0 fw-medium">Register</p>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/userLogin">
+                            <p className="m-0 fw-medium">Login</p>
+                          </Link>
+                        </li>
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <>
                     <li>
@@ -213,11 +279,39 @@ const Header = () => {
                         Contact
                       </NewLink>
                     </li>
+                    {}
+                    <li>
+                      <Link to="" className="d-md-none d-block">
+                        <p className="m-0 fw-medium">Acount Details</p>
+                      </Link>
+                    </li>
+                    <li className="d-md-none d-block">
+                      {state2?.id ? (
+                        <Link>
+                          <p
+                            className="m-0 fw-medium"
+                            onClick={handleClearStorage}
+                            style={{ cursor: "pointer" }}
+                          >
+                            LogOut
+                          </p>
+                        </Link>
+                      ) : (
+                        <>
+                          <Link to="/userRegister">
+                            <p className="m-0 fw-medium">Register</p>
+                          </Link>
+                          <Link to="/userLogin">
+                            <p className="m-0 fw-medium">Login</p>
+                          </Link>
+                        </>
+                      )}
+                    </li>
                   </>
                 )}
               </ul>
               <div className="d-flex gap-3   align-items-center">
-                <Link to="/wishlist" className="position-relative">
+                <Link to="/wishlist" className="position-relative d-md-block d-none">
                   <img src={HearIcon} alt="#" className="img-fluid" />
                   <p className="position-absolute text-black totalcount">
                     {totalFav}
@@ -225,7 +319,7 @@ const Header = () => {
                 </Link>
                 {state2?.id ? (
                   <>
-                    <div class="dropdown123">
+                    <div class="dropdown123 d-md-block d-none">
                       <span className="profileImg">
                         <img src={ProfileIcon} alt="#" className="img-fluid" />
                       </span>
@@ -236,7 +330,7 @@ const Header = () => {
                         {/* <Link to="/userLogin"> */}
                         <p
                           className="m-0 fw-medium"
-                          onClick={ handleClearStorage}
+                          onClick={handleClearStorage}
                           style={{ cursor: "pointer" }}
                         >
                           LogOut
@@ -247,7 +341,7 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    <div class="dropdown123">
+                    <div class="dropdown123 d-md-block d-none">
                       <span className="profileImg">
                         <img src={ProfileIcon} alt="#" className="img-fluid" />
                       </span>
@@ -262,22 +356,23 @@ const Header = () => {
                     </div>
                   </>
                 )}
-                <Link to="/cart" className="position-relative">
+                <Link to="/cart" className="position-relative d-md-block d-none">
                   <img src={CartIcon} alt="#" className="img-fluid" />
                   <p className="position-absolute text-black totalcount">
                     {totalCart ? totalCart : 0}
                   </p>
                 </Link>
+                <CurrencySwitcher />
               </div>
 
               <label htmlFor="menu-btn" className="btn menu-btn">
                 <FontAwesomeIcon icon={faBars} />
               </label>
-              <CurrencySwitcher/>
             </div>
           </nav>
         </div>
       </header>
+      <CustomNavBar/>
     </div>
   );
 };

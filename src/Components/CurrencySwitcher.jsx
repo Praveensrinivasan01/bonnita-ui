@@ -28,23 +28,23 @@ const CurrencySwitcher = () => {
 
   return (
     <div>
-      <div className="currency-switcher" style={{marginTop:"-5%"}}>
-        <div className={`dropdown ${isOpen ? "open" : ""}`}>
-          <div className="caption" onClick={toggleDropdown}>
-            <img style={{ width: "20px"}} src={selectedCurrency?.Url} alt={selectedCurrency.name}/>
+      <div className="currency-switcher" >
+        <div className={`dropdown currency ${isOpen ? "open" : ""}`}>
+          <div className="caption d-flex gap-3" onClick={toggleDropdown}>
+            <img  src={selectedCurrency?.Url} alt={selectedCurrency.name}/>
             <span>{selectedCurrency.name}</span>
           </div>
           <div className="list" >
             {currencies.map((currency) => (
               <div
                 key={currency.name}
-                className={`item ${
+                className={`item d-flex gap-3 ${
                   selectedCurrency === currency.name ? "selected" : ""
                 }`}
                 data-item={currency.name}
                 onClick={() => selectCurrency(currency.name)}
               >
-                <img style={{ width: "20px"}} src={currency?.Url} alt={currency.name}/>
+                <img src={currency?.Url} alt={currency.name}/>
                 <span>{currency.name}</span>
               </div>
             ))}

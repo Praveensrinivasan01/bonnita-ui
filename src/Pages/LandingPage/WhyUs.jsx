@@ -13,22 +13,20 @@ const WhyUs = () => {
       <h3 className="text-center" data-aos="fade-left" data-aos-duration="1700">Why Us</h3>
       <div className="row pb-5">
         <div className="col-md-6" data-aos="fade-left" data-aos-duration="1700">
-          <h4 className="pt-md-4 pt-3">Lorem Ipsum</h4>
+          <h4 className="pt-md-4 pt-3">Bonnita</h4>
           <p className="pt-md-3 pt-2" s>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            Although we may believe we have seen everything in fashion. But these new and innovative items can enhance our everyday outfits. One such item is a unique, handmade, and versatile bag that adds authenticity and draws attention to your style.
+
+            We are proud to present a woman bag collection with a similar design concept – bags of multifunctionality. Each bag offers multiple possibilities, making it the ideal accessory for travel and activities, as it can carry all your essentials. Elegant backpack, one shoulder bag, clutch, messenger, with or without a strap, it’s all in only one leather handmade bag!
           </p>
           <div className="quotesBgColor pt-3 pb-3 ps-3 pe-4 mt-md-4">
             <h5>
-              “ Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. ”
+              “ a woman bag collection with a similar design concept – bags of multifunctionality. ”
             </h5>
-            <h6 className="text-end">-- Lorem Ipsum</h6>
+            <h6 className="text-end">-- Bonnita</h6>
           </div>
           {/* <button className="btn p-3 rounded-0 mt-4">TRY NOW</button> */}
-          <Button btnName={"TRY NOW"} btnStyle={"button color-1 mt-4"}/> 
+          <Button btnName={"TRY NOW"} btnStyle={"button color-1 mt-4"} />
         </div>
         <div className="col-md-6 ps-md-5 " data-aos="fade-right" data-aos-duration="1700">
           <img src={handBagImg} alt="#" className="img-fluid" />

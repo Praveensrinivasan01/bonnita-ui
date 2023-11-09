@@ -265,7 +265,7 @@ const Billingdetails = () => {
                       <h3 className="mb-4">Billing details</h3>
                       {/* <form className="billing "> */}
                       <div className="d-flex">
-                        <div className="form-floating mb-3 col-6 pe-5">
+                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
                           <input
                             type="text"
                             className="form-control"
@@ -281,10 +281,10 @@ const Billingdetails = () => {
                             required
                           />
                           <label for="floatingInput">
-                            Door No/Appartment No *
+                            Door No*
                           </label>
                         </div>
-                        <div className="form-floating mb-3 col-6 pe-5">
+                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
                           <input
                             type="text"
                             className="form-control"
@@ -304,7 +304,7 @@ const Billingdetails = () => {
                       </div>
 
                       <div className="d-flex">
-                        <div className="form-floating mb-3 col-6 pe-5">
+                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
                           <input
                             type="text"
                             className="form-control"
@@ -322,7 +322,7 @@ const Billingdetails = () => {
                           <label for="floatingInput">Address Line 2 *</label>
                         </div>
 
-                        <div className="form-floating mb-3 col-6 pe-5">
+                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
                           <input
                             type="text"
                             className="form-control"
@@ -343,12 +343,12 @@ const Billingdetails = () => {
                             required
                           />
 
-                          <label for="floatingInput">City</label>
+                          <label for="floatingInput">City *</label>
                         </div>
                       </div>
 
                       <div className="d-flex">
-                        <div className="form-floating mb-3 col-6 pe-5">
+                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
                           <input
                             type="text"
                             className="form-control"
@@ -368,10 +368,10 @@ const Billingdetails = () => {
                             }}
                             required
                           />
-                          <label for="floatingInput">State</label>
+                          <label for="floatingInput">State *</label>
                         </div>
 
-                        <div className="form-floating mb-3 col-6 pe-5">
+                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
                           <input
                             type="text"
                             className="form-control"
@@ -395,7 +395,7 @@ const Billingdetails = () => {
                         </div>
                       </div>
 
-                        <div className="form-floating mb-3 col-6 pe-5">
+                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
                           <input
                             type="text"
                             className="form-control"
@@ -439,13 +439,13 @@ const Billingdetails = () => {
                       {/* </form> */}
                     </div>
 
-                    <div className="col-lg-5 col-md-6">
-                      <div className="sidebar sidebar-order">
+                    <div className="col-lg-5 col-md-6 col-12">
+                      <div className="sidebar sidebar-order m-0 w-100 ps-3 pe-4">
                         <div className="widget widget-order-product">
                           <div className="d-flex justify-content-between row fw-bold">
                             <span className="widget-title col-6">Products</span>
                             <span className="col-3">Nos.</span>
-                            <span className="col-3">SUBTOTAL</span>
+                            <span className="col-3">SUB TOTAL</span>
                           </div>
                           {productInfo?.map((details, index) => {
                             let quantity = details.cart_quantity

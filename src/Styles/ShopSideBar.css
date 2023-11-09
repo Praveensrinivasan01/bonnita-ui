@@ -338,6 +338,14 @@
     left: -14px;
     top: -14px;
   }
+  
+  /* @media only screen and (max-width: 600px) {
+  .sidebar-shop {
+    width: 100% !important;
+  }
+
+} */
+
 
 /* 
   .fix{

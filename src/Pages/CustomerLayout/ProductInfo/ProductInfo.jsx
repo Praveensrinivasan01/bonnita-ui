@@ -169,7 +169,7 @@ const ProductInfo = () => {
                 ${productDetails1?.mrp}
               </p>
             </div>
-            <div className="product-price fs-5 m-0 pt-3 ">
+            <div className="product-price fs-md-5 fs-6 m-0 pt-3 ">
               {productDetails1?.features}
             </div>
             <div className="d-flex gap-2 pt-3">
@@ -202,9 +202,9 @@ const ProductInfo = () => {
             </div>
 
             <div className="product-infor-inner d-flex gap-2 pt-2">
-              <table className="" cellPadding={"8"} cellSpacing={"8"}>
+              <table className="fs-6" cellPadding={"8"} cellSpacing={"8"}>
                 <tr>
-                  <td className=" fw-medium mt-3">SKU</td>
+                  <td className=" fw-medium mt-3 ">SKU</td>
                   <td>:</td>
                   <td className=" mt-3">{productDetails1?.code}</td>
                 </tr>

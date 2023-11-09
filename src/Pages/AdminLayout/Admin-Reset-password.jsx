@@ -38,7 +38,7 @@ const AdminResetpassword = () => {
       <div className="container-md PaddingTop bg-white p-4 rounded-md">
         <h3 className="text-center mt-5 fw-medium fs-3">Change Password</h3>
         <div className="d-flex align-items-center justify-content-center mt-3">
-          <div className="border-1 col-4 p-3 mb-5 mt-3">
+          <div className="border-1 col-lg-4 col-md-8 col-12 p-3 mb-5 mt-3">
          
             <div className="">
               <form onSubmit={handleSubmit}>
