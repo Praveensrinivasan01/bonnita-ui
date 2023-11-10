@@ -42,7 +42,7 @@ const Billingdetails = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/product/make-payment",
+        `${process.env.REACT_APP_UI}/product/make-payment`,
         details,
         {
           headers: {

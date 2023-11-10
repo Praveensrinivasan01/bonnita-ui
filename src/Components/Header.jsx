@@ -23,6 +23,8 @@ import { clearData } from "../Zustand/userDetails";
 import CustomNavBar from "./CustomNavBar";
 
 const Header = () => {
+
+  const  pathurl = window.location.pathname
   const [toggler, setToggler] = useState(true);
   const state = cartStore((state) => state?.cart);
   const state1 = wishList((state) => state?.wishList);
@@ -170,7 +172,7 @@ const Header = () => {
             <div className="wrapper">
               <div className="logo">
                 <Link to="/">
-                  <img src={logo} alt="#" />
+                  <img src={logo} className="h-8" alt="#" />
                 </Link>
               </div>
               <input type="radio" name="slider" id="menu-btn" />
@@ -362,7 +364,11 @@ const Header = () => {
                     {totalCart ? totalCart : 0}
                   </p>
                 </Link>
-                <CurrencySwitcher />
+                {
+                  pathurl !=="/" ?
+               null:
+                <> <CurrencySwitcher /></>
+                }
               </div>
 
               <label htmlFor="menu-btn" className="btn menu-btn">

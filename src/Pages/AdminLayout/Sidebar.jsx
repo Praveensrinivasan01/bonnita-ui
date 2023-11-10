@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import logo from "../../Assets/Logo/LogoForBonnita.jpg"
 
-const Sidebar = () => {
+const   Sidebar = () => {
 
     const navigate = useNavigate();
     const { pathname } = useLocation();

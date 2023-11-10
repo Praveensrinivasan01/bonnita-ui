@@ -163,7 +163,7 @@ const Cart = () => {
                 icon={faTrash}
                 style={{ cursor: "pointer", ...iconStyles1 }}
                 onClick={() => deleteData(cartDetails)}
-                className="ms-4"
+                className="ms-3"
               />
             </span>
           </div>
