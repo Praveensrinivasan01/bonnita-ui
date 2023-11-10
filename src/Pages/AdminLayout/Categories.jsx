@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AuthPost, Delete, Get } from "../../../src/Commons/httpService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Modal,
   ModalContent,
@@ -33,38 +33,30 @@ const Categories = () => {
   const [page, setPage] = useState(1);
   const debounceSearchValue = useDebounce(searchParam,1000)
 
-  useEffect(() => {
-    getcatogories();
-  }, [debounceSearchValue,page]);
+
 
   useEffect(() => {
     getcatogories();
   }, []);
 
-  console.log(searchParam,"searchParam")
   const getcatogories = async () => {
     // setSearchParams()
     const res = await axios.post(
       `${
         process.env.REACT_APP_API_URL
-      }/admin/get-all-category?search=${searchParam}&offset=${
-        15 * (page - 1)
-      } `,
-      "admin"
-    );
+      }/admin/get-all-category?search=${searchParam}&offset=${15 * (page - 1)} `,"admin");
     if (res.data.statusCode == 200) {
       setCatogories(res.data.data);
       console.log(res, "rest");
     }
   };
-  // const PageQuery = async () => {
-  //   const response = await axios.post(`${process.env.REACT_APP_API_URL}/product/shop-mapping?category=&offset=${15 * (page - 1)}`)
-  //   if (response?.data?.statusCode == 200) {
-  //     sendData(response?.data?.data)
-  //   } else {
-  //     sendData([])
-  //   }
-  // }
+
+
+  useEffect(() => {
+    console.log("page changed")
+    getcatogories();
+  }, [debounceSearchValue,page]);
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     const selectedImage = e.target.files[0];
@@ -363,10 +355,10 @@ const Categories = () => {
         </div>
 
         <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-          <a
-            href="#"
+          <Link
             class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-          >
+            onClick={() => page !== 1 && setPage((prev) => prev - 1)}
+        >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -383,11 +375,12 @@ const Categories = () => {
             </svg>
 
             <span>Previous</span>
-          </a>
+          </Link>
 
-          <a
-            href="#"
+          <Link
             class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+            onClick={() => page !== 1 && setPage((prev) => prev +1)}
+
           >
             <span>Next</span>
 
@@ -405,7 +398,7 @@ const Categories = () => {
                 d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
               />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
 

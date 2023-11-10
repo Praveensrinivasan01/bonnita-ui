@@ -17,10 +17,18 @@ const ProductInfo = () => {
   const [productDetails1, setProductDetails1] = useState([]);
   const [imageData, setImageData] = useState("");
   const navigate = useNavigate();
+  const [colorMapping, setColorMapping] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
     if (id) {
+
+      const getColor = async () => {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/color-mapping/${id}`);
+        console.log(response.data.data, "color mapping")
+        setColorMapping(response?.data?.data)
+      }
+      getColor()
       const fetchData = async () => {
         try {
           const response = await axios.get(
@@ -203,6 +211,19 @@ const ProductInfo = () => {
 
             <div className="product-infor-inner d-flex gap-2 pt-2">
               <table className="fs-6" cellPadding={"8"} cellSpacing={"8"}>
+                {colorMapping?.length ? (<><tr> <td colSpan={3} className=" fw-medium mt-3 ">Available Colors</td> </tr>
+                  <tr>
+                    {colorMapping?.map((color) => {
+                      return (<>
+                        <Link to={`/product/${color.id}`}>
+                          <td></td>
+                          <td></td>
+                          <td className="color-dot" style={{ backgroundColor: color.color, cursor: "pointer" }} onClick={() => console.log("product color clicked")} ></td>
+                        </Link>
+                      </>)
+                    })}
+                  </tr></>) : ""}
+
                 <tr>
                   <td className=" fw-medium mt-3 ">SKU</td>
                   <td>:</td>
