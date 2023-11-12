@@ -128,6 +128,15 @@ const   Sidebar = () => {
             Orders
         </li>
         <li
+            className={ pathname.includes("coupon") ? 
+            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
+            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
+            style={{cursor:"pointer"}}
+            onClick={()=>navigate('/admin/coupon')}
+        >
+            Coupon
+        </li>
+        <li
             className={ pathname.includes("accountinfo") ? 
             'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
             "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}

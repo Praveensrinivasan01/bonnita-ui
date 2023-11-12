@@ -13,8 +13,8 @@ import { Link as NewLink } from "react-scroll";
 import { useLocation } from "react-router-dom";
 import "../Styles/Header.css";
 import Popup from "./Popup";
-import { cartStore } from "../Zustand/cartStore";
-import { wishList } from "../Zustand/wishListStore";
+import { cartStore, increment } from "../Zustand/cartStore";
+import { favourite, wishList } from "../Zustand/wishListStore";
 import wishlist from "../Pages/CustomerLayout/wishlist";
 import { loginStore, logout } from "../Zustand/loginStore";
 import axios from "axios";
@@ -23,108 +23,89 @@ import { clearData } from "../Zustand/userDetails";
 import CustomNavBar from "./CustomNavBar";
 
 const Header = () => {
-
-  const  pathurl = window.location.pathname
+  const pathurl = window.location.pathname;
   const [toggler, setToggler] = useState(true);
-  const state = cartStore((state) => state?.cart);
-  const state1 = wishList((state) => state?.wishList);
   const [totalCart, setTotalCart] = useState("0");
   const [totalFav, settotalFav] = useState("0");
+  const state = cartStore((state) => state?.cart);
   const totalQuantity12 = state?.reduce(
     (total, item) => total + item.cart_quantity,
     0
   );
   const state2 = loginStore((state) => state?.login);
-  const [totalQuantity, setTotalQuantity] = useState([totalQuantity12]);
+  const favData = wishList((state) => state?.wishList);
+  console.log(totalQuantity12, "totalQuantity12");
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     if (state2?.id) {
-    //       const response1 = await axios.get(
-    //         `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
-    //       );
-    //       if (response1) {
-    //         const total = response1?.data?.data?.reduce(
-    //           (total, item) => total + item.cart_quantity,
-    //           0
-    //         );
-    //         console.log(total, "total");
-    //         setTotalCart(total);
-    //         setTotalQuantity((prevTotal) => prevTotal + total);
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching data: ", error);
-    //   }
-    // };
-
     const fetchDataFav = async () => {
       try {
+        let response1;
         if (state2?.id) {
-          const response1 = await axios.get(
+          response1 = await axios.get(
             `${process.env.REACT_APP_API_URL}/product/get-all-favourites/${state2?.id}`
           );
-          if (response1) {
-            const total = response1?.data?.data?.reduce(
-              (total, item) => total + item.fav_quantity,
-              0
-            );
-            console.log(total, "total");
-            settotalFav(totalFav);
-            setTotalQuantity((prevTotal) => prevTotal + total);
+          if (response1 && response1?.data?.data?.length > 0) {
+            if (favData.length !== response1.data.data?.length) {
+              response1?.data?.data?.forEach((item) => {
+                favourite(item, state2);
+              });
+            }
           }
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     };
+  
+    fetchDataFav();
+  }, [1]);
 
-    if (state2?.id) {
-      fetchData();
-      fetchDataFav();
-    }
-  }, [totalFav, state2?.id]);
+ 
 
   useEffect(() => {
-    fetchData();
-  }, [totalFav]);
-
-  const fetchData = async () => {
-    try {
-      if (state2?.id) {
-        const response1 = await axios.get(
-          `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
-        );
-        if (response1) {
-          const total = response1?.data?.data?.reduce(
-            (total, item) => total + item.cart_quantity,
-            0
-          );
-          console.log(total, "total");
-          setTotalCart(total);
-          setTotalQuantity((prevTotal) => prevTotal + total);
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching data: ", error);
+    if (favData?.length) {
+      settotalFav(favData.length);
     }
-  };
+  }, [favData]);
 
-  const totalQuantity1 = state1.reduce(
-    (total, item) => total + item.fav_quantity,
-    0
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let cartResponse;
+        if (state2?.id) {
+          cartResponse = await axios.get(
+            `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
+          );
+          if (cartResponse && cartResponse?.data?.data?.length > 0) {
+            if (state?.length !== cartResponse.data.data?.length) {
+              cartResponse?.data?.data?.forEach((item) => {
+                increment(item, state2);
+              });
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+  
+    fetchData();
+  }, [1]);
+  
 
-  // if(!state2.id){
-  //   setToggle(true)
-  // }
+  useEffect(() => {
+    if (totalQuantity12) {
+      setTotalCart(totalQuantity12);
+    }
+  }, [totalQuantity12]);
 
   const handleClearStorage = () => {
     logout();
+    localStorage.clear();
+    window.location.reload();
     clearData();
   };
-
+  
   // console.log(state2.id);
   const path1 = useLocation();
   console.log(path1.pathname[1], "path1");
@@ -184,6 +165,17 @@ const Header = () => {
                 <li>
                   <Link to="/" smooth={true} duration={500}>
                     Home
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/contactus"
+                    smooth={true}
+                    duration={500}
+                    offset={-100}
+                  >
+                    Contact
                   </Link>
                 </li>
 
@@ -271,16 +263,7 @@ const Header = () => {
                         Why Us
                       </NewLink>
                     </li>
-                    <li>
-                      <NewLink
-                        to="contact"
-                        smooth={true}
-                        duration={500}
-                        offset={-100}
-                      >
-                        Contact
-                      </NewLink>
-                    </li>
+
                     {}
                     <li>
                       <Link to="" className="d-md-none d-block">
@@ -313,20 +296,33 @@ const Header = () => {
                 )}
               </ul>
               <div className="d-flex gap-3   align-items-center">
-                <Link to="/wishlist" className="position-relative d-md-block d-none">
+                <Link
+                  to="/wishlist"
+                  className="position-relative d-md-block d-none"
+                >
                   <img src={HearIcon} alt="#" className="img-fluid" />
                   <p className="position-absolute text-black totalcount">
-                    {totalFav}
+                    {state2.id && totalFav ?totalFav :0}
+                  </p>
+                </Link>
+                
+                <Link
+                  to="/cart"
+                  className="position-relative d-md-block d-none"
+                >
+                  <img src={CartIcon} alt="#" className="img-fluid" />
+                  <p className="position-absolute text-black totalcount">
+                    {state2.id && totalCart ? totalCart : 0}
                   </p>
                 </Link>
                 {state2?.id ? (
                   <>
                     <div class="dropdown123 d-md-block d-none">
-                      <span className="profileImg">
+                      <span className="profileImg leading-10">
                         <img src={ProfileIcon} alt="#" className="img-fluid" />
                       </span>
-                      <div class="dropdown-content">
-                        <Link to="">
+                      <div class="dropdown-content leading-10">
+                        <Link to="accountinfo">
                           <p className="m-0 fw-medium">Acount Details</p>
                         </Link>
                         {/* <Link to="/userLogin"> */}
@@ -358,17 +354,12 @@ const Header = () => {
                     </div>
                   </>
                 )}
-                <Link to="/cart" className="position-relative d-md-block d-none">
-                  <img src={CartIcon} alt="#" className="img-fluid" />
-                  <p className="position-absolute text-black totalcount">
-                    {totalCart ? totalCart : 0}
-                  </p>
-                </Link>
-                {
-                  pathurl !=="/" ?
-               null:
-                <> <CurrencySwitcher /></>
-                }
+                {pathurl !== "/" ? null : (
+                  <>
+                    {" "}
+                    <CurrencySwitcher />
+                  </>
+                )}
               </div>
 
               <label htmlFor="menu-btn" className="btn menu-btn">
@@ -378,7 +369,7 @@ const Header = () => {
           </nav>
         </div>
       </header>
-      <CustomNavBar/>
+      <CustomNavBar />
     </div>
   );
 };

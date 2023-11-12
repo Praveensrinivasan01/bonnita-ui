@@ -29,6 +29,8 @@ const Queries = () => {
   const [query, setqueryType] = useState("");
   const [comments, setcomments] = useState("");
 
+  
+  
   useEffect(() => {
     getCustomerFeedBacks()
   }, [])
@@ -41,7 +43,6 @@ const Queries = () => {
       setFeedBacks(response?.data?.data)
     }
   }
-
   const handleQueries = async (e) => {
     e.preventDefault();
 
@@ -68,7 +69,6 @@ const Queries = () => {
       toast.error(error);
     }
   };
-
   return (
     <div className="pt-5">
       <div className="container-md CaroselForQuries p-md-5 " style={{ zIndex: 2, position: "relative" }}>

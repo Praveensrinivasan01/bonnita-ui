@@ -33,17 +33,7 @@ const Footer = () => {
 
             <img src={Logo} alt="#" className="img-fluid" />
           </div>
-            <iframe
-              title="Google Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.0619303638346!2d80.17701997557!3d13.031728213556148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5260d62bc6942b%3A0x8cd23707b2ddfb87!2sSRM%20Easwari%20Engineering%20College!5e0!3m2!1sen!2sin!4v1697561664496!5m2!1sen!2sin"
-              width="420"
-              height="180"
-              className="mt-4 d-lg-block d-md-none d-block "
-              style={{ border: "0" ,borderRadius:"20px"}}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            
           </div>
           <div className="col-md-4 d-flex justify-content-center gap-4 mt-md-0 mt-4 mx-auto my-auto">
             <div>

@@ -1,9 +1,9 @@
 
 
-::selection {
+/* ::selection {
   background: rgba(187, 134, 252, 0.5);
   color: #fff;
-}
+} */
 
 
 
@@ -49,7 +49,7 @@
 #AllNotification:checked ~ .list label.AllNotification,
 #Whishlist:checked ~ .list label.Whishlist,
 #Profile:checked ~ .list label.Profile {
-  color: #22272c;
+  color: gray;
 }
 
 .content123 .slider {
@@ -60,8 +60,8 @@
   width: 100%;
   border-radius: 12px;
   transition: all 0.5s ease;
-
-  background: #bb86fc;
+  color: white;
+  /* background: black; */
 }
 
 /*   */
@@ -106,5 +106,5 @@
 }
 
 .content123 .list label:hover {
-  color: #bb86fc;
+  color: #000;
 }

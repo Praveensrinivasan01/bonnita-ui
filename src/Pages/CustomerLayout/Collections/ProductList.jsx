@@ -64,9 +64,9 @@ const ProductList = ({ productsData }) => {
   return (
     <>
       <section className="product">
-        <div className="row">
+        <div className="grid gap-3 md:grid-cols-4 grid-cols-1  ">
           {productsData?.map((listitem) => (
-            <div className="col-lg-4 col-md-6 mb-4" key={listitem.id}>
+            <div className=" ps-3 pe-3 mb-4 border-2 border" key={listitem.id}>
               <div className="product-item wow fadeInUp">
                 <div className="product-img">
                   <span className="product-label">

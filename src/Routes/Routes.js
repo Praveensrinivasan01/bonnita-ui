@@ -36,6 +36,9 @@ import Accountinfo from '../Pages/CustomerLayout/AccountInfo'
 import AdminAccountinfo from '../Pages/AdminLayout/Account-Info'
 import TopFilters from '../Pages/AdminLayout/TopFilters'
 import { withAuth } from './SimpleAuth'
+import ContactUs from '../Pages/CustomerLayout/ContactUs'
+import Coupon from '../Pages/AdminLayout/Coupon'
+import { CustomerOrderDetails } from '../Pages/CustomerLayout/OrderDetails'
 
 export const Routes = () => {
   const AdminComponent = withAuth(Admin); // Wrap the Admin component
@@ -136,6 +139,14 @@ export const Routes = () => {
             path: "/accountinfo",
             element: <Accountinfo />,
           },
+          {
+            path:"/contactus",
+            element:<ContactUs/>
+          },
+          {
+            path:"/orderDetails/:id",
+            element:<CustomerOrderDetails/>
+          },
         ],
       },
       {
@@ -180,6 +191,10 @@ export const Routes = () => {
           {
             path: "/admin/orders/:id",
             element: <OrderDetails />,
+          },
+          {
+            path: "/admin/coupon",
+            element: <Coupon/>,
           },
           {
             path: "/admin/topfilter",

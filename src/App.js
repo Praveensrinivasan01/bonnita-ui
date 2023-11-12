@@ -10,7 +10,7 @@ function App() {
     <>
       {path.startsWith("/admin") ? null : <Header  />}
         <Routes />
-      {path.startsWith("/admin") ? null : <Footer />}
+      {/* {path.startsWith("/admin") ? null : <Footer />} */}
     </>
   );
 

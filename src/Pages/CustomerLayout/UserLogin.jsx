@@ -43,6 +43,7 @@ const UserLogin = () => {
         })
         .then(async (resp) => {
           if (resp.data.statusCode === 200) {
+
             setLoginData({
               id: resp.data.user.id,
               UserToken: resp.data.token,
@@ -50,6 +51,9 @@ const UserLogin = () => {
             // setUserLoginData(resp.data.user);
             setUserData({email,firstname:resp.data.user.firstname,lastname:resp.data.user.lastname,mobile:resp.data.user.mobile})
             navigate(-1);
+            setTimeout(()=>{
+              window.location.reload();
+            },500)
           } else if (resp.data.statusCode === 310) {
             toast.error(resp.data.message);
           }

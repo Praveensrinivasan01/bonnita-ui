@@ -38,7 +38,7 @@ const Cart = () => {
     color: "#FF98A6",
     fontSize: "24px",
   };
-  // const state = cartStore((state) => state.cart);
+  const state = cartStore((state) => state.cart);
   // let totalQuantity = state.reduce((total, item) => total + item.cart_quantity, 0);
 
   const state2 = loginStore((state) => state.login);
@@ -94,14 +94,14 @@ const Cart = () => {
   useEffect(() => {
     deleteData();
     getCategories();
-  }, []);
+  },[state]);
 
-  console.log(cartData, "CartData");
+  console.log(state, "CartData");
 
   const Instock = 1;
   return (
     <div className=" container-md PaddingTop overflow-auto">
-      {cartData?.length ? (
+      {state2Id && state?.length ? (
         <>
           <div>
             <h4 className="mt-3 fs-6 fw-medium">
@@ -113,9 +113,10 @@ const Cart = () => {
             <h3 className="mt-3 mb-3 fs-3 fw-medium">My Cart</h3>
           </div>
           <div className="row tableForAddtoCart mt-3 p-3 rounded-0 d-md-flex d-none">
-            <div className="col-5 fw-semibold fs-5">Product</div>
+            <div className="col-4 fw-semibold fs-5">Product</div>
             <div className="col-2 fw-semibold fs-5">price</div>
-            <div className="col-5 fw-semibold fs-5">Stock</div>
+            <div className="col-4 fw-semibold fs-5">Stock</div>
+            <div className="col-2 fw-semibold fs-5">Total</div>
           </div>
         </>
       ) : (
@@ -124,14 +125,14 @@ const Cart = () => {
         </>
       )}
 
-      {cartData?.map((cartDetails) => (
+      {state2Id && state?.map((cartDetails) => (
         <div className="row tableForAddtoCart border-top-0 rounded-0 py-4 px-2 d-flex align-items-center">
-          <div className="col-md-5 d-flex align-items-center">
-            <img src={cartDetails.front_side} className="img-fluid w-28 md:w-36 pe-3" />
+          <div className="col-md-4 col-12 d-flex align-items-center justify-center">
+            <img src={cartDetails.front_side} className="img-fluid w-28 md:w-36 pe-3 pb-md-0 pb-2" />
             <p className="">{cartDetails.name}</p>
           </div>
-          <div className="col-md-2 col-3"><p><span>₹</span>{cartDetails.selling_price}</p></div>
-          <div className="col-md-5 col-6">
+          <div className="col-md-2 col-2"><p><span>₹</span>{cartDetails.selling_price}</p></div>
+          <div className="col-md-4 col-4">
             <span className="d-flex align-items-center">
               <p
                 className=""
@@ -167,9 +168,12 @@ const Cart = () => {
               />
             </span>
           </div>
+          <div className="col-md-2">
+          {cartDetails.selling_price * cartDetails.cart_quantity }
+          </div>
         </div>
       ))}
-      {cartData?.length ? (
+      {state2Id && cartData?.length ? (
         <div className="text-end mb-4 pb-5 mt-4">
           <Button
             btnName={"PLACE ORDER"}
