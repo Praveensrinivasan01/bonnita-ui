@@ -84,7 +84,7 @@ const Categories = () => {
 
           <div className="col-lg-3 col-md-4 col-12 card bg-dark mt-3 mb-3">
             <div className=" m-auto">
-              <NavLink to="/shop">
+              <NavLink to="/shop?type=all">
                 <h2 className="fs-3 text-light">View All</h2>
               </NavLink>
             </div>

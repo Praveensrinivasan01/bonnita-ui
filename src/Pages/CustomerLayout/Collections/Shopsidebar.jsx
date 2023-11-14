@@ -31,6 +31,7 @@ const Shopsidebar = () => {
   const [page, setPage] = useState(1)
   const [searchParam, setSearchParams] = useState("")
   const [categoryParam, setCategoryParam] = useState("all")
+  const [type, setType] = useState("all")
   const [subCategoryParams, setSubCategoryParams] = useState("all")
   const [sortParams, setSortParams] = useState("lowToHigh")
   const debounceSearchValue = useDebounce(searchParam, 1000)
@@ -43,7 +44,7 @@ const Shopsidebar = () => {
   }
 
   const shopPageQuery = async () => {
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}/product/shop-mapping?category='${queryParams?.get('category') ?? categoryParam}'&subcategory='${subCategoryParams}'&search=${searchParam}&price='${sortParams}'&offset=${15 * (page - 1)}`)
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/product/shop-mapping?category='${queryParams?.get('category') ?? categoryParam}'&subcategory='${subCategoryParams}'&search=${searchParam}&price='${sortParams}'&offset=${15 * (page - 1)}&type='${queryParams?.get('type') ?? type}'`)
 
     console.log("response?.data?.data)", response?.data?.data)
     if (response?.data?.statusCode == 200) {
@@ -69,7 +70,7 @@ const Shopsidebar = () => {
   useEffect(() => {
     console.log(" triggerere")
     shopPageQuery();
-  }, [page, categoryParam, subCategoryParams, debounceSearchValue, sortParams])
+  }, [page, categoryParam, subCategoryParams, debounceSearchValue, sortParams, type])
 
   return (
     <>
@@ -104,14 +105,16 @@ const Shopsidebar = () => {
                       </form>
                     </div>
                     <div className="widget widget_category style-2 wow fadeInUp">
+                      <h5 className="widget-title mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("newarrivals"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shop") }}><span>New Arrivals</span></h5>
+                      <h5 className="widget-title mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("bestsellers"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shop") }}><span>Best Sellers</span></h5>
                       <h5 className="widget-title mb-3"><span>Categories</span></h5>
-                      <h5 className="widget-title mt-1 mb-3" style={{ cursor: "pointer" }} onClick={() => { setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shop") }}>All</h5>
+                      <h5 className="widget-title mt-1 mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("all"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shop") }}>All</h5>
                       {sideBarResponse?.map((ele, i) => {
                         return <div className="dropdown mt-2 mb-3">
-                          <h2 className={`d-flex justify-content-between align-items-center`} style={{ cursor: "pointer" }} onClick={() => { setIndexValue(i); setSubIndexValue(-1); setCategoryParam(ele.category_name); setSubCategoryParams("all"); navigate("/shop") }}> {ele.category_name}<span><FontAwesomeIcon icon={faChevronDown} /> </span></h2>
-                          <div className={`showWithTransition px-4 ${indexValue == i ? ' open ' : ''}`} >
+                          <h2 className={`d-flex justify-content-between align-items-center`} style={{ cursor: "pointer" }} onClick={() => { setType("all"); setIndexValue(i); setSubIndexValue(-1); setCategoryParam(ele.category_name); setSubCategoryParams("all"); navigate("/shop") }}> {ele.category_name}<span><FontAwesomeIcon icon={faChevronDown} /> </span></h2>
+                          <div className={`showWithTransition px-4 ${(indexValue == i || (queryParams.get('category') == ele.category_name)) ? ' open ' : ''}`} >
                             {ele.subcategories?.map((e, i) => {
-                              return <p className={`dropdown-item fw-lighter pt-2 ${subIndexValue == i ? ' color-selected ' : ''}`} type="button" onClick={() => { setSubIndexValue(i); setSubCategoryParams(e.subcategory_name); setPage(1); navigate("/shop") }}>{e.subcategory_name}</p>
+                              return <p className={`dropdown-item fw-lighter pt-2 ${subIndexValue == i ? ' color-selected ' : ''}`} type="button" onClick={() => { setType("all"); setSubIndexValue(i); setSubCategoryParams(e.subcategory_name); setPage(1); navigate("/shop") }}>{e.subcategory_name}</p>
                             })}
                           </div>
                         </div>

@@ -38,7 +38,7 @@ const NewArrivals = () => {
         <h3 style={{ color: "#1D1D1D", fontSize: "32px", fontWeight: "600" }}>
           New Arrivals
         </h3>
-        <Link to="/shop">
+        <Link to="/shop?type=bestsellers">
           <h4 className="text-decoration-underline onHover">View All</h4>
         </Link>
       </div>

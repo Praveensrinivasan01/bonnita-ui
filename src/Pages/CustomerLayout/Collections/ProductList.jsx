@@ -66,7 +66,7 @@ const ProductList = ({ productsData }) => {
       <section className="product">
         <div className="grid gap-3 md:grid-cols-4 grid-cols-1  ">
           {productsData?.map((listitem) => (
-            <div className=" ps-3 pe-3 mb-4 border-2 border" key={listitem.id}>
+            <div className="bg-slate-50 ps-3 pe-3 mb-4 border-2 border" key={listitem.id}>
               <div className="product-item wow fadeInUp">
                 <div className="product-img">
                   <span className="product-label">
@@ -93,9 +93,9 @@ const ProductList = ({ productsData }) => {
                     </li>
                   </ul>
                 </div>
-                <div className="product-content">
-                  <div className="rating-price">
-                    <ul className="ratings active">
+                <div className="product-content ">
+                  <div className="rating-price pt-2">
+                    <ul className="ratings active text-xs">
                       {[...Array(Number(listitem.total_rating))].map((_, index) => (
                         <li key={index} className="star">
                           <FontAwesomeIcon icon={faStar} />
@@ -107,10 +107,10 @@ const ProductList = ({ productsData }) => {
                       {currencyCode?.symbol}{currencyConversion(listitem.selling_price)}
                     </div>
                   </div>
-                  <div className="product-title-price-old">
-                    <a href="product-detail.html">{listitem.name}</a>
+                  <div className="product-title-price-old pl-1 ">
+                    <a href="product-detail.html" className="text-xs">{listitem.name}</a>
                     <div
-                      className="product-price text-decoration-line-through"
+                      className="product-price text-decoration-line-through pl-2"
                       style={{ color: "#777" }}
                     >
                       {currencyCode?.symbol}{listitem.mrp}
