@@ -37,10 +37,10 @@ const handleFavData = (products, state2)=>{
 } 
 
   return (
-    <div className="container-lg">
+    <div className="container-lg p-0">
       <div className="row" data-aos="fade-up" data-aos-duration="1000">
         {products?.map((product) => (
-          <div className="col-md-3 mb-md-0 mb-4" key={product.id}>
+          <div className="col-md-3 col-6 mb-md-0 mb-4" key={product.id}>
             <div className="product-item wow fadeInUp seller-item">
               <div className="product-img">
                 <span className="product-label color-1">{product.new}</span>
@@ -77,9 +77,9 @@ const handleFavData = (products, state2)=>{
                   </ul>
                   <div className="product-price">${product.selling_price}</div>
                 </div>
-                <div className="product-title-price-old">
+                <div className="product-title-price-old text-xs">
                   {product.name}
-                  <div className="product-price-old">
+                  <div className="product-price-old text-xs">
                     ${product.mrp}
                   </div>
                 </div>

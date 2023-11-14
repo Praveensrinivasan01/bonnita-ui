@@ -17,7 +17,6 @@ export const UserDetails = create(
 
 export const setUserData = (item)=>
 UserDetails.setState((state)=>{
-
   return{ UserDetails: item }
 })
 

@@ -14,5 +14,4 @@ export const placeOrder = create(
 export const addToPlaceOrder = (item) =>
   placeOrder.setState((state) => {
     return { placeOrder:item };
-  
   });

@@ -21,7 +21,7 @@
 .content123 {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .content123 .list {

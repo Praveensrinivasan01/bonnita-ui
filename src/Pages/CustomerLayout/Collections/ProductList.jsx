@@ -64,7 +64,7 @@ const ProductList = ({ productsData }) => {
   return (
     <>
       <section className="product">
-        <div className="grid gap-3 md:grid-cols-4 grid-cols-1  ">
+        <div className="grid gap-3 md:grid-cols-3 grid-cols-2  ">
           {productsData?.map((listitem) => (
             <div className="bg-slate-50 ps-3 pe-3 mb-4 border-2 border" key={listitem.id}>
               <div className="product-item wow fadeInUp">

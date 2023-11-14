@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import logo from "../../Assets/Logo/LogoForBonnita.jpg"
+import { AuthPost } from '../../Commons/httpService';
 
 const   Sidebar = () => {
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const [count, setCount] = useState(0)
 
     const AdminlogOut = ()=>{
         sessionStorage.clear()
     }
+
+    let getcount = async () => {
+        await AuthPost(`admin/get-query-count`, {}, 'admin').then((res) => {
+
+            if (res.statusCode == 200) {
+                setCount(res.data.count)
+            }
+        }).catch((err) => {
+            console.log('err::: ', err);
+        })
+    }
+
+    useEffect(() => {
+        getcount()
+    }, [])
 
   return (
     <>
@@ -23,7 +40,7 @@ const   Sidebar = () => {
 
         <ul class="mt-6 space-y-1">
         <li 
-            className={ pathname.includes("dashboard") ? 
+            className={ pathname.includes("dashboard")  ? 
             'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
             "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
             onClick={()=>navigate('/admin/dashboard')}
@@ -137,6 +154,15 @@ const   Sidebar = () => {
             Coupon
         </li>
         <li
+                          className={pathname.includes("queries") ?
+                              'block   bg-red-400 px-4 py-3 text-sm font-medium text-white flex justify-between' :
+                              "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 flex justify-between hover:text-gray-700"}
+            style={{cursor:"pointer"}}
+            onClick={()=>navigate('/admin/queries')}
+        >
+                          <span> Queries</span> <span class="badge text-black bg-white     badge-light">{count}</span>
+        </li>
+        <li
             className={ pathname.includes("accountinfo") ? 
             'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
             "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
@@ -146,11 +172,17 @@ const   Sidebar = () => {
             Account Info
         </li>
 
+                      <li
+                          className={"block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"} style={{ cursor: "pointer" }}
+                      >
+                          <button className='btn-danger' onClick={() => AdminlogOut}> Logout</button>
+
+                      </li>
+
         </ul>
     </div>
 
-    <div class=" inset-x-0 bottom-0 border-t border-gray-100">
-        <button className='btn-danger' onClick={()=>AdminlogOut}> Logout</button>
+              {/* <div class=" inset-x-0 bottom-0 border-t border-gray-100">
         <a href="#" class="flex items-center gap-2 bg-gray-100 p-4 hover:bg-gray-300">
         <img
             alt="Man"
@@ -166,7 +198,7 @@ const   Sidebar = () => {
             </p>
         </div>
         </a>
-    </div>
+    </div> */}
     </div>  
     </>
   )

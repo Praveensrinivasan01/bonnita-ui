@@ -39,6 +39,7 @@ import { withAuth } from './SimpleAuth'
 import ContactUs from '../Pages/CustomerLayout/ContactUs'
 import Coupon from '../Pages/AdminLayout/Coupon'
 import { CustomerOrderDetails } from '../Pages/CustomerLayout/OrderDetails'
+import Queries from '../Pages/AdminLayout/Queries'
 
 export const Routes = () => {
   const AdminComponent = withAuth(Admin); // Wrap the Admin component
@@ -199,6 +200,10 @@ export const Routes = () => {
           {
             path: "/admin/topfilter",
             element: <TopFilters />,
+          },
+          {
+            path: "/admin/queries",
+            element: <Queries />,
           },
         ],
       },

@@ -1,4 +1,4 @@
-import { faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -10,6 +10,9 @@ import { increment } from "../../../Zustand/cartStore";
 import { toast } from "react-toastify";
 import { addToPlaceOrder } from "../../../Zustand/placeOrderdetails";
 import { loginStore } from "../../../Zustand/loginStore";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import SliderforProduct from 'react-slick';
 
 const ProductInfo = () => {
   const { id } = useParams();
@@ -68,6 +71,10 @@ const ProductInfo = () => {
     setImgaChange(productDetails1?.imageDetails[0]?.front_Side || "");
   };
 
+
+
+
+
   const notify3 = () => {
     if (state2?.id) {
       // toast(`🛒  ${products?.name} Added To Cart`, { draggable: true });
@@ -96,6 +103,18 @@ const ProductInfo = () => {
     }
   }
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 1500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    //  prevArrow: <ArrowButton direction="prev" />,
+    // nextArrow: <ArrowButton direction="next" />,
+  };
+
   console.log(productDetails1, "Productsline1233");
   return (
     <>
@@ -110,19 +129,57 @@ const ProductInfo = () => {
         </p>
       </div>
       <div className="infor-product container-md">
-        <div className="row">
-          <div className="col-md-4">
-            <div className="img-top ">
+        <div className="row ">
+          <div className="col-md-4 ">
+          <SliderforProduct {...settings} style={{width:"25%"}}>
+            <div className="" >
               {imageData && (
                 <img
                   src={imgChange.length ? imgChange : imageData.front_side}
                   alt="Image"
-                  className=" "
-                  style={{ width: "100%" }}
+                  className=""
                 />
               )}
+              </div>
+           
+              <div>
+              <img
+                src={imageData?.front_side}
+                alt="Image"
+                className=" "
+                onClick={frontSide}
+              />
+              </div>
+              <div>
+
+              <img
+                src={imageData?.back_side}
+                alt="Image"
+                className="img-fluid "
+                onClick={backSide}
+              />
+              </div>
+              <div>
+
+              <img
+                src={imageData?.left_side}
+                alt="Image"
+                className="img-fluid "
+                onClick={leftSide}
+              />
+              </div>
+              <div>
+              <img
+                src={imageData?.right_side}
+                alt="Image"
+                className="img-fluid "
+                onClick={rightSide}
+              />
+
             </div>
-            <div className="img-thumnail d-flex justify-content-center mt-3 gap-1">
+            </SliderforProduct>
+          </div>
+            {/* <div className="img-thumnail d-flex justify-content-center mt-3 gap-1">
               <img
                 src={imageData?.front_side}
                 alt="Image"
@@ -147,8 +204,7 @@ const ProductInfo = () => {
                 className="w-25"
                 onClick={rightSide}
               />
-            </div>
-          </div>
+            </div> */}
           <div className="col-md-8">
             {/* <p className=" mt-3 text-light text-bg-dark  text-center fs-5" style={{width:'90px',height: '36px'}}>NEW</p> */}
             <h4 className="mt-3">

@@ -2,7 +2,6 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 

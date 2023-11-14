@@ -11,6 +11,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { increment } from "../../Zustand/cartStore";
 import { useCurrencyStore } from "../../Zustand/currency";
 import { AuthGet } from "../../Commons/httpService";
+import { addorderDetails } from "../../Zustand/orderDetails";
 
 
 const Billingdetails = () => {
@@ -101,11 +102,11 @@ if(orderid){
       : [detailsOfPlaceOrder]
     )?.map((details) => ({
       product_id: details.id,
-      quantity: details.cart_quantity || 1,
+      quantity: details.cart_quantity && details.cart_quantity?.length ? details.cart_quantity : 1 ,
       price: details.selling_price,
     })),
     total_amount: 0,
-    quantity: 0,
+    // quantity: 0,
     mode_of_payment: "COD",
   });
 
@@ -208,7 +209,7 @@ if(orderid){
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newOrder);
+    console.log(newOrder,"orders");
     try {
     
         if (state2.id) {
@@ -217,14 +218,23 @@ if(orderid){
             `${process.env.REACT_APP_API_URL}/order/create-order`,
             newOrder
           );
-          if(response.data.statusCode == 200){
-              if(newOrder.mode_of_payment== 'E_PAY'){
+          if(response.data.statusCode === 200){
+              if(newOrder.mode_of_payment=== 'E_PAY'){
             generateHash(response.data.order)
+            console.log(response.data.order.id,"idd")
+            let orderDetails = {
+              id: response.data.order.id,
+              status: response.data.order.status
+            };
+            addorderDetails(
+              orderDetails
+            )
             console.log('yes');
-              }else{
-                toast("order placed successfully.")
-              }
+          }else{
+            toast("order placed successfully.")
           }
+        }
+       
           console.log(response, "response");
           console.log(formData, "set");
         } else {
@@ -234,32 +244,6 @@ if(orderid){
       
     } catch (error) {}
   };
-
-  const makeCashPayment = async () => {
-    try {
-      const cashPaymentResponse = await axios.post(
-        `${process.env.REACT_APP_API_URL}/`,
-        newOrder
-      );
-      console.log("Cash payment made:", cashPaymentResponse);
-    } catch (error) {
-      console.error("Error making cash payment:", error);
-    }
-  };
-
-  const makeUpiPayment = async () => {
-    try {
-      const upiPaymentResponse = await axios.post(
-        `${process.env.REACT_APP_API_URL}/`,
-        newOrder
-      );
-      console.log("UPI payment made:", upiPaymentResponse);
-    } catch (error) {
-      console.error("Error making UPI payment:", error);
-    }
-  };
-
-  console.log(newOrder, "newOrder");
 
   // if (remember === true) {
   //   handleClick();
