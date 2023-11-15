@@ -22,10 +22,8 @@ const Queries = () => {
     const HandleQueryStatus = async(status,id)=>{
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/landingpage/update-query`,
         {
-
             id:id,
             status:status
-
         })
         if(response.data.statusCode===200){
             getCoustomerQuery()   
@@ -52,9 +50,9 @@ const Queries = () => {
             }}
           >
             <option selected>Select</option>
-            <option value="All" selected>All</option>
+            {/* <option value="All" selected>All</option> */}
             <option value="completed" >Completed</option>
-            <option value="pending" >Pending</option>
+            <option value="pending" selected>Pending</option>
           </select>
         </div>
 

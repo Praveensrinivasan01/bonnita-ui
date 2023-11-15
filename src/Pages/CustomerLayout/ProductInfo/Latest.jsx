@@ -95,11 +95,11 @@ const Latest = () => {
 
   return (
     <section className="product themesflat-section style-4 mb-5 mt-3 container-md">
-    <div className="container">
+    <div className="container-md">
       <h3 className="themesflat-heading wear-with mt-md-5">Latest</h3>
       <div className="row">
           {newArrival?.map((latest) => (
-          <div className="col-md-3 mb-md-0 mb-3" key={latest.id}>
+          <div className="col-md-3 col-6 mb-md-0 mb-3 p-0" key={latest.id}>
             <div className="product-item margin-bottom-0">
               <div className="product-img">
                 <SingleProduct products={latest}/>
@@ -134,7 +134,7 @@ const Latest = () => {
                   </ul>
                     <div className="product-price">{latest.selling_price}</div>
                 </div>
-                <div className="product-title-price-old">
+                <div className="product-title-price-old text-xs">
                     {latest.name}
                   {/* {latest.color ? (
                     <ul className="product-options">

@@ -6,13 +6,13 @@ const SingleProduct = ({products}) => {
     <div>
       <Link to={`/product/${products.id}`}>
         <img
-          className="img-default  w-100 md:h-[250px] h-[180px]"
+          className="img-default  w-100 md:h-[250px] "
           src={products.front_side}
           alt="Image"
           // style={{ height: "250px" }}
         />
         <img
-          className="img-hover text-center w-100 md:h-[250px] h-[180px]"
+          className="img-hover text-center w-100 md:h-[250px]"
           src={products.front_side}
           alt="Image"
           // style={{ height: "250px" }}

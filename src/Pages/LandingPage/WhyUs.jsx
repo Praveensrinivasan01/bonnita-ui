@@ -28,7 +28,7 @@ const WhyUs = () => {
           {/* <button className="btn p-3 rounded-0 mt-4">TRY NOW</button> */}
           <Button btnName={"TRY NOW"} btnStyle={"button color-1 mt-4"} />
         </div>
-        <div className="col-md-6 ps-md-5 items-center flex justify-center" data-aos="fade-right" data-aos-duration="1700">
+        <div className="col-md-6 ps-md-5 pt-md-0 pt-4 items-center flex justify-center" data-aos="fade-right" data-aos-duration="1700">
           <img src={handBagImg} alt="#" className="img-fluid" />
         </div>
       </div>

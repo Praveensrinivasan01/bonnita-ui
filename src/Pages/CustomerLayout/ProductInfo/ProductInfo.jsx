@@ -131,7 +131,7 @@ const ProductInfo = () => {
       <div className="infor-product container-md">
         <div className="row ">
           <div className="col-md-4 ">
-          <SliderforProduct {...settings} style={{width:"25%"}}>
+          <SliderforProduct {...settings}>
             <div className="" >
               {imageData && (
                 <img
@@ -141,8 +141,9 @@ const ProductInfo = () => {
                 />
               )}
               </div>
+              
            
-              <div>
+              {/* <div>
               <img
                 src={imageData?.front_side}
                 alt="Image"
@@ -176,7 +177,7 @@ const ProductInfo = () => {
                 onClick={rightSide}
               />
 
-            </div>
+            </div> */}
             </SliderforProduct>
           </div>
             {/* <div className="img-thumnail d-flex justify-content-center mt-3 gap-1">

@@ -48,7 +48,7 @@ const ContactUs = () => {
     }
   };
   return (
-    <div className="container pt-52">
+    <div className="container md:pt-52 pt-36">
       <h3>
         <Link to="/" className="text-gray-400">
           Home
@@ -56,7 +56,7 @@ const ContactUs = () => {
         /Contact
       </h3>
 
-      <div className="pt-5">
+      <div className="md:pt-5 pt-3">
         <h1 className="md:text-3xl text-xl font-bold">Contact Us</h1>
         <p className="pt-1">
           If you need any help, please contact us or send us an email or go to
@@ -65,7 +65,7 @@ const ContactUs = () => {
         <p className="pt-1">
           We are sure that you can receive our reply as soon as possible.
         </p>
-        <div className=" grid grid-rows-3 grid-flow-col gap-4 pt-10 divide-x-2 text-center">
+        <div className=" grid md:grid-rows-3 md:grid-flow-col gap-4 pt-10 divide-x-2 text-center">
           <div className="row-span-2">
             <p className="font-bold">Phone</p>
             <p className="text-gray-500 pt-2">

@@ -44,51 +44,26 @@ const Categories = () => {
     <section className="categories container-lg" name="categories">
       <h1 className="text-center mb-md-4">Categories</h1>
       <div className="container">
-        <div className="row gap-2 d-flex justify-content-evenly p-md-0 p-3" >
+        <div className="grid gap-5 md:grid-cols-3  justify-center items-center  mt-3 mb-3" >
           {categoriesData.map((category, index) => (
-
-            <div
+            <Link to={`/shop?category=${category.name}`}>
+              <img
               key={index}
-              className="col-lg-3 col-md-4 col-12 card mt-3 mb-3 bgCategories"
-              style={{
-                backgroundImage: `url(${category.imageData})`,
-                backgroundRepeat: "no-repeat",
-                cursor:"pointer"
-              }}
+                className="col-lg-12 w-96 md:h-[350px] h-[180px] shadow-md"
+                src={category.imageData}
             >
-             
+              </img>
 
-              <div className="content m-auto" onClick={() => { Navigate(`/shop?category=${category.name}`) }}>
-                <h2 className="title ">{category.name}</h2>
-                {/* <p className="copy">Product Pricing .</p> */}
-                <div className="d-flex gap-3">
-                  {/* <img src={HearIcon} alt="#" className="img-fluid" onClick={()=>{
-                    decrement(category)
-                  }} /> */}
-                  {/* <img
-                    src={CartIcon}
-                    alt="#"
-                    className="img-fluid position-relative"
-                    onClick={()=>notify(category)}
+            </Link>
 
-                  /> */}
-
-                  <Link to={`/shop?category=${category.name}`}>
-                  <FontAwesomeIcon icon={faSearch} />
-                  </Link>
-                </div>
-            
-              </div>
-            </div>
           ))}
 
-          <div className="col-lg-3 col-md-4 col-12 card bg-dark mt-3 mb-3">
-            <div className=" m-auto">
-              <NavLink to="/shop?type=all">
-                <h2 className="fs-3 text-light">View All</h2>
-              </NavLink>
-            </div>
-          </div>
+
+
+
+          <NavLink to="/shop?type=all">
+            <h2 className="col-lg-12 bg-dark  w-96 rounded-xl justify-center flex items-center  md:h-[380px]  h-[180px] shadow-md fs-3 text-light">View All</h2>
+          </NavLink>
         </div>
       </div>
 
