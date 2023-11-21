@@ -63,8 +63,8 @@ const ProductList = ({ productsData }) => {
 
   return (
     <>
-      <section className="product container mt-5">
-        <div className="grid gap-3 md:grid-cols-4 grid-cols-2  ">
+      <section className="product container-md">
+        {/* <div className="grid gap-3 md:grid-cols-4 grid-cols-2  ">
           {productsData?.map((listitem) => (
             <div className=" ps-3 pe-3 mb-4" key={listitem.id}>
               <div className="product-item wow fadeInUp">
@@ -74,9 +74,6 @@ const ProductList = ({ productsData }) => {
                   </span>
                   <SingleProduct products={listitem} />
                   <ul className="product-icon">
-                    {/* <li>
-                        <FontAwesomeIcon icon={faShare} />
-                    </li> */}
                     <li>
                       <FontAwesomeIcon
                         icon={faHeart}
@@ -120,7 +117,55 @@ const ProductList = ({ productsData }) => {
               </div>
             </div>
           ))}
+        </div> */}
+
+        <div className="row g-4">
+
+{productsData?.map((product) => (
+<div className="col-md-3">
+  <div className="product-single-card">
+    <div className="product-top-area">
+      <div className="product-discount -z-10">
+       {product.new}
+      </div>
+      <Link to={`/product/${product.id}`}>
+      <div className="product-img">
+        <div className="first-view">
+          <img src={product.front_side} alt="logo" className=""/>
         </div>
+        <div className="hover-view">
+          <img src={product.front_side} alt="logo" className=""/>
+        </div>
+      </div>
+      </Link>
+      CCCZZZ
+    </div>
+    <div className="product-info">
+      <h6 className=" text-xs font-semibold">{product.name}</h6>
+      <div className="align-items-center justify-content-between">
+        <div className=" me-1 flex">
+        <ul className="ratings active text-xs">
+                      {[...Array(Number(product.total_rating))].map((_, index) => (
+                        <li key={index} className="star">
+                          <FontAwesomeIcon icon={faStar} />
+                        </li>
+                      ))}
+                    </ul>
+        </div>
+        <div className="d-flex">
+          <div className="new-price text-md font-semibold">
+          ₹{product.selling_price}
+        </div>
+        <div className="old-price text-md font-semibold">
+        ₹{product.mrp}
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+))}
+</div>
       </section>
     </>
   );

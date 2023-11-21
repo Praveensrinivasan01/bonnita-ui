@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../Styles/LandingPage/HeroSection.css'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -6,8 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import Button from '../../Components/Button';
+import axios from 'axios';
 
 export const HeroSection = () => {
+  const [dynamicBanner,SetDynamicBanner] = useState([])
+
+  // useEffect(()=>{
+  //   HandleBanner()
+  // },[])
 
   const ArrowButton = ({ direction, onClick }) => (
   <button
@@ -29,6 +35,15 @@ export const HeroSection = () => {
      prevArrow: <ArrowButton direction="prev" />,
     nextArrow: <ArrowButton direction="next" />,
   };
+
+  // const HandleBanner = async()=>{
+  //   const response = await axios.post(
+  //     // `${process.env.REACT_APP_API_URL}`
+  //     )
+  //   if(response.status===200){
+  //     SetDynamicBanner()
+  //   }
+  // }
 
   return (
     <div className='home'>

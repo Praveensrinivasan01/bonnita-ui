@@ -1,55 +1,55 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import logo from "../../Assets/Logo/LogoForBonnita.jpg"
-import { AuthPost } from '../../Commons/httpService';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import logo from "../../Assets/Logo/LogoForBonnita.jpg";
+import { AuthPost } from "../../Commons/httpService";
 
-const   Sidebar = () => {
+const Sidebar = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [count, setCount] = useState(0);
 
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const [count, setCount] = useState(0)
+  const AdminlogOut = () => {
+    sessionStorage.clear();
+  };
 
-    const AdminlogOut = ()=>{
-        sessionStorage.clear()
-    }
+  let getcount = async () => {
+    await AuthPost(`admin/get-query-count`, {}, "admin")
+      .then((res) => {
+        if (res.statusCode == 200) {
+          setCount(res.data.count);
+        }
+      })
+      .catch((err) => {
+        console.log("err::: ", err);
+      });
+  };
 
-    let getcount = async () => {
-        await AuthPost(`admin/get-query-count`, {}, 'admin').then((res) => {
-
-            if (res.statusCode == 200) {
-                setCount(res.data.count)
-            }
-        }).catch((err) => {
-            console.log('err::: ', err);
-        })
-    }
-
-    useEffect(() => {
-        getcount()
-    }, [])
+  useEffect(() => {
+    getcount();
+  }, []);
 
   return (
     <>
-    <div class="flex h-screen flex-col justify-between border-e bg-white w-[250px] sticky">
-    <div class="px-3 py-6 ">
-        <span
-        class="grid w-32 lace-content-center   text-xs text-gray-600 "
-        >
-        <img src={logo} className=''/>
-        </span>
+      <div class="flex h-screen flex-col justify-between border-e bg-white w-[250px] sticky">
+        <div class="px-3 py-6 ">
+          <span class="grid w-32 lace-content-center   text-xs text-gray-600 ">
+            <img src={logo} className="" />
+          </span>
 
-        <ul class="mt-6 space-y-1">
-        <li 
-            className={ pathname.includes("dashboard")  ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            onClick={()=>navigate('/admin/dashboard')}
-            style={{cursor:"pointer"}}
-        >
-            Dashboard
-        </li>
+          <ul class="mt-6 space-y-1">
+            <li
+              className={
+                pathname.includes("dashboard")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              onClick={() => navigate("/admin/dashboard")}
+              style={{ cursor: "pointer" }}
+            >
+              Dashboard
+            </li>
 
-        {/* <li>
+            {/* <li>
             <details class="group [&_summary::-webkit-details-marker]:hidden">
             <summary
                 class="flex cursor-pointer items-center justify-between   px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
@@ -96,93 +96,127 @@ const   Sidebar = () => {
             </details>
         </li> */}
 
-        <li
-            className={ pathname.includes("categories") ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            onClick={()=>navigate('/admin/categories')}
-            style={{cursor:"pointer"}}
-        >
-            Categories
-        </li>
+            <li
+              className={
+                pathname.includes("categories")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              onClick={() => navigate("/admin/categories")}
+              style={{ cursor: "pointer" }}
+            >
+              Categories
+            </li>
 
-        <li
-            className={ pathname.includes("products") ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            onClick={()=>navigate('/admin/products')}
-            style={{cursor:"pointer"}}
-        >
-            Products
-        </li>
+            <li
+              className={
+                pathname.includes("products")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              onClick={() => navigate("/admin/products")}
+              style={{ cursor: "pointer" }}
+            >
+              Products
+            </li>
 
-        <li
-            className={ pathname.includes("users") ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            style={{cursor:"pointer"}}
-            onClick={()=>navigate('/admin/users')}
-        >
-            Users
-        </li>
-        <li
-            className={ pathname.includes("topfilter") ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            style={{cursor:"pointer"}}
-            onClick={()=>navigate('/admin/topfilter')}
-        >
-            Top Records
-        </li>
+            <li
+              className={
+                pathname.includes("users")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/users")}
+            >
+              Users
+            </li>
+            <li
+              className={
+                pathname.includes("banner")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/banner")}
+            >
+              Banner
+            </li>
+            <li
+              className={
+                pathname.includes("topfilter")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/topfilter")}
+            >
+              Top Records
+            </li>
 
-        <li
-            className={ pathname.includes("orders") ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            style={{cursor:"pointer"}}
-            onClick={()=>navigate('/admin/orders')}
-        >
-            Orders
-        </li>
-        <li
-            className={ pathname.includes("coupon") ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            style={{cursor:"pointer"}}
-            onClick={()=>navigate('/admin/coupon')}
-        >
-            Coupon
-        </li>
-        <li
-                          className={pathname.includes("queries") ?
-                              'block   bg-red-400 px-4 py-3 text-sm font-medium text-white flex justify-between' :
-                              "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 flex justify-between hover:text-gray-700"}
-            style={{cursor:"pointer"}}
-            onClick={()=>navigate('/admin/queries')}
-        >
-                          <span> Queries</span> <span class="badge text-black bg-white     badge-light">{count}</span>
-        </li>
-        <li
-            className={ pathname.includes("accountinfo") ? 
-            'block   bg-red-400 px-4 py-3 text-sm font-medium text-white' :
-            "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"}
-            style={{cursor:"pointer"}}
-            onClick={()=>navigate('/admin/accountinfo')}
-        >
-            Account Info
-        </li>
+            <li
+              className={
+                pathname.includes("orders")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/orders")}
+            >
+              Orders
+            </li>
+            <li
+              className={
+                pathname.includes("coupon")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/coupon")}
+            >
+              Coupon
+            </li>
+            <li
+              className={
+                pathname.includes("queries")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white flex justify-between"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 flex justify-between hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/queries")}
+            >
+              <span> Queries</span>{" "}
+              <span class="badge text-black bg-white     badge-light">
+                {count}
+              </span>
+            </li>
+            <li
+              className={
+                pathname.includes("accountinfo")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/accountinfo")}
+            >
+              Account Info
+            </li>
 
-                      <li
-                          className={"block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"} style={{ cursor: "pointer" }}
-                      >
-                          <button className='btn-danger' onClick={() => AdminlogOut}> Logout</button>
+            <li
+              className={
+                "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+            >
+              <button className="btn-danger" onClick={() => AdminlogOut}>
+                {" "}
+                Logout
+              </button>
+            </li>
+          </ul>
+        </div>
 
-                      </li>
-
-        </ul>
-    </div>
-
-              {/* <div class=" inset-x-0 bottom-0 border-t border-gray-100">
+        {/* <div class=" inset-x-0 bottom-0 border-t border-gray-100">
         <a href="#" class="flex items-center gap-2 bg-gray-100 p-4 hover:bg-gray-300">
         <img
             alt="Man"
@@ -199,9 +233,9 @@ const   Sidebar = () => {
         </div>
         </a>
     </div> */}
-    </div>  
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

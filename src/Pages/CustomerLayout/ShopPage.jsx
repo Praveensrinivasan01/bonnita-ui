@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProductList from './Collections/ProductList';
 
 const ShopPage = () => {
-    const [categories,Setcategories] = useState("bestSellers")
+    const [categories,Setcategories] = useState("all")
     const [subcategories,Setsubcategories] = useState([])
 
     const [data, sendData] = useState([])
@@ -29,57 +29,65 @@ const ShopPage = () => {
         sendData([])
       }
     }
+    const commonClass = ' lg:px-3 lg:py-3  rounded-md border text-center cursor-pointer transition duration-700 ease-in-out w-100 px-11 flex items-center';
+    const activeClass = 'bg-orange-500 font-semibold text-base text-white ';
 
+    const commonSubCategoryClass = 'lg:px-3 lg:py-3 rounded-md border text-center cursor-pointer w-100 px-6 flex items-center transition duration-700 ease-in-out';
+const activeSubCategoryClass = 'bg-indigo-500 font-semibold text-base text-white';
+    
     useEffect(()=>{
       shopPageQuery()
     },[page, categoryParam, subcategories, sortParams, type])
     console.log(categories,"categories")
   return (
-    <div className='md:pt-48'>
-        <div className='container-md'>
-        <div className={ categories!=="naturalcane" && categories!=="veganleather"? 'flex items-center justify-between' :"flex items-center gap-5"}>
+    <div className='md:pt-48 pt-36 pb-4'>
+        <div className='container-md overflow-x-auto'>
+        <div className={ categories!=="naturalcane" && categories!=="veganleather"? '' :""}>
         {
           categories==="geniuneleather"?
-          <>
-        <p className='cursor-pointer p-2 rounded-md border text-center w-[12%] bg-black shadow-lg shadow-indigo-500/40 font-semibold text-base text-white  transition duration-700 ease-in-out'onClick={() => {Setcategories(""); Setsubcategories("");
+          <div className='flex gap-2'>
+        <p className='cursor-pointer lg:px-3 lg:py-3 rounded-md border text-center w-100 px-3 flex items-center bg-black  font-semibold text-base text-white  transition duration-700 ease-in-out'onClick={() => {Setcategories("all"); Setsubcategories("");
 }}
 >Back</p>
-          <p className={ categories==="geniuneleather" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'}>Geniune Leather</p>
-        <p className={ subcategories==="WALLETS" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("WALLETS")}>WALLETS</p>
-        <p className={ subcategories==="KEYCHAINS" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("KEYCHAINS")}>KEY CHAINS</p>
-        <p className={ subcategories==="CARDHOLDER" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("CARDHOLDER")}>CARD HOLDER</p>
-        <p className={ subcategories==="ONESIDEBAGS" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("ONESIDEBAGS")}>ONE SIDE BAGS</p>
-        <p className={ subcategories==="BAGS" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("BAGS")}>BAGS</p>
-        <p className={ subcategories==="BELT" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("BELT")}>BELT</p>
-          </> : 
+  <p className={`${commonSubCategoryClass} ${subcategories === "WALLETS" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("WALLETS")}>WALLETS</p>
+      <p className={`${commonSubCategoryClass} ${subcategories === "KEYCHAINS" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("KEYCHAINS")}>KEY CHAINS</p>
+      <p className={`${commonSubCategoryClass} ${subcategories === "CARDHOLDER" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("CARDHOLDER")}>CARD HOLDER</p>
+      <p className={`${commonSubCategoryClass} ${subcategories === "ONESIDEBAGS" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("ONESIDEBAGS")}>ONE SIDE BAGS</p>
+      <p className={`${commonSubCategoryClass} ${subcategories === "BAGS" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("BAGS")}>BAGS</p>
+      <p className={`${commonSubCategoryClass} ${subcategories === "BELT" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("BELT")}>BELT</p>
+          </div> : 
           categories==="naturalcane"?
-          <>
-          <p className='cursor-pointer p-2 rounded-md border text-center w-[12%] bg-black shadow-lg shadow-indigo-500/40 font-semibold text-base text-white  transition duration-700 ease-in-out'onClick={()=>Setcategories("")}>Back</p>
-          <p className={ subcategories==="BAGS" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("BAGS")}>BAGS</p>
-          <p className={ subcategories==="BELT" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("BELT")}>BELT</p>
-          </>
+          <div className='flex gap-3'>
+          <p className='cursor-pointer p-2 rounded-md border text-center w-100  bg-black  font-semibold text-base text-white  transition duration-700 ease-in-out'onClick={() => {Setcategories("all"); Setsubcategories("");
+}}
+>Back</p>
+          <p className={`${commonSubCategoryClass} ${subcategories === "BAGS" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("BAGS")}>BAGS</p>
+      <p className={`${commonSubCategoryClass} ${subcategories === "BELT" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("BELT")}>BELT</p>
+          </div>
           :
           categories==="veganleather"?
-          <>
-          <p className='cursor-pointer p-2 rounded-md border text-center w-[12%] bg-black shadow-lg shadow-indigo-500/40 font-semibold text-base text-white  transition duration-700 ease-in-out'onClick={()=>Setcategories("")}>Back</p>
-          <p className={ subcategories==="BAGS" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("BAGS")}>BAGS</p>
-          <p className={ subcategories==="BELT" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-indigo-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setsubcategories("BELT")}>BELT</p>
-          </>:
-          <>
-        <p className={ categories==="bestSellers" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white  transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("bestSellers")}>Best Sellers</p>
-        <p className={ categories==="newArrivals" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("newArrivals")}>New  Sellers</p>
-        <p className={ categories==="all" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("all")}>All</p>
-        <p className={ categories==="geniuneleather" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("geniuneleather")}>Geniune Leather</p>
-        <p className={ categories==="naturalcane" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("naturalcane")}>Natural Cane</p>
-        <p className={ categories==="veganleather" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("veganleather")}>Vegan Leather</p>
-          </>
+          <div className='flex gap-3'>
+          <p className='cursor-pointer p-2 rounded-md border text-center w-100  bg-black  font-semibold text-base text-white  transition duration-700 ease-in-out'onClick={() => {Setcategories("all"); Setsubcategories("");
+}}
+>Back</p>
+          <p className={`${commonSubCategoryClass} ${subcategories === "BAGS" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("BAGS")}>BAGS</p>
+      <p className={`${commonSubCategoryClass} ${subcategories === "BELT" ? activeSubCategoryClass : ''}`} onClick={() => Setsubcategories("BELT")}>BELT</p>
+          </div>:
+          <div className="flex gap-3">
+          <p className={`${commonClass} ${categories === "all" ? activeClass : ''}`} onClick={() => Setcategories("all")}>All</p>
+          <p className={`${commonClass} ${categories === "bestSellers" ? activeClass : ''}`} onClick={() => Setcategories("bestSellers")}>Best Sellers</p>
+          <p className={`${commonClass} ${categories === "newArrivals" ? activeClass : ''}`} onClick={() => Setcategories("newArrivals")}>New  Sellers</p>
+          <p className={`${commonClass} ${categories === "geniuneleather" ? activeClass : ''}`} onClick={() => Setcategories("geniuneleather")}>Geniune Leather</p>
+          <p className={`${commonClass} ${categories === "naturalcane" ? activeClass : ''}`} onClick={() => Setcategories("naturalcane")}>Natural Cane</p>
+          <p className={`${commonClass} ${categories === "veganleather" ? activeClass : ''}`} onClick={() => Setcategories("veganleather")}>Vegan Leather</p>
+          </div>
         }
-        {/* <p className={ categories==="bestSellers" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white  transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("bestSellers")}>Best Sellers</p>
-        <p className={ categories==="newArrivals" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("newArrivals")}>New  Sellers</p>
-        <p className={ categories==="all" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("all")}>All</p>
-        <p className={ categories==="geniuneleather" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("geniuneleather")}>Geniune Leather</p>
-        <p className={ categories==="naturalcane" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("naturalcane")}>Natural Cane</p>
-        <p className={ categories==="veganleather" ?'cursor-pointer p-2 rounded-md border text-center w-[12%] bg-orange-500 shadow-lg shadow-indigo-500/40 font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center w-[12%] cursor-pointer'} onClick={()=>Setcategories("veganleather")}>Vegan Leather</p> */}
+        {/* <p className={ categories==="bestSellers" ?'cursor-pointer p-2 rounded-md border text-center   bg-orange-500  font-semibold text-base text-white  transition duration-700 ease-in-out':'p-2 rounded-md border text-center   cursor-pointer'} onClick={()=>Setcategories("bestSellers")}>Best Sellers</p>
+        <p className={ categories==="newArrivals" ?'cursor-pointer p-2 rounded-md border text-center   bg-orange-500  font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center   cursor-pointer'} onClick={()=>Setcategories("newArrivals")}>New  Sellers</p>
+        <p className={ categories==="all" ?'cursor-pointer p-2 rounded-md border text-center   bg-orange-500  font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center   cursor-pointer'} onClick={()=>Setcategories("all")}>All</p>
+        <p className={ categories==="geniuneleather" ?'cursor-pointer p-2 rounded-md border text-center   bg-orange-500  font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center   cursor-pointer'} onClick={()=>Setcategories("geniuneleather")}>Geniune Leather</p>
+        <p className={ categories==="naturalcane" ?'cursor-pointer p-2 rounded-md border text-center   bg-orange-500  font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center   cursor-pointer'} onClick={()=>Setcategories("naturalcane")}>Natural Cane</p>
+        <p className={ categories==="veganleather" ?'cursor-pointer p-2 rounded-md border text-center   bg-orange-500  font-semibold text-base text-white transition duration-700 ease-in-out':'p-2 rounded-md border text-center   cursor-pointer'} onClick={()=>Setcategories("veganleather")}>Vegan Leather</p> */}
         </div>
         </div>
         <ProductList productsData={data} />

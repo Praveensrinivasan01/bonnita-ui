@@ -41,6 +41,7 @@ import Coupon from '../Pages/AdminLayout/Coupon'
 import { CustomerOrderDetails } from '../Pages/CustomerLayout/OrderDetails'
 import Queries from '../Pages/AdminLayout/Queries'
 import ShopPage from '../Pages/CustomerLayout/ShopPage'
+import Banner from '../Pages/AdminLayout/Banner'
 
 export const Routes = () => {
   const AdminComponent = withAuth(Admin); // Wrap the Admin component
@@ -185,6 +186,10 @@ export const Routes = () => {
           {
             path: "/admin/users",
             element: <Users />,
+          },
+          {
+            path: "/admin/banner",
+            element: <Banner />,
           },
           {
             path: "/admin/accountinfo",
