@@ -63,7 +63,7 @@ const ProductList = ({ productsData }) => {
 
   return (
     <>
-      <section className="product container-md">
+      <section className="product container-md mt-5">
         {/* <div className="grid gap-3 md:grid-cols-4 grid-cols-2  ">
           {productsData?.map((listitem) => (
             <div className=" ps-3 pe-3 mb-4" key={listitem.id}>
@@ -138,11 +138,28 @@ const ProductList = ({ productsData }) => {
         </div>
       </div>
       </Link>
-        {/* CCCZZZ */}
+      <div className="sideicons">
+              <button className="sideicons-btn">
+              <FontAwesomeIcon
+                        icon={faHeart}
+                        style={{ cursor: "pointer" }}
+                        onClick={ ()=>
+                          handleFavDataInShop(product,state2)
+                        }
+                      />
+              </button>
+              <button className="sideicons-btn">
+              <FontAwesomeIcon
+                        icon={faShoppingCart}
+                        style={{ cursor: "pointer" }}
+                        onClick={ ()=>handleAddToCartInShop(product, state2)}
+                      />
+              </button>
+            </div>
     </div>
     <div className="product-info">
       <h6 className=" text-xs font-semibold">{product.name}</h6>
-      <div className="align-items-center justify-content-between">
+      <div className="align-items-center justify-content-between flex">
         <div className=" me-1 flex">
         <ul className="ratings active text-xs">
                       {[...Array(Number(product.total_rating))].map((_, index) => (

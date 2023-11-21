@@ -18,39 +18,58 @@ const Banner = () => {
   const [page, setPage] = useState(1);
 
   const handleFileChange = (e) => {
+    console.log("image", e.target.files[0])
     setFile(e.target.files[0]);
     const selectedImage = e.target.files[0];
     if (selectedImage) {
       setImage(URL.createObjectURL(selectedImage));
     }
   };
+
+  const handleUpload = async () => {
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      console.log("formData", file)
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/landingpage/upload-image`,
+        formData
+      );
+      if (response.data.statusCode == 200) {
+        handleClose()
+      }
+    } catch (e) {
+      console.log(e)
+      return
+    }
+  }
+
   const handleClose = () => {
     setModal(false);
     setImage(null);
   };
 
   useEffect(()=>{
-    // getBanner()
-  },[banner])
+    getBanner()
+  }, [])
 
-//   const getBanner = async()=>{
-//     const response = await axios.post(
-//         // `${process.env.REACT_APP_API_URL}`
-//         )
-//     if(response?.status===200){
-//         setBanner(response)
-//     }
-//   }
+  const getBanner = async () => {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/landingpage/get-banner-image?offset=${15 * (page - 1)}`
+    )
+    if (response?.data.statusCode === 200) {
+      setBanner(response?.data?.data)
+    }
+  }
 
-//   const handleDelete = async (e) => {
-//     let response = await axios.delete(
-//       `${process.env.REACT_APP_API_URL}`
-//     );
-
-//     if (response.status === 200) {
-//       getBanner();
-//     }
-//   };
+  const handleDelete = async (e) => {
+    let response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/landingpage/delete-banner-image/${e}`
+    );
+    if (response.status === 200) {
+      getBanner();
+    }
+  };
 
   return (
     <div>
@@ -112,7 +131,7 @@ const Banner = () => {
                       <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                         <div>
                           <h2 className="font-medium text-gray-800">
-                            {banner.no}
+                            {((page - 1) * 15) + (index + 1)}
                           </h2>
                         </div>
                       </td>
@@ -145,9 +164,9 @@ const Banner = () => {
                             />
                           </svg>
                         </button> */}
-                        {/* <button
+                        <button
                           onClick={(e) => {
-                            handleDelete(banner);
+                            handleDelete(banner.id);
                           }}
                           type="button"
                           className="px-3 py-2 text-sm font-medium text-center text-white border-2 border-red-200 focus:ring-1 focus:outline-none focus:ring-red-200"
@@ -164,7 +183,7 @@ const Banner = () => {
                               fill="#EE7B7B"
                             />
                           </svg>
-                        </button> */}
+                        </button>
                       </td>
                       
                     </tr>
@@ -275,7 +294,7 @@ const Banner = () => {
               type="button"
               class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
               onClick={() => {
-                // handleUpload(banner);
+                handleUpload(banner);
               }}
             >
               Save
