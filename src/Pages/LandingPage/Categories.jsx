@@ -42,7 +42,7 @@ const Categories = () => {
   return (
     <section className="categories container-lg" name="categories">
       <h1 className="text-center mb-md-4">Categories</h1>
-      <NavLink to="/shop?type=all">
+      <NavLink to="/shoppage?type=all">
           <h2 className="text-sm text-black text-end underline">
             View All
           </h2>
@@ -68,7 +68,7 @@ const Categories = () => {
       <div className="grid gap-5 md:grid-cols-3  justify-center items-center  mt-3 mb-3">
         {categoriesData.map((category, index) => (
           <Link
-            to={`/shop?category=${category.name}`}
+            to={`/shoppage?category=${category.name}`}
             className="position-relative image-container"
           >
             <img
@@ -77,7 +77,7 @@ const Categories = () => {
               src={category.imageData}
               alt={category.name}
             />
-            <span className="category-name position-absolute bottom-10 left-32">
+            <span className="category-name position-absolute rounded-sm bg-slate-300 p-1 text-black bottom-8 md:left-32 left-28">
               {category.name}
             </span>
           </Link>

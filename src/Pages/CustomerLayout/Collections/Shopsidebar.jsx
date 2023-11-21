@@ -105,16 +105,16 @@ const Shopsidebar = () => {
                       </form>
                     </div>
                     <div className="widget widget_category style-2 wow fadeInUp">
-                      <h5 className="widget-title mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("newarrivals"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shop") }}><span>New Arrivals</span></h5>
-                      <h5 className="widget-title mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("bestsellers"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shop") }}><span>Best Sellers</span></h5>
+                      <h5 className="widget-title mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("newarrivals"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shoppage") }}><span>New Arrivals</span></h5>
+                      <h5 className="widget-title mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("bestsellers"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shoppage") }}><span>Best Sellers</span></h5>
                       <h5 className="widget-title mb-3"><span>Categories</span></h5>
-                      <h5 className="widget-title mt-1 mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("all"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shop") }}>All</h5>
+                      <h5 className="widget-title mt-1 mb-3" style={{ cursor: "pointer" }} onClick={() => { setType("all"); setCategoryParam("all"); setSubCategoryParams("all"); setSubIndexValue(-1); setIndexValue(-1); setPage(1); navigate("/shoppage") }}>All</h5>
                       {sideBarResponse?.map((ele, i) => {
                         return <div className="dropdown mt-2 mb-3">
-                          <h2 className={`d-flex justify-content-between align-items-center`} style={{ cursor: "pointer" }} onClick={() => { setType("all"); setIndexValue(i); setSubIndexValue(-1); setCategoryParam(ele.category_name); setSubCategoryParams("all"); navigate("/shop") }}> {ele.category_name}<span><FontAwesomeIcon icon={faChevronDown} /> </span></h2>
+                          <h2 className={`d-flex justify-content-between align-items-center`} style={{ cursor: "pointer" }} onClick={() => { setType("all"); setIndexValue(i); setSubIndexValue(-1); setCategoryParam(ele.category_name); setSubCategoryParams("all"); navigate("/shoppage") }}> {ele.category_name}<span><FontAwesomeIcon icon={faChevronDown} /> </span></h2>
                           <div className={`showWithTransition px-4 ${(indexValue == i || (queryParams.get('category') == ele.category_name)) ? ' open ' : ''}`} >
                             {ele.subcategories?.map((e, i) => {
-                              return <p className={`dropdown-item fw-lighter pt-2 ${subIndexValue == i ? ' color-selected ' : ''}`} type="button" onClick={() => { setType("all"); setSubIndexValue(i); setSubCategoryParams(e.subcategory_name); setPage(1); navigate("/shop") }}>{e.subcategory_name}</p>
+                              return <p className={`dropdown-item fw-lighter pt-2 ${subIndexValue == i ? ' color-selected ' : ''}`} type="button" onClick={() => { setType("all"); setSubIndexValue(i); setSubCategoryParams(e.subcategory_name); setPage(1); navigate("/shoppage") }}>{e.subcategory_name}</p>
                             })}
                           </div>
                         </div>

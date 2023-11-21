@@ -172,7 +172,7 @@ const TabSection = ({ id }) => {
               <p className="ps-4 pb-3">No review for this product u can add review </p>
               </div>
               }
-              <hr className="ps-4" />
+              <hr className="ps-4 pe-4" />
               <div className="container pt-4">
               <form className="col-lg-6 col-md-8 col-12 border-1 rounded-3 p-4 mt-3" onSubmit={handleReview}>
                   {/* <div className="mb-3">

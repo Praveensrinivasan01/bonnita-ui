@@ -122,7 +122,7 @@ const ProductInfo = () => {
       <div className="container-md mb-4 PaddingTop">
         <p>
           {" "}
-          <Link to="/shop">
+          <Link to="/shoppage">
             <span style={{ color: "#777" }}>Shop</span>
           </Link>
           / Product Overview
@@ -131,7 +131,7 @@ const ProductInfo = () => {
       <div className="infor-product container-md">
         <div className="row ">
           <div className="col-md-4 ">
-          <SliderforProduct {...settings}>
+          {/* <SliderforProduct {...settings}> */}
             <div className="" >
               {imageData && (
                 <img
@@ -142,12 +142,12 @@ const ProductInfo = () => {
               )}
               </div>
               
-           
-              {/* <div>
+           <div className="flex gap-3 ">
+              <div>
               <img
                 src={imageData?.front_side}
                 alt="Image"
-                className=" "
+                className=" cursor-pointer"
                 onClick={frontSide}
               />
               </div>
@@ -156,7 +156,7 @@ const ProductInfo = () => {
               <img
                 src={imageData?.back_side}
                 alt="Image"
-                className="img-fluid "
+                className="img-fluid cursor-pointer"
                 onClick={backSide}
               />
               </div>
@@ -165,7 +165,7 @@ const ProductInfo = () => {
               <img
                 src={imageData?.left_side}
                 alt="Image"
-                className="img-fluid "
+                className="img-fluid cursor-pointer"
                 onClick={leftSide}
               />
               </div>
@@ -173,12 +173,13 @@ const ProductInfo = () => {
               <img
                 src={imageData?.right_side}
                 alt="Image"
-                className="img-fluid "
+                className="img-fluid cursor-pointer"
                 onClick={rightSide}
               />
 
-            </div> */}
-            </SliderforProduct>
+            </div>
+           </div>
+            {/* </SliderforProduct> */}
           </div>
             {/* <div className="img-thumnail d-flex justify-content-center mt-3 gap-1">
               <img

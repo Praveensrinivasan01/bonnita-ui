@@ -105,7 +105,7 @@ const Cart = () => {
         <>
           <div>
             <h4 className="mt-3 fs-6 fw-medium">
-              <Link to="/shop">
+              <Link to="/shoppage">
                 <span style={{ color: "#777" }}>Shop</span>
               </Link>
               / My Cart

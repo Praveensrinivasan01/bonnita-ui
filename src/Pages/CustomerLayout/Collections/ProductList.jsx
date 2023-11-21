@@ -138,7 +138,7 @@ const ProductList = ({ productsData }) => {
         </div>
       </div>
       </Link>
-      CCCZZZ
+        {/* CCCZZZ */}
     </div>
     <div className="product-info">
       <h6 className=" text-xs font-semibold">{product.name}</h6>

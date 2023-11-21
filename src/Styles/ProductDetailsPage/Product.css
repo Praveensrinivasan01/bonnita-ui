@@ -247,3 +247,10 @@
     font-size: 38px ;
     margin-bottom: 33px;
   }
+
+  @media only screen and (max-width:600px){
+    .customer-review .customer {
+      width: 25%;
+    }
+    
+  }

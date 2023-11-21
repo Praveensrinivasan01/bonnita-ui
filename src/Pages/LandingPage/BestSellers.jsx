@@ -31,7 +31,7 @@ const BestSellers = () => {
         <h3 style={{color:"#1D1D1D",fontSize:'32px',fontWeight:"600"}}>
             Best Sellers
         </h3>
-        <Link to="/shop?type=bestsellers">
+        <Link to="/shoppage?type=bestsellers">
         <h4 className='text-decoration-underline onHover'>
             View All
         </h4>

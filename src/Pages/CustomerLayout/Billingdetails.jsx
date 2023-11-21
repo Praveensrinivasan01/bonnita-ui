@@ -255,7 +255,7 @@ if(orderid){
     <>
       <div className="container-md PaddingTop">
         <h5>
-          <Link to="/shop">Shop</Link> / Shopping Cart
+          <Link to="/shoppage">Shop</Link> / Shopping Cart
         </h5>
         <div className="row mt-4">
           <div id="main-content" className="site-main clearfix">
