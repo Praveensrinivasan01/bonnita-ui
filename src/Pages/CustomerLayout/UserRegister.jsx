@@ -174,7 +174,7 @@ const UserRegister = () => {
                   onChange={(e) => {
                     const phNumber = e.target.value.replace(/[^0-9]/g, "");
                     if (phNumber.length <= 10) {
-                    setMobile(`+91${phNumber}`);
+                      setMobile(phNumber);
                     }
                   }}
                   className="w-full px-3 py-3 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
