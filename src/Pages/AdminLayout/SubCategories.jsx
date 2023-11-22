@@ -240,7 +240,7 @@ const SubCategories = () => {
                         </button>
                         <button
                           onClick={(e) => {
-                            handleDelete(catogories.id);
+                            handleDelete(catogories.subcategory_id);
                           }}
                           type="button"
                           className="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
