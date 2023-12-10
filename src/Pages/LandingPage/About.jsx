@@ -32,7 +32,7 @@ const About = () => {
           </p> */}
           <div className="text-center">
              {/* <a href="#" className='button1 color-2 mt-4' data-aos="fade-left" data-aos-duration="1700">LET’S CONNECT</a> */}
-             <Button btnName={"LET’S CONNECT"} btnStyle={"button1 color-2 mt-4"} />   
+             <Button btnName={"LET’S CONNECT"} btnStyle={"button1 color-2 mt-4"} link={"contactus"} linkNeeded="yes" />   
           </div>
         </div>
         <div className="col-lg-4 text-end d-flex justify-content-end pt-md-5 mt-md-5">

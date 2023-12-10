@@ -258,7 +258,12 @@ const AccountInfo = () => {
                 activeTab === "Profile" ? "active" : ""
               }`}
             >
-              <div className="title">Profile</div>
+              <div className="title">
+                <p>UserName</p>:
+                <p>EmailId</p>:
+                <p>Contact no</p>
+                <p>Bonus Points</p>
+              </div>
               
             </div>
           </div>

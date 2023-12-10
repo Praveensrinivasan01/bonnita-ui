@@ -206,7 +206,7 @@ const Shop = () => {
       formData.append('image', file);
   
       try {
-        const response = await fetch('http://localhost:8000/api/product/upload-image', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/product/upload-image`, {
           method: 'POST',
           body: formData,
         });

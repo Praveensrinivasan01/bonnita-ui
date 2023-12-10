@@ -407,9 +407,9 @@ const Categories = () => {
         scrollBehavior="inside"
         backdrop="blur"
         isOpen={modal}
-        onOpenChange={handleClose}
+        onOpenChange={() => setModal(!modal)}
       >
-        <ModalContent>
+               <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
             {editmode ? "Edit Category" : "Add Category"}
           </ModalHeader>
@@ -418,6 +418,8 @@ const Categories = () => {
               <label
                 for="default-input"
                 class="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="default-input"
+                className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Name
               </label>
@@ -426,9 +428,11 @@ const Categories = () => {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
+                // onChange={(e) => setName(e.target.value)}
                 type="text"
                 id="default-input"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="Category Name"
               />
             </div>
@@ -488,6 +492,7 @@ const Categories = () => {
             <button
               type="button"
               class="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
+              className="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
               onClick={handleClose}
             >
               Cancel

@@ -70,7 +70,7 @@ const ContactUs = () => {
             <p className="font-bold">Phone</p>
             <p className="text-gray-500 pt-2">
               <span>Phone 01:</span>
-              <Link to=""> (0091) 8547 632521</Link>
+              <Link to=""> +9 18220773182</Link>
             </p>
           </div>
           <div className="row-span-2 ">
@@ -84,7 +84,7 @@ const ContactUs = () => {
             <p className="text-gray-500 pt-2">
               <span></span>
 
-              <Link to=""> bonnita@gmail.com</Link>
+              <Link to=""> bonnita3182@gmail.com</Link>
             </p>
           </div>
         </div>

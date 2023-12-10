@@ -73,25 +73,26 @@ const Latest = () => {
 
   const state2 = loginStore((state) => state.login);
 
-  const notify4 = (products) => {
-    toast(`🛒  ${products.title} Added To Cart`, { draggable: true });
-    increment(products);
-  };
-
-  const notify5 = (products) => {
-    if (state2) {
-      toast(
-        <div>
-          <FontAwesomeIcon icon={faHeart} /> {products.title} Added To Your
-          Wishlist
-        </div>,
-        { draggable: true }
-      );
+  const handleAddToCartInShop = (product, state2) => {
+    if (state2?.id) {
+      // console.log(state2?.id, "state2");
+      increment(product, state2);
     } else {
-      toast("User Needs To Login", { draggable: true });
-      Navigate("/userRegister");
+      // console.log("imHere in productPge");
+      toast("User Needs to Login", { draggable: true });
+      Navigate("/userLogin");
     }
   };
+
+  const handleFavDataInShop = (products, state2) => {
+    if (state2?.id) {
+      favourite(products, state2);
+    } else {
+      toast("User Needs To Login", { draggable: true });
+      Navigate("/userLogin");
+    }
+  };
+
 
   return (
     <section className="product themesflat-section style-4 mb-5 mt-3 container-md">
@@ -138,14 +139,14 @@ const Latest = () => {
                     <FontAwesomeIcon
                       icon={faHeart}
                       style={{ cursor: "pointer" }}
-                      onClick={() => notify5(latest)}
+                      onClick={() => handleFavDataInShop(latest,state2)}
                     />
                   </button>
                   <button className="sideicons-btn">
                     <FontAwesomeIcon
                       icon={faShoppingCart}
                       style={{ cursor: "pointer" }}
-                      onClick={() => notify4(latest)}
+                      onClick={() => handleAddToCartInShop(latest,state2)}
                     />
                   </button>
                 </div>

@@ -103,20 +103,10 @@ await AuthGet('product/product-mapping/'+id,'admin').then((res)=>{
   console.log('err::: ', err);
 })
 
-
-
-
 }
-  
-
-
-
-
-
-
 
   const getDropDownData = async () => {
-    let dropDownRes = await axios.get("http://localhost:8000/api/product/category-mapping");
+    let dropDownRes = await axios.get(`${process.env.REACT_APP_API_URL}/product/category-mapping`);
 debugger
     if (dropDownRes.data.statusCode === 200) {
       setDropDown(dropDownRes.data.data)
@@ -146,7 +136,7 @@ const handleUpload = async () => {
     try {
       
       const response = await axios.post(
-        `http://localhost:8000/api/product/upload-product-image/${undefined}`, formData);
+        `${process.env.REACT_APP_API_URL}/product/upload-product-image/${undefined}`, formData);
 
       console.log("response",response)
       if (response?.data?.statusCode == 200) {
@@ -168,7 +158,7 @@ const handleUpload = async () => {
           product_color_name: colorName,
         };
 
-        let resp = await axios.post(`http://localhost:8000/api/product/add-product`, productData)
+        let resp = await axios.post(`${process.env.REACT_APP_API_URL}/product/add-product`, productData)
          if (resp.data.statusCode == 200) {
            //  navigate("admin/products");
               }

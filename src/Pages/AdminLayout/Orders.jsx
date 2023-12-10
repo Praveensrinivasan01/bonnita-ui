@@ -8,20 +8,21 @@ const Orders = () => {
     const [data, setData] = useState([])
     const [page, setPage] = useState(1)
     const [searchParam, setSearchParams] = useState("");
-    const [filterParam, setFilterParam] = useState("");
-    const debouncesearchValue = useDebounce(searchParam,1000)
+    const [filterParam, setFilterParam] = useState("all");
+    const debouncesearchValue = useDebounce(searchParam,1000);
 
     useEffect(() => {
         getAllOrders()
-    }, [page, debouncesearchValue])
+    }, [page, debouncesearchValue,filterParam])
 
 
     const getAllOrders = async () => {
-        const usersResponse = await axios.post(`${process.env.REACT_APP_API_URL}/admin/get-all-orders?offset=${(page - 1) * 15}&search=${searchParam}`, {}, 'admin')
+        const usersResponse = await axios.post(`${process.env.REACT_APP_API_URL}/admin/get-all-orders?offset=${(page - 1) * 15}&search=${searchParam}&status=${filterParam}`, {}, 'admin')
         if (usersResponse?.data?.statusCode === 200) {
             setData(usersResponse.data.customers)
         }
     } 
+   
 
   return (
     <>
@@ -40,16 +41,17 @@ const Orders = () => {
             <div class="relative flex items-center mt-4 md:mt-0">
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
                   <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ml-2 p-2.5"
-                      onChange={(e) => setSearchParams(e.target.value)}
+                      onChange={(e) => setFilterParam(e.target.value)}
                   >
                     <option selected>Filter Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Packed">Packed</option>
-                    <option value="Ready To Ship">Ready To Ship</option>
-                    <option value="On The Way">On The Way</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Returned">Returned</option>
-                    <option value="Cancelled">Cancelled</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="PACKED">Packed</option>
+                    <option value="READYTOSHIP">Ready To Ship</option>
+                    <option value="ONTHEWAY">On The Way</option>
+                    <option value="DELIVERED">Delivered</option>
+                    <option value="RETURN">Returned</option>
+                    <option value="REFUNDED">Refunded</option>
+                    <option value="CANCELLED">Cancelled</option>
                 </select>
             </div>    
 
@@ -141,7 +143,9 @@ const Orders = () => {
                                           </td>
 
                                           <td class="px-4 py-4 text-sm whitespace-nowrap flex gap-2">
+                                          <Link to={`/admin/orders/${ele?.order_id}`}>
                                               <button type="button" class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Details</button>
+                                          </Link>
                                           </td>
                                       </tr>)
                                   })}      
@@ -171,7 +175,7 @@ const Orders = () => {
                     </span>
                   </Link>
 
-                  <Link href="#" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100" onClick={() => page !== 1 && setPage((prev) => prev - 1)}
+                  <Link href="#" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100" onClick={() => page !== 1 && setPage((prev) => prev + 1)}
                   >
                     <span>
                         Next

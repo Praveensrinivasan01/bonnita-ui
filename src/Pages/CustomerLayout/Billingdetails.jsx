@@ -495,6 +495,11 @@ if(orderid){
                           </div>
                         </div>
                         <hr className="mt-3" />
+                       <div>
+                       <p className="pt-2 pb-2">By purchasing this product, you'll earn {total/20} points</p>
+                       </div>
+                       <hr/>
+
 
                         <div className="d-flex justify-content-between mt-4 fw-bold">
                           <div>Shipping</div>
@@ -586,6 +591,29 @@ if(orderid){
                                   </svg>
                                   <p>/UPI</p>
                                 </div>
+                              </label>
+                            </div>
+                            {/* <p>*if only your bonus points is abouve 500 you can redeem </p> */}
+                            <div className="form-check">
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="gridRadios"
+                                id="gridRadios1"
+                                value={formData.cash}
+                                checked={formData.cash}
+                                // onChange={() => {
+                                //   setNewOrder({
+                                //     ...newOrder,
+                                //     mode_of_payment:"COD"
+                                //   });
+                                // }}
+                              />
+                              <label
+                                className="form-check-label"
+                                for="gridRadios1"
+                              >
+                                Redeem your Points
                               </label>
                             </div>
                           </div>

@@ -1,9 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Give+You+Glory&family=Lexend:wght@400;500;600;700;800&display=swap");
 
 .CaroselBgImg {
-  background-image: url("../../Assets/LandingPageImages/surprised-curly-woman-beret-looks-left-charming-lady-pink-sweater-sunglasses-green-skirt-holds-grey-handbag.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
   height: 73vh;
   margin-top: 7%;
 }
@@ -43,7 +42,7 @@
 
 
 .carosel {
-  padding-bottom: 7em;
+  padding-bottom: 1em;
 }
 
 .button {

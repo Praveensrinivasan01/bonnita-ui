@@ -178,6 +178,17 @@ const Sidebar = () => {
             </li>
             <li
               className={
+                pathname.includes("WhyUs")
+                  ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
+                  : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              }
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/WhyUs")}
+            >
+              WHY US
+            </li>
+            <li
+              className={
                 pathname.includes("queries")
                   ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white flex justify-between"
                   : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 flex justify-between hover:text-gray-700"
