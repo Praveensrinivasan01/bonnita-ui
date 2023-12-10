@@ -49,7 +49,7 @@ const UserLogin = () => {
               UserToken: resp.data.token,
             });
             // setUserLoginData(resp.data.user);
-            setUserData({email,firstname:resp.data.user.firstname,lastname:resp.data.user.lastname,mobile:resp.data.user.mobile})
+            setUserData({email,firstname:resp.data.user.firstname,lastname:resp.data.user.lastname,mobile:resp.data.user.mobile,bonusPoints:resp.data.user.bonus_points})
             navigate(-1);
             setTimeout(()=>{
               window.location.reload();

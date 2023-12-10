@@ -39,14 +39,18 @@ const OrderDetails = () => {
             <div class="bg-white group grid w-full grid-cols-12 overflow-hidden rounded-lg border py-8 text-gray-700 shadow transition hover:shadow-lg sm:mx-auto">
                 <div class="col-span-11 flex flex-col pr-8 text-left sm:pl-4">
 
-                    <h3 class="text-sm text-gray-600">User Name</h3>
+                    {/* <h3 class="text-sm text-gray-600">User Name</h3> */}
 
                     <p class="overflow-hidden pr-7 text-lg font-semibold sm:text-xl"> {data && data[0]?.username}</p>
 
-                    <p class="overflow-hidden pr-7 text-sm">Address : {data && data[0]?.address_line1}, {data && data[0]?.address_line2},{data && data[0]?.city} , {data && data[0]?.state},{data && data[0]?.country},{data && data[0]?.zip_code}</p>
+                    <p class="overflow-hidden pr-7 pt-2 text-base">{data && data[0]?.address_line1}, {data && data[0]?.address_line2},</p>
+                    <p class="overflow-hidden pr-7 text-base">{data && data[0]?.city} , {data && data[0]?.state},</p>
+                    <p class="overflow-hidden pr-7 text-base">{data && data[0]?.country},{data && data[0]?.zip_code}</p>
 
-                    <div class="mt-2 flex flex-col space-y-3 text-sm font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
+                    <div class="mt-4 flex flex-col  space-y-3 text-base font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
                         <div class="">Items:<span class="ml-2 mr-3 rounded-full bg-green-100 px-2 py-0.5 text-green-900"> {data[0]?.total_quantity} </span></div>
+                    </div>
+                    <div class="mt-4 flex flex-col  space-y-3 text-base font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
                         <div class="">Price:<span class="ml-2 mr-3 rounded-full bg-blue-100 px-2 py-0.5 text-blue-900">{data[0]?.total}</span></div>
                     </div>
 

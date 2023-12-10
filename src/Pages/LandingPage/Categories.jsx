@@ -77,7 +77,7 @@ const Categories = () => {
               src={category.imageData}
               alt={category.name}
             />
-            <span className="category-name position-absolute rounded-sm bg-slate-300 p-1 text-black bottom-8 md:left-32 left-28">
+            <span className="category-name position-absolute rounded-sm bg-slate-300 p-1 text-black bottom-8 md:left-35 left-28">
               {category.name}
             </span>
           </Link>

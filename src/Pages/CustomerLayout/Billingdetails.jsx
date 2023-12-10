@@ -12,14 +12,17 @@ import { increment } from "../../Zustand/cartStore";
 import { useCurrencyStore } from "../../Zustand/currency";
 import { AuthGet } from "../../Commons/httpService";
 import { addorderDetails } from "../../Zustand/orderDetails";
+import CoupenForm from "../../Components/CoupenForm";
 
 
 const Billingdetails = () => {
   const path = window.location.pathname;
+
   const [productInfo, setProductInfo] = useState(null);
+  const [savedOrderId, setSavedOrderId] = useState()
   const detailsOfPlaceOrder = placeOrder((state) => state.placeOrder);
-  const currentsite=window.location.href
-  const {orderid}=useParams()
+  const currentsite = window.location.href
+  const { orderid } = useParams()
 
   const currencyType = useCurrencyStore((state) => state?.currencyCode)
   const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
@@ -27,7 +30,7 @@ const Billingdetails = () => {
   let generateHash = async (data) => {
     const userData = localStorage.getItem("UserDetails")
     const parsedData = JSON.parse(userData)?.state?.UserDetails
-    console.log("----->",JSON.parse(userData));
+    console.log("----->", JSON.parse(userData));
     const details = {
       order_id: data.id,
       order_amount: currencyConversion(data.total),
@@ -35,7 +38,7 @@ const Billingdetails = () => {
       order_note: 'Additional order info',
       customer_details: {
         customer_id: data.user_id,
-        customer_name: parsedData.firstname+" "+parsedData.lastname,
+        customer_name: parsedData.firstname + " " + parsedData.lastname,
         customer_email: parsedData.email,
         customer_phone: parsedData.mobile,
       },
@@ -53,7 +56,8 @@ const Billingdetails = () => {
       );
       console.warn(response);
       if (response.status == 200) {
-        opencf(response.data.data.payment_session_id,data.id);
+        setSavedOrderId(data.id)
+        opencf(response.data.data.payment_session_id, data.id);
       }
       console.log("Payment success:", response.data);
     } catch (error) {
@@ -61,36 +65,46 @@ const Billingdetails = () => {
     }
   };
 
-  let opencf = (session,oi) => {
+  let opencf = (session, oi) => {
     debugger
     let checkoutOptions = {
       paymentSessionId: session,
-      returnUrl: currentsite+'/'+oi,
+      returnUrl: currentsite + '/' + oi,
     };
     cashfree.checkout(checkoutOptions).then(function (result) {
       if (result.error) {
         alert(result.error.message);
       }
       if (result.redirect) {
-        console.log("Redirection");
+        localStorage.setItem("PaymentOnProcess", oi + '' + 'Not Paid')
       }
     });
   };
 
- let ordersave=async()=>{
-  debugger
-await AuthGet('order/get-paydata/'+orderid,'customer_token').then((res)=>{
-  if(res.statusCode==200){
-    console.warn(res)
+  let ordersave = async () => {
+    debugger
+    await AuthGet('order/get-paydata/' + orderid, 'customer_token').then((res) => {
+      if (res.statusCode === 200) {
+        console.warn(res)
+        if (res?.data?.data === 'PAID') {
+          toast.success("Order successfully paid")
+        } else {
+          toast.error("Payment failed Please try again")
+        }
+      }
+    })
   }
-})
- }
 
-  useEffect(()=>{
-if(orderid){
-  ordersave()
-}
-  },[])
+  useEffect(() => {
+    if (orderid) {
+      ordersave()
+    } else {
+      let paystatus = localStorage.getItem('PaymentOnProcess')
+      if (paystatus?.includes(savedOrderId)) {
+        toast.error("Payment failed Please try again")
+      }
+    }
+  }, [])
 
   console.log(detailsOfPlaceOrder, "dajdjlsljNLJn");
   const state2 = loginStore((state) => state.login);
@@ -102,7 +116,7 @@ if(orderid){
       : [detailsOfPlaceOrder]
     )?.map((details) => ({
       product_id: details.id,
-      quantity: details.cart_quantity && details.cart_quantity?.length ? details.cart_quantity : 1 ,
+      quantity: details.cart_quantity ? details.cart_quantity : 1,
       price: details.selling_price,
     })),
     total_amount: 0,
@@ -131,7 +145,7 @@ if(orderid){
       setNewOrder({
         ...newOrder,
         total_amount: total,
-        quantity: totalQuantity,
+        quantity: totalQuantity || 1,
       });
     }
   }, [state2?.id, path, detailsOfPlaceOrder]);
@@ -204,24 +218,23 @@ if(orderid){
         Navigate("/userlogin");
         toast.error("Please Login to Continue");
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newOrder,"orders");
     try {
-    
-        if (state2.id) {
-          handleClick();
-          const response = await axios.post(
-            `${process.env.REACT_APP_API_URL}/order/create-order`,
-            newOrder
-          );
-          if(response.data.statusCode === 200){
-              if(newOrder.mode_of_payment=== 'E_PAY'){
+
+      if (state2.id) {
+        handleClick();
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}/order/create-order`,
+          newOrder
+        );
+        if (response.data.statusCode === 200) {
+          if (newOrder.mode_of_payment === 'E_PAY') {
             generateHash(response.data.order)
-            console.log(response.data.order.id,"idd")
+            console.log(response.data.order.id, "idd")
             let orderDetails = {
               id: response.data.order.id,
               status: response.data.order.status
@@ -230,19 +243,19 @@ if(orderid){
               orderDetails
             )
             console.log('yes');
-          }else{
+          } else {
             toast("order placed successfully.")
           }
         }
-       
-          console.log(response, "response");
-          console.log(formData, "set");
-        } else {
-          Navigate("/userlogin");
-          toast.error("Please Login to Continue");
-        }
-      
-    } catch (error) {}
+
+        console.log(response, "response");
+        console.log(formData, "set");
+      } else {
+        Navigate("/userlogin");
+        toast.error("Please Login to Continue");
+      }
+
+    } catch (error) { }
   };
 
   // if (remember === true) {
@@ -250,6 +263,55 @@ if(orderid){
   // } else {
   //   console.log("errroe");
   // }
+
+  // const coupen = async()=>{
+
+  // }
+
+  const [coupen, setCoupen] = useState('');
+  const [error, setError] = useState('');
+  const [discount, setDiscount] = useState(0)
+
+  const [res, setRes] = useState([])
+  // const [,setRes]= useState([])
+
+  const handleCoupen = async () => {
+    if (!coupen) {
+      setError('Please enter a coupon code.');
+      return;
+    }
+    try {
+      const body = {
+        coupon_name: coupen
+      };
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/admin/check-coupon`,
+        body
+      );
+      if (response.data.statusCode === 400) {
+        setError(response.data.message);
+        setCoupen('');
+        return
+      }
+      setRes(response.data);
+      setDiscount(response?.data.data[0]?.discount_percent)
+
+      console.log(response, "response");
+
+    } catch (error) {
+      // Handle error
+    }
+  };
+
+  // console.log(res?.data[0]?.discount_percent
+  //   ,"response")
+
+  const handleInputChange = (e) => {
+    setCoupen(e.target.value);
+    setError('');
+  };
+
+
 
   return (
     <>
@@ -397,47 +459,47 @@ if(orderid){
                         </div>
                       </div>
 
-                        <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
+                      <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="floatingInput"
+                          placeholder="Postcode/Zip*"
+                          value={formData.zip_code}
+                          onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const numericValue = inputValue.replace(
+                              /\D/g,
+                              ""
+                            );
+                            const truncatedValue = numericValue.slice(0, 6);
+                            setFormData({
+                              ...formData,
+                              zip_code: truncatedValue,
+                            });
+                          }}
+                          required
+                        />
+
+                        <label for="floatingInput">Postcode/Zip*</label>
+                      </div>
+
+                      <div className="d-flex flex-column mt-4 col-12">
+                        <label className="checkbox-customer">
+                          Save my Address (for upcoming orders)
                           <input
-                            type="text"
-                            className="form-control"
-                            id="floatingInput"
-                            placeholder="Postcode/Zip*"
-                            value={formData.zip_code}
+                            type="checkbox"
+                            className="tranfer"
+                            id="remmember"
+                            name="remmember"
+                            value={remember}
                             onChange={(e) => {
-                              const inputValue = e.target.value;
-                              const numericValue = inputValue.replace(
-                                /\D/g,
-                                ""
-                              );
-                              const truncatedValue = numericValue.slice(0, 6);
-                              setFormData({
-                                ...formData,
-                                zip_code: truncatedValue,
-                              });
+                              setRemember(!remember);
                             }}
-                            required
                           />
-
-                          <label for="floatingInput">Postcode/Zip*</label>
-                        </div>
-
-                        <div className="d-flex flex-column mt-4 col-12">
-                          <label className="checkbox-customer">
-                            Save my Address (for upcoming orders)
-                            <input
-                              type="checkbox"
-                              className="tranfer"
-                              id="remmember"
-                              name="remmember"
-                              value={remember}
-                              onChange={(e) => {
-                                setRemember(!remember);
-                              }}
-                            />
-                            <span className="checkmark style-2" />
-                          </label>
-                        </div>
+                          <span className="checkmark style-2" />
+                        </label>
+                      </div>
                       {/* </form> */}
                     </div>
 
@@ -482,23 +544,55 @@ if(orderid){
                             );
                           })}
                         </div>
+                        <div>
+                          <div className="bg-white rounded pt-6 flex justify-between items-center">
+                            <div className="mb-6">
+                              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                                Coupon Code
+                              </label>
+                              <input
+                                className="appearance-none border border-red-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="password"
+                                type="text"
+                                placeholder="Please Enter the code."
+                                value={coupen}
+                                onChange={handleInputChange}
+                              />
+                              {/* {error && <p className="text-red-500 text-xs italic">{error}</p>} */}
+                            </div>
+                            <button
+                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                              onClick={handleCoupen}
+                            >
+                              Apply Now
+                            </button>
+                          </div>
+                          {
+                            res.statusCode === 200 ? (
+                              <p className="text-green-500 text-xs italic">{res.message}</p>
+                            ) : (
+                              <p className="text-red-500 text-xs italic">{res.message}</p>
+                            )
+                          }
+                        </div>
+
                         <hr className="mt-3" />
 
                         <div className=" mt-4 d-flex justify-content-between fw-bold">
                           <span className="widget-title">Subtotal</span>
                           <div className="d-flex flex-column">
-                            <span className="price text-end">₹{total}</span>
+                            <span className="price text-end">₹{discount?  total-Number(discount) : total }</span>
                             {console.log(total)}
                             <span className="totalSavings text-end">
-                              *Totally ₹{totalDiscount} saved !!
+                              *Totally ₹{totalDiscount +Number(discount)} saved !!
                             </span>
                           </div>
                         </div>
                         <hr className="mt-3" />
-                       <div>
-                       <p className="pt-2 pb-2">By purchasing this product, you'll earn {total/20} points</p>
-                       </div>
-                       <hr/>
+                        <div>
+                          <p className="pt-2 pb-2">By purchasing this product, you'll earn {total / 20} points</p>
+                        </div>
+                        <hr />
 
 
                         <div className="d-flex justify-content-between mt-4 fw-bold">
@@ -531,7 +625,7 @@ if(orderid){
                                 onChange={() => {
                                   setNewOrder({
                                     ...newOrder,
-                                    mode_of_payment:"COD"
+                                    mode_of_payment: "COD"
                                   });
                                 }}
                               />
@@ -553,7 +647,7 @@ if(orderid){
                                 onChange={() => {
                                   setNewOrder({
                                     ...newOrder,
-                                   mode_of_payment:"E_PAY"
+                                    mode_of_payment: "E_PAY"
                                   });
                                 }}
                               />
@@ -602,12 +696,12 @@ if(orderid){
                                 id="gridRadios1"
                                 value={formData.cash}
                                 checked={formData.cash}
-                                // onChange={() => {
-                                //   setNewOrder({
-                                //     ...newOrder,
-                                //     mode_of_payment:"COD"
-                                //   });
-                                // }}
+                              // onChange={() => {
+                              //   setNewOrder({
+                              //     ...newOrder,
+                              //     mode_of_payment:"COD"
+                              //   });
+                              // }}
                               />
                               <label
                                 className="form-check-label"
@@ -654,9 +748,11 @@ if(orderid){
                 </form>
               </div>
             </section>
+
           </div>
         </div>
       </div>
+
     </>
   );
 };

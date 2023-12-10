@@ -42,6 +42,7 @@ const Coupon = () => {
       );
       if (response.data.statusCode === 200) {
         getAllCoupon();
+        handleClose()
       }
     } catch (error) {
       console.error("internal server error");
@@ -321,9 +322,9 @@ const Coupon = () => {
               <div>
                 <label
                   for="message"
-                  class="block mb-2 text-sm font-medium text-gray-900"
+                  class="block mt-3 mb-2 text-sm font-medium text-gray-900"
                 >
-                  Discount Percentage
+                  Discount Amount
                 </label>
                 <input
                   value={discountPercentage}
@@ -331,7 +332,7 @@ const Coupon = () => {
                   id="message"
                   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                   required
-                  placeholder=" Discount in Percentage"
+                  placeholder=" Discount in Amount"
                 />
               </div>
 
