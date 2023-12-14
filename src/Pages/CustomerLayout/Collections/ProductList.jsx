@@ -34,7 +34,7 @@ const ProductList = ({ productsData }) => {
 
   useEffect(() => {
     // getProduct()
-  }, [productsData,currencyCode]);
+  }, [productsData]);
   
   // const notify = (category) =>{
   //   increment(category,state2?.id)
@@ -171,10 +171,10 @@ const ProductList = ({ productsData }) => {
         </div>
         <div className="d-flex">
           <div className="new-price text-md font-semibold">
-          ₹{product.selling_price}
+          {currencyCode?.symbol}{currencyConversion(product.selling_price)}
         </div>
         <div className="old-price text-md font-semibold">
-        ₹{product.mrp}
+          {currencyCode?.symbol}{currencyConversion(product.mrp)}
         </div>
         </div>
       </div>

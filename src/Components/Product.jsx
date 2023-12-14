@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -9,11 +9,15 @@ import { increment } from "../Zustand/cartStore";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginStore } from "../Zustand/loginStore";
+import { useCurrencyStore } from "../Zustand/currency";
 
 const Product = ({ products }) => {
   const navigate = useNavigate();
   console.log(products, "Products");
   const state2 = loginStore((state) => state.login);
+
+  const currencyType = useCurrencyStore((state) => state?.currencyCode)
+  const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
 
 const handleAddToCart = (product,state2) => {
   if (state2?.id) {
@@ -141,10 +145,10 @@ const handleFavData = (products, state2)=>{
               </div>
               <div className="d-flex">
                 <div className="new-price text-md font-semibold">
-                ₹{product.selling_price}
+                {currencyType.symbol}{currencyConversion(product.selling_price)}
               </div>
               <div className="old-price text-md font-semibold">
-              ₹{product.mrp}
+                {currencyType.symbol}{currencyConversion(product.mrp)}
               </div>
               </div>
             </div>

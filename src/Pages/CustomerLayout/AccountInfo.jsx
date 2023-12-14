@@ -3,6 +3,7 @@ import "../../Styles/ordersummery.css";
 import { Link } from "react-router-dom";
 import { loginStore } from "../../Zustand/loginStore";
 import axios from "axios";
+import { useCurrencyStore } from "../../Zustand/currency";
 
 const AccountInfo = () => {
   const [activeTab, setActiveTab] = useState("MyOrder");
@@ -11,6 +12,8 @@ const AccountInfo = () => {
   const [orderDetails,setOrderDetails] = useState()
 
   const state2 = loginStore((state) => state.login);
+  const currencyType = useCurrencyStore((state) => state?.currencyCode)
+  const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
 
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
@@ -158,7 +161,7 @@ const AccountInfo = () => {
                               <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                 <div>
                                   <h2 className="font-medium text-gray-800 ">
-                                    {item.total}
+                                    {currencyType?.symbol}{currencyConversion(item.total)}
                                   </h2>
                                 </div>
                               </td>

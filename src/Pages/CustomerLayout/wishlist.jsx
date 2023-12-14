@@ -11,11 +11,16 @@ import { increment } from "../../Zustand/cartStore";
 import  {useState}  from "react";
 import axios from "axios";
 import { loginStore } from "../../Zustand/loginStore";
+import { useCurrencyStore } from "../../Zustand/currency";
 
 const Wishlist = () => {
 
   const state2 = loginStore((state) => state.login);
   const state2Id = state2?.id;
+
+  const currencyType = useCurrencyStore((state) => state?.currencyCode)
+  const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
+
   useEffect(() => {
     if(state2Id){
       deleteData();
@@ -95,7 +100,7 @@ const Wishlist = () => {
           <img src={wishlist?.front_side} className="img-fluid w-28 md:w-36 pe-3" />
           {wishlist.name}
         </div>
-        <div className="col-md-2 col-5 text-dark">{wishlist.mrp}</div>
+        <div className="col-md-2 col-5 text-dark"><s>{currencyType.symbol}{currencyConversion(wishlist.mrp)}</s> {currencyType.symbol}{currencyConversion(wishlist.selling_price)}</div>
         <div className="col-md-5 col-7 ">
         <div className="d-flex justify-content-between align-items-center col-lg-8 col-md-10 col-12">
 

@@ -16,6 +16,7 @@ import { increment } from "../../../Zustand/cartStore";
 import { favourite } from "../../../Zustand/wishListStore";
 import { loginStore } from "../../../Zustand/loginStore";
 import axios from "axios";
+import { useCurrencyStore } from "../../../Zustand/currency";
 
 const Latest = () => {
   const Navigate = useNavigate();
@@ -55,6 +56,8 @@ const Latest = () => {
   ];
 
   const [newArrival, setNewArrival] = useState([]);
+  const currencyType = useCurrencyStore((state) => state?.currencyCode)
+  const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
 
   useEffect(() => {
     getNewArrivals();
@@ -171,10 +174,10 @@ const Latest = () => {
                   </div>
                   <div className="d-flex">
                     <div className="new-price text-md font-semibold">
-                      ₹{latest.selling_price}
+                      {currencyType.symbol}{currencyConversion(latest.selling_price)}
                     </div>
                     <div className="old-price text-md font-semibold">
-                      ₹{latest.mrp}
+                      {currencyType.symbol}{currencyConversion(latest.mrp)}
                     </div>
                   </div>
                 </div>

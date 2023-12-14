@@ -539,7 +539,7 @@ const Billingdetails = () => {
                                     }}
                                   /> */}
                                 </div>
-                                <span className="price col-3">₹{subtotal}</span>
+                                <span className="price col-3">{currencyType.symbol}{currencyConversion(subtotal)}</span>
                               </div>
                             );
                           })}
@@ -581,10 +581,10 @@ const Billingdetails = () => {
                         <div className=" mt-4 d-flex justify-content-between fw-bold">
                           <span className="widget-title">Subtotal</span>
                           <div className="d-flex flex-column">
-                            <span className="price text-end">₹{discount?  total-Number(discount) : total }</span>
+                            <span className="price text-end">{currencyType.symbol}{discount?  currencyConversion(total-Number(discount)) : currencyConversion(total) }</span>
                             {console.log(total)}
                             <span className="totalSavings text-end">
-                              *Totally ₹{totalDiscount +Number(discount)} saved !!
+                              *Totally {currencyType.symbol}{currencyConversion(totalDiscount +Number(discount))} saved !!
                             </span>
                           </div>
                         </div>
@@ -601,7 +601,7 @@ const Billingdetails = () => {
                             <div className="d-flex flex-column">
                               <span className="text-end">Free</span>
                               <span className="totalSavings text-end">
-                                *Orders above ₹999 to avail free delivery
+                                *Orders above {currencyType.symbol}{currencyConversion(999)} to avail free delivery
                               </span>
                             </div>
                           ) : null}
@@ -610,7 +610,7 @@ const Billingdetails = () => {
                         <div className=" mt-3">
                           <div className="d-flex justify-content-between">
                             <span className="widget-title">Total</span>
-                            <span className="price">₹{total}</span>
+                            <span className="price">{currencyType?.symbol}{currencyConversion(total)}</span>
                           </div>
                           <div className="mt-3">
                             <h5>Payments</h5>

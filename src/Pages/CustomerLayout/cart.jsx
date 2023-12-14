@@ -20,6 +20,7 @@ import { loginStore } from "../../Zustand/loginStore";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { addToPlaceOrder } from "../../Zustand/placeOrderdetails";
+import { useCurrencyStore } from "../../Zustand/currency";
 
 const Cart = () => {
   const iconStyle = {
@@ -45,6 +46,9 @@ const Cart = () => {
   const state2Id = state2?.id;
 
   const [cartData, setCartData] = useState();
+
+  const currencyType = useCurrencyStore((state) => state?.currencyCode)
+  const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
 
   const getCategories = async () => {
     if (state2Id) {
@@ -92,6 +96,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0,0)
     deleteData();
     getCategories();
   },[state]);
@@ -131,7 +136,7 @@ const Cart = () => {
             <img src={cartDetails.front_side} className="img-fluid w-28 md:w-36 pe-3 pb-md-0 pb-2" />
             <p className="">{cartDetails.name}</p>
           </div>
-          <div className="col-md-2 col-2"><p><span>₹</span>{cartDetails.selling_price}</p></div>
+          <div className="col-md-2 col-2"><p><span>{currencyType?.symbol}</span>{currencyConversion(cartDetails.selling_price)}</p></div>
           <div className="col-md-4 col-4">
             <span className="d-flex align-items-center">
               <p
@@ -169,7 +174,7 @@ const Cart = () => {
             </span>
           </div>
           <div className="col-md-2">
-          {cartDetails.selling_price * cartDetails.cart_quantity }
+           {currencyType?.symbol}{currencyConversion(cartDetails.selling_price) * cartDetails.cart_quantity }
           </div>
         </div>
       ))}

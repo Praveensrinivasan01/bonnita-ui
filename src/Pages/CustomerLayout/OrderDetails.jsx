@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useCurrencyStore } from "../../Zustand/currency";
 export const CustomerOrderDetails = () => {
   const { id } = useParams();
   const [orderDetails, setOrderDetails] = useState([]);
+  const currencyType = useCurrencyStore((state) => state?.currencyCode)
+  const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
 
   const getOrderDetails = async () => {
     try {
@@ -55,13 +58,13 @@ export const CustomerOrderDetails = () => {
                                 scope="col"
                                 className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
                               >
-                                Price
+                                Quantity
                               </th>
                               <th
                                 scope="col"
                                 className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
                               >
-                                Status
+                                Price
                               </th>
                             </tr>
                           </thead>
@@ -83,7 +86,7 @@ export const CustomerOrderDetails = () => {
                               <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                 <div>
                                   <h2 className="font-medium text-gray-800 ">
-                                  <p>{item.price}</p>
+                                  <p>{currencyType.symbol}{currencyConversion(item.price)}</p>
                                   </h2>
                                 </div>
                               </td>

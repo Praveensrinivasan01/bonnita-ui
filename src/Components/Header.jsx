@@ -185,7 +185,7 @@ const Header = () => {
                       <div className="d-md-none d-block">
                         <li>
                           <Link to="" className="d-md-none d-block">
-                            <p className="m-0 fw-medium">Acount Details</p>
+                            <p className="m-0 fw-medium">Account Details</p>
                           </Link>
                         </li>
 
@@ -267,7 +267,7 @@ const Header = () => {
                     {}
                     <li>
                       <Link to="" className="d-md-none d-block">
-                        <p className="m-0 fw-medium">Acount Details</p>
+                        <p className="m-0 fw-medium">Account Details</p>
                       </Link>
                     </li>
                     <li className="d-md-none d-block">
@@ -323,7 +323,7 @@ const Header = () => {
                       </span>
                       <div class="dropdown-content leading-10">
                         <Link to="accountinfo">
-                          <p className="m-0 fw-medium">Acount Details</p>
+                          <p className="m-0 fw-medium">Account Details</p>
                         </Link>
                         {/* <Link to="/userLogin"> */}
                         <p

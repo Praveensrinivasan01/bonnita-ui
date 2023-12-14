@@ -13,6 +13,7 @@ import { loginStore } from "../../../Zustand/loginStore";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SliderforProduct from 'react-slick';
+import { useCurrencyStore } from "../../../Zustand/currency";
 
 const ProductInfo = () => {
   const { id } = useParams();
@@ -22,7 +23,11 @@ const ProductInfo = () => {
   const navigate = useNavigate();
   const [colorMapping, setColorMapping] = useState([]);
 
+  const currencyType = useCurrencyStore((state) => state?.currencyCode)
+  const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
+
   useEffect(() => {
+    window.scrollTo(0,0)
     let isMounted = true;
     if (id) {
 
@@ -226,13 +231,13 @@ const ProductInfo = () => {
             </div>
             <div className="d-flex gap-4 align-items-center pt-3">
               <div className="product-price m-0">
-                ${productDetails1?.selling_price}
+                {currencyType.symbol}{currencyConversion(productDetails1?.selling_price)}
               </div>
               <p
                 className="text-decoration-line-through"
                 style={{ fontSize: "24px;", color: "#EE7B7B" }}
               >
-                ${productDetails1?.mrp}
+                {currencyType.symbol}{currencyConversion(productDetails1?.mrp)}
               </p>
             </div>
             <div className="product-price fs-md-5 fs-6 m-0 pt-3 ">
