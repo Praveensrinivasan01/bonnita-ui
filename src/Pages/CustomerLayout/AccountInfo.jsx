@@ -8,8 +8,9 @@ import { useCurrencyStore } from "../../Zustand/currency";
 const AccountInfo = () => {
   const [activeTab, setActiveTab] = useState("MyOrder");
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [orderDetails,setOrderDetails] = useState()
+  const [page, setPage] = useState(0);
+  const [orderDetails, setOrderDetails] = useState()
+  const [TotalCount, SetTotalCount] = useState()
 
   const state2 = loginStore((state) => state.login);
   const currencyType = useCurrencyStore((state) => state?.currencyCode)
@@ -19,24 +20,27 @@ const AccountInfo = () => {
     setActiveTab(tabId);
   };
 
-  const getPrdouctDetails = async()=>{
+  const getPrdouctDetails = async () => {
     try {
 
-      const response =await axios.post(`${process.env.REACT_APP_API_URL}/order/get-order/${state2.id}?offset=${(page - 1) * 15}`)
-      if(response?.data?.statusCode===200){
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/order/get-order/${state2.id}?offset=${(page) * 15}`)
+      if (response?.data?.statusCode === 200) {
+        SetTotalCount(response?.data?.count)
         setOrderDetails(response?.data?.data)
-      }else{
+      } else {
         console.log(response.data.statusCode)
       }
-      
+
     } catch (error) {
       console.error("Internal Server error")
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getPrdouctDetails()
-  },[])
+  }, [])
+
+  console.log(orderDetails, "orderDetails")
 
 
   return (
@@ -51,8 +55,8 @@ const AccountInfo = () => {
             id="MyOrder"
             onChange={() => handleTabChange("MyOrder")}
           />
-          
-          
+
+
           <input
             type="radio"
             name="slider"
@@ -75,39 +79,37 @@ const AccountInfo = () => {
             >
               <span>My Order</span>
             </label>
-            <label
+            {/* <label
               htmlFor="Mycoupons"
               className={
                 activeTab === "Mycoupons" ? "Mycoupons active" : "Mycoupons"
               }
             >
               <span>Manage Addresses</span>
-            </label>
-           
-            <label
+            </label> */}
+
+            {/* <label
               htmlFor="Profile"
               className={activeTab === "Profile" ? "Profile active" : "Profile"}
             >
               <span>Profile Information</span>
-            </label>
+            </label> */}
             <div
               className="slider"
               style={{
-                top: `${
-                  activeTab === "MyOrder"
-                    ? 0
-                    : activeTab === "Mycoupons"
+                top: `${activeTab === "MyOrder"
+                  ? 0
+                  : activeTab === "Mycoupons"
                     ? 60
                     : activeTab === "AllNotification"
-                }px`,
+                  }px`,
               }}
             />
           </div>
           <div className="text-content">
             <div
-              className={`MyOrder text ${
-                activeTab === "MyOrder" ? "active" : ""
-              }`}
+              className={`MyOrder text ${activeTab === "MyOrder" ? "active" : ""
+                }`}
             >
               <div className="title">
                 <div className="flex flex-col mt-6">
@@ -139,44 +141,44 @@ const AccountInfo = () => {
                           </thead>
                           <tbody className="bg-white divide-y divide-gray-200">
                             {orderDetails?.map((item) => {
-                            return (
+                              return (
 
-                            <tr style={{ cursor: "pointer" }}>
-                              <Link to={`/orderDetails/${item.order_id}`}>
-                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                  <div className="flex justify-center items-center">
-                                    <img
-                                      className="font-medium text-gray-800 w-36"
-                                      src={item.front_side}
-                                    />
-                                    <h2 className="font-medium text-gray-800 ms-3">
-                                      {
-                                        item.product_name[0]
-                                      }
-                                    </h2>
-                                  </div>
-                                </td>
-                              </Link>
+                                <tr style={{ cursor: "pointer" }}>
+                                  <Link to={`/orderDetails/${item.order_id}`}>
+                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                      <div className="flex justify-center items-center">
+                                        <img
+                                          className="font-medium text-gray-800 w-36"
+                                          src={item.front_side}
+                                        />
+                                        <h2 className="font-medium text-gray-800 ms-3">
+                                          {
+                                            item.product_name[0]
+                                          }
+                                        </h2>
+                                      </div>
+                                    </td>
+                                  </Link>
 
-                              <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                <div>
-                                  <h2 className="font-medium text-gray-800 ">
-                                    {currencyType?.symbol}{currencyConversion(item.total)}
-                                  </h2>
-                                </div>
-                              </td>
+                                  <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                    <div>
+                                      <h2 className="font-medium text-gray-800 ">
+                                        {currencyType?.symbol}{currencyConversion(item.total)}
+                                      </h2>
+                                    </div>
+                                  </td>
 
-                              <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                <div>
-                                  <h2 className="font-medium text-gray-800 ">
-                                    {item.status}
-                                  </h2>
-                                </div>
-                              </td>
-                            </tr>
+                                  <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                    <div>
+                                      <h2 className="font-medium text-gray-800 ">
+                                        {item.status}
+                                      </h2>
+                                    </div>
+                                  </td>
+                                </tr>
 
-                            )
-                            })}      
+                              )
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -184,62 +186,74 @@ const AccountInfo = () => {
                   </div>
                 </div>
                 <div className="d-flex justify-content-end">
-        <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
-          <Link
-            className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-                              onClick={() => page !== 1 && setPage((prev) => prev - 1)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-              />
-            </svg>
+                  <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
 
-            <span>Previous</span>
-          </Link>
+                    {
+                      Math.floor(TotalCount / 15) >= page &&
+                      <>
+                        {
+                          page !== 0 && (
+                            <button
+                              className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                              onClick={() => setPage((prev) => prev - 1)}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+                                />
+                              </svg>
 
-          <Link
-          
-            className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-                              onClick={() => setPage((prev) => prev + 1)}
+                              <span>Previous</span>
+                            </button>
+                          )
+                        }
 
-          >
+                        {
+                          Math.floor(TotalCount / 15) > page && (
 
-            <span>Next</span>
+                            <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                              onClick={() => setPage(page + 1)}>
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
-          </Link>
-        </div>
-        </div>
+
+                              <span>Next</span>
+
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                />
+                              </svg>
+                            </button>
+                          )
+                        }
+
+                      </>
+                    }
+                  </div>
+                </div>
               </div>
             </div>
-           
+
             <div
-              className={`Mycoupons text ${
-                activeTab === "Mycoupons" ? "active" : ""
-              }`}
+              className={`Mycoupons text ${activeTab === "Mycoupons" ? "active" : ""
+                }`}
             >
               <div className="title">
                 Manage Addresses
@@ -255,8 +269,8 @@ const AccountInfo = () => {
                 </div>
               </div>
             </div>
-            
-            <div
+
+            {/* <div
               className={`Profile text ${
                 activeTab === "Profile" ? "active" : ""
               }`}
@@ -268,7 +282,7 @@ const AccountInfo = () => {
                 <p>Bonus Points</p>
               </div>
               
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

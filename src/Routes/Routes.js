@@ -43,186 +43,197 @@ import Queries from '../Pages/AdminLayout/Queries'
 import ShopPage from '../Pages/CustomerLayout/ShopPage'
 import Banner from '../Pages/AdminLayout/Banner'
 import WhyUs from '../Pages/AdminLayout/WhyUs'
+import TermsAndCondition from '../Pages/TermsAndCondition'
+import NewsLetter from '../Pages/AdminLayout/NewsLetter'
+import ThankYou from '../Pages/Thankyou'
 // import WhyUs from '../Pages/AdminLayout/WhyUs'
 
 export const Routes = () => {
   const AdminComponent = withAuth(Admin); // Wrap the Admin component
 
-    const routes = useRoutes([
-      {
-        path: "*",
-        element: <NotFoundPage />,
-      },
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-      // {
-      //   path: "/reset-password",
-      //   element: <ResetPassword />,
-      // },
-      {
-        path: "/change-password",
-        element: <ChangePassword />,
-      },
-      // {
-      //   path: "/admin/signup",
-      //   element: <AdminSignup />,
-      // },
-      {
-        path: "/admin/login",
-        element: <Adminlogin />,
-      },
-      {
-        path: "/admin/forgot-Password",
-        element: <AdminforgotPassword />,
-      },
-      {
-        path: "/admin/reset-password",
-        element: <AdminResetpassword />,
-      },
-      {
-        path: "/admin/change-password",
-        element: <AdminChangepassword />,
-      },
-      {
-        element: <Customer />,
-        children: [
-          {
-            path: "/shop?",
-            element: <Shop />,
-          },
-          {
-            path: "/billingdetails",
-            element: <Billingdetails />,
-          },
-          {
-            path: "/billingdetails/:orderid",
-            element: <Billingdetails />,
-          },
-          {
-            path: "/userRegister",
-            element: <UserRegister />,
-          },
-          {
-            path: "/userLogin",
-            element: <UserLogin />,
-          },
-          {
-            path: "/forgotPassword",
-            element: <ForgotPassword />,
-          },
-          {
-            path: "/resetPassword",
-            element: <ResetPassword />,
-          },
-          // {
-          //   path: "/profile",
-          //   element: <Profile />,
-          // },
-          // {
-          //   path: "/favourites",
-          //   element: <Favourites />,
-          // },
-          {
-            path: "/cart",
-            element: <Cart />,
-          },
-          {
-            path: "/wishlist",
-            element: <Wishlist />,
-          },
-          {
-            path: "/product/:id",
-            element: <ProductInformation />,
-          },
-          {
-            path: "/accountinfo",
-            element: <Accountinfo />,
-          },
-          {
-            path:"/contactus",
-            element:<ContactUs/>
-          },
-          {
-            path:"/orderDetails/:id",
-            element:<CustomerOrderDetails/>
-          },
-          {
-            path:"/shopPage",
-            element:<ShopPage/>
-          },
-        ],
-      },
-      {
-        element: <AdminComponent />,
-        children: [
-          {
-            path: "/admin/dashboard",
-            element: <Dashboard />,
-          },
-          {
-            path: "/admin/categories",
-            element: <Categories />,
-          },
-          {
-            path: "/admin/categories/:id",
-            element: <SubCategories />,
-          },
-          {
-            path: "/admin/products",
-            element: <Products />,
-          },
-          {
-            path: "/admin/products/add",
-            element: <ProductsDetails />,
-          },
-          {
-            path: "/admin/products/:id",
-            element: <ProductsDetails />,
-          },
-          {
-            path: "/admin/users",
-            element: <Users />,
-          },
-          {
-            path: "/admin/banner",
-            element: <Banner />,
-          },
-          {
-            path: "/admin/whyus",
-            element: <WhyUs />,
-          },
-          {
-            path: "/admin/accountinfo",
-            element: <AdminAccountinfo />,
-          },
-          {
-            path: "/admin/orders",
-            element: <Orders />,
-          },
-          {
-            path: "/admin/orders/:id",
-            element: <OrderDetails />,
-          },
-          {
-            path: "/admin/coupon",
-            element: <Coupon/>,
-          },
-          {
-            path: "/admin/topfilter",
-            element: <TopFilters />,
-          },
-          {
-            path: "/admin/queries",
-            element: <Queries />,
-          },
-        ],
-      },
-    ]);
-    return <>{routes}</>;
+  const routes = useRoutes([
+    {
+      path: "*",
+      element: <NotFoundPage />,
+    },
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/signup",
+      element: <Signup />,
+    },
+    // {
+    //   path: "/reset-password",
+    //   element: <ResetPassword />,
+    // },
+    {
+      path: "/change-password",
+      element: <ChangePassword />,
+    },
+    // {
+    //   path: "/admin/signup",
+    //   element: <AdminSignup />,
+    // },
+    {
+      path: "/admin/login",
+      element: <Adminlogin />,
+    },
+    {
+      path: "/admin/forgot-Password",
+      element: <AdminforgotPassword />,
+    },
+    {
+      path: "/admin/reset-password",
+      element: <AdminResetpassword />,
+    },
+    {
+      path: "/admin/change-password",
+      element: <AdminChangepassword />,
+    },
+    {
+      element: <Customer />,
+      children: [
+        {
+          path: "/shop?",
+          element: <Shop />,
+        },
+        {
+          path: "/billingdetails",
+          element: <Billingdetails />,
+        },
+        {
+          path: "/billingdetails/:orderid",
+          element: <Billingdetails />,
+        },
+        {
+          path: "/userRegister",
+          element: <UserRegister />,
+        },
+        {
+          path: "/userLogin",
+          element: <UserLogin />,
+        },
+        {
+          path: "/forgotPassword",
+          element: <ForgotPassword />,
+        },
+        {
+          path: "/resetPassword",
+          element: <ResetPassword />,
+        },
+        // {
+        //   path: "/profile",
+        //   element: <Profile />,
+        // },
+        {
+          path: "/thankYou",
+          element: <ThankYou />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
+        },
+        {
+          path: "/wishlist",
+          element: <Wishlist />,
+        },
+        {
+          path: "/product/:id",
+          element: <ProductInformation />,
+        },
+        {
+          path: "/accountinfo",
+          element: <Accountinfo />,
+        },
+        {
+          path: "/contactus",
+          element: <ContactUs />
+        },
+        {
+          path: "/orderDetails/:id",
+          element: <CustomerOrderDetails />
+        },
+        {
+          path: "/shopPage",
+          element: <ShopPage />
+        },
+        {
+          path: "/termsAndCondition",
+          element: <TermsAndCondition />
+        },
+      ],
+    },
+    {
+      element: <AdminComponent />,
+      children: [
+        {
+          path: "/admin/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/admin/categories",
+          element: <Categories />,
+        },
+        {
+          path: "/admin/categories/:id",
+          element: <SubCategories />,
+        },
+        {
+          path: "/admin/products",
+          element: <Products />,
+        },
+        {
+          path: "/admin/products/add",
+          element: <ProductsDetails />,
+        },
+        {
+          path: "/admin/products/:id",
+          element: <ProductsDetails />,
+        },
+        {
+          path: "/admin/users",
+          element: <Users />,
+        },
+        {
+          path: "/admin/banner",
+          element: <Banner />,
+        },
+        {
+          path: "/admin/whyus",
+          element: <WhyUs />,
+        },
+        {
+          path: "/admin/accountinfo",
+          element: <AdminAccountinfo />,
+        },
+        {
+          path: "/admin/orders",
+          element: <Orders />,
+        },
+        {
+          path: "/admin/orders/:id",
+          element: <OrderDetails />,
+        },
+        {
+          path: "/admin/coupon",
+          element: <Coupon />,
+        },
+        {
+          path: "/admin/topfilter",
+          element: <TopFilters />,
+        },
+        {
+          path: "/admin/queries",
+          element: <Queries />,
+        },
+        {
+          path: "/admin/newsletter",
+          element: <NewsLetter />,
+        },
+      ],
+    },
+  ]);
+  return <>{routes}</>;
 }

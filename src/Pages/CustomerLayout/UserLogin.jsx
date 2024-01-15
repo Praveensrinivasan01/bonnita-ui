@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { setLoginData } from "../../Zustand/loginStore";
 import { UserDetails, setUserData } from "../../Zustand/userDetails";
+import { AuthGet } from "../../Commons/httpService";
+import { Modal } from "@nextui-org/modal";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +18,7 @@ const UserLogin = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+   const [show, setShow] = useState(false)
 
   // const [previousPageUrl, setPreviousPageUrl] = useState('');
   // const [login,setUserLogin] = useState("")
@@ -32,7 +35,40 @@ const UserLogin = () => {
   // console.log(location);
 
   // console.log(previousPageUrl)
+
+  const handleClose = () => {
+    localStorage.clear("userOrderDetails")
+    navigate(-1);
+    setTimeout(() => {
+      window.location.reload();
+    }, 500)
+    setShow(false)
+  }
+
+  const handleOkay = () => {
+    navigate("/billingdetails")
+  }
+  const handleCancle = () => {
+    localStorage.clear("userOrderDetails")
+  }
   console.log(email);
+  let ordersave = async (OrderId) => {
+    await AuthGet('order/get-paydata/' + OrderId, 'customer_token').then((res) => {
+      if (res.statusCode === 200) {
+        console.warn(res)
+        if (res?.data?.order_status === 'PAID') {
+          handleClose()
+          //toast.success("Order successfully paid")
+        } else {
+          // navigate()
+          setShow(true)
+          console.log(show, "show")
+          // alert("Payment failed. Please try again")
+          toast.error("Your Last transaction failed. Please try again")
+        }
+      }
+    })
+  }
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -49,11 +85,19 @@ const UserLogin = () => {
               UserToken: resp.data.token,
             });
             // setUserLoginData(resp.data.user);
-            setUserData({email,firstname:resp.data.user.firstname,lastname:resp.data.user.lastname,mobile:resp.data.user.mobile,bonusPoints:resp.data.user.bonus_points})
-            navigate(-1);
-            setTimeout(()=>{
-              window.location.reload();
-            },500)
+
+            setUserData({ email, firstname: resp.data.user.firstname, lastname: resp.data.user.lastname, mobile: resp.data.user.mobile, bonusPoints: resp.data.user.bonus_points })
+            const userOrderDetails = JSON.parse(localStorage.getItem("userOrderDetails"))
+            debugger   
+            if (userOrderDetails?.userId === resp.data.user.id) {
+              await ordersave(userOrderDetails?.OrderId)
+            }else{
+              navigate(-1);
+              setTimeout(() => {
+                window.location.reload();
+              }, 500)
+            }
+
           } else if (resp.data.statusCode === 310) {
             toast.error(resp.data.message);
           }
@@ -77,7 +121,6 @@ const UserLogin = () => {
   };
 
   console.log(showPassword);
-
   return (
     <section className=" container-md PaddingTop">
       <p>
@@ -86,6 +129,12 @@ const UserLogin = () => {
         </Link>
         /Account
       </p>
+      {show&&<div> 
+      <div>
+      <span>your last transaction was not completed successfully do you want to purchase again</span>
+      </div>
+   <button onClick={()=>{ handleOkay()} } >Yes</button> <button onClick={()=>{ handleClose()}}>No</button>
+     </div>}
       <h5 className="text-center fs-2 fw-medium mb-4">Login</h5>
 
       <div className="row d-flex gap-4 justify-content-center mb-5">

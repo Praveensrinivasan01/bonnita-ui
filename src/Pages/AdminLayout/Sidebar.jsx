@@ -30,7 +30,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div class="flex h-screen flex-col justify-between border-e bg-white w-[250px] sticky">
+      <div class="flex flex-col justify-between border-e bg-white w-[250px] sticky">
         <div class="px-3 py-6 ">
           <span class="grid w-32 lace-content-center   text-xs text-gray-600 ">
             <img src={logo} className="" />
@@ -185,7 +185,7 @@ const Sidebar = () => {
               style={{ cursor: "pointer" }}
               onClick={() => navigate("/admin/WhyUs")}
             >
-              WHY US
+              LookBook
             </li>
             <li
               className={
@@ -203,14 +203,14 @@ const Sidebar = () => {
             </li>
             <li
               className={
-                pathname.includes("accountinfo")
+                pathname.includes("newsletter")
                   ? "block   bg-red-400 px-4 py-3 text-sm font-medium text-white"
                   : "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
               }
               style={{ cursor: "pointer" }}
-              onClick={() => navigate("/admin/accountinfo")}
+              onClick={() => navigate("/admin/newsletter")}
             >
-              Account Info
+              NewsLetter
             </li>
 
             <li

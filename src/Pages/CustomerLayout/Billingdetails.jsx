@@ -11,15 +11,22 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { increment } from "../../Zustand/cartStore";
 import { useCurrencyStore } from "../../Zustand/currency";
 import { AuthGet } from "../../Commons/httpService";
-import { addorderDetails } from "../../Zustand/orderDetails";
+import { addorderDetails, orderDetails } from "../../Zustand/orderDetails";
 import CoupenForm from "../../Components/CoupenForm";
+import { UserDetails } from "../../Zustand/userDetails";
+// import Modal from "react-bootstrap/Modal"
+// import UserLogin from './UserLogin';
+// import { loginStore } from './../../Zustand/loginStore';
 
 
 const Billingdetails = () => {
+
   const path = window.location.pathname;
 
   const [productInfo, setProductInfo] = useState(null);
   const [savedOrderId, setSavedOrderId] = useState()
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
+
   const detailsOfPlaceOrder = placeOrder((state) => state.placeOrder);
   const currentsite = window.location.href
   const { orderid } = useParams()
@@ -27,20 +34,29 @@ const Billingdetails = () => {
   const currencyType = useCurrencyStore((state) => state?.currencyCode)
   const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
 
+  const [coupon, setCoupon] = useState(false)
+  const [redeem, setRedeem] = useState(false)
+
+  const bonusPoints = UserDetails((state) => state?.UserDetails)
+  const orderDetail = orderDetails((state) => state?.orderDetails)
+  const userDetails = loginStore((state) => state?.login)
+
+  console.log(bonusPoints?.bonusPoints, "bonusPoints", userDetails);
+
   let generateHash = async (data) => {
-    const userData = localStorage.getItem("UserDetails")
+    const userData = sessionStorage.getItem("UserDetails")
     const parsedData = JSON.parse(userData)?.state?.UserDetails
     console.log("----->", JSON.parse(userData));
     const details = {
       order_id: data.id,
-      order_amount: currencyConversion(data.total),
+      order_amount: redeem === true ? deliveryCharge + data.total - bonusPoints?.bonusPoints : coupon === true ? deliveryCharge + data.total - discount : deliveryCharge + data.total,
       order_currency: currencyType?.name,
       order_note: 'Additional order info',
       customer_details: {
         customer_id: data.user_id,
-        customer_name: parsedData.firstname + " " + parsedData.lastname,
-        customer_email: parsedData.email,
-        customer_phone: parsedData.mobile,
+        customer_name: parsedData?.firstname + " " + parsedData?.lastname,
+        customer_email: parsedData?.email,
+        customer_phone: parsedData?.mobile,
       },
     };
 
@@ -55,18 +71,24 @@ const Billingdetails = () => {
         }
       );
       console.warn(response);
-      if (response.status == 200) {
+      if (response.status === 200) {
         setSavedOrderId(data.id)
-        opencf(response.data.data.payment_session_id, data.id);
+        const orderDetails = {
+          "OrderId": data.id,
+          "userId": data.user_id,
+          "detailsOfPlaceOrder": detailsOfPlaceOrder
+        };
+        localStorage.setItem('userOrderDetails', JSON.stringify(orderDetails));
+        opencf(response?.data?.data?.payment_session_id, data.id);
       }
       console.log("Payment success:", response.data);
     } catch (error) {
       console.error("Payment error:", error);
     }
   };
-
+  const userId = sessionStorage.getItem("login")
   let opencf = (session, oi) => {
-    debugger
+    // debugger
     let checkoutOptions = {
       paymentSessionId: session,
       returnUrl: currentsite + '/' + oi,
@@ -81,18 +103,87 @@ const Billingdetails = () => {
     });
   };
 
+  const [rawResponse, setRawResponse] = useState()
+
   let ordersave = async () => {
-    debugger
-    await AuthGet('order/get-paydata/' + orderid, 'customer_token').then((res) => {
+    await AuthGet('order/get-paydata/' + orderid, 'customer_token').then(async (res) => {
+      // debugger
       if (res.statusCode === 200) {
+        localStorage.removeItem("userOrderDetails")
         console.warn(res)
-        if (res?.data?.data === 'PAID') {
+        // handleSuccess()
+        // setRawResponse(res)
+        if (res?.data?.order_status === 'PAID') {
+          handleOrderResponse(res)
+          // handleSuccess()
           toast.success("Order successfully paid")
+          navigate('/thankYou')
         } else {
           toast.error("Payment failed Please try again")
         }
       }
     })
+  }
+
+  const handleSuccess = async (orderid) => {
+    console.log("Hello--->", orderDetail?.id)
+    try {
+      let body = {
+        email: bonusPoints.email,
+        order_id: orderid ? orderid : orderDetail?.id,
+        product_name: productInfo[0].name,
+        quantity: productInfo[0].cart_quantity ? productInfo[0].cart_quantity : 1,
+        price: newOrder?.productdetails[0]?.price,
+      }
+      const url = `${process.env.REACT_APP_API_URL}/payment/order-success`
+      const response = await axios.post(url, body)
+      if (response.status === 200) {
+        console.log(response, "response")
+      }
+    } catch (error) {
+
+    }
+  }
+
+  console.log(productInfo, "productInfo")
+
+
+  const handleOrderResponse = async (Rawresponse) => {
+    try {
+      console.log(newOrder?.mode_of_payment, "newOrder?.mode_of_payment")
+      console.log(Rawresponse, "Rawresponse")
+      const body = {
+        user_id: userDetails.id,
+        order_id: orderid,
+        cashfree_id: Rawresponse?.data?.cf_order_id,
+        amount: newOrder?.productdetails[0]?.price,
+        raw_response: JSON.stringify(Rawresponse),
+        status: Rawresponse?.data?.order_status
+      }
+      console.log(body, "body")
+      const api = `${process.env.REACT_APP_API_URL}/payment/save`
+
+      const response = await axios.post(api, body)
+      console.log(response.data.statusCode, "response")
+      await handleSuccess()
+
+      // if (response.data.statusCode === 200) {
+      // }
+
+      // else {
+      //   body = {
+      //     order_id: orderid,
+      //     amount: newOrder?.productdetails[0]?.price,
+      //     raw_response: rawResponse,
+      //     payment_method: newOrder?.mode_of_payment,
+      //     status: rawResponse?.data?.order_status
+      //   }
+      // }
+
+
+    } catch (error) {
+
+    }
   }
 
   useEffect(() => {
@@ -121,8 +212,12 @@ const Billingdetails = () => {
     })),
     total_amount: 0,
     // quantity: 0,
+    discount: 0,
+    bonus: 0,
     mode_of_payment: "COD",
   });
+
+  console.log(newOrder, "newOrder");
 
   const navigate = useNavigate();
 
@@ -150,7 +245,7 @@ const Billingdetails = () => {
     }
   }, [state2?.id, path, detailsOfPlaceOrder]);
 
-  console.log(newOrder, "newOrder");
+  console.log(newOrder?.productdetails[0]?.price, "newOrder", newOrder);
 
   useEffect(() => {
     if (Array.isArray(detailsOfPlaceOrder)) {
@@ -191,6 +286,8 @@ const Billingdetails = () => {
     });
   };
 
+  console.log(newOrder.mode_of_payment, "mode_of_payment")
+
   let total = 0;
   let totalDiscount = 0;
   // let subTotal = 0;
@@ -227,10 +324,29 @@ const Billingdetails = () => {
 
       if (state2.id) {
         handleClick();
+
+        if (coupon) {
+          console.log(discount, "coupon")
+          setNewOrder({
+            ...newOrder,
+            discount: discount
+          });
+        }
+
+        if (redeem) {
+          setNewOrder({
+            ...newOrder,
+            bounus: bonusPoints?.bonusPoints
+          });
+        }
+
+        console.log(newOrder, "newOrder11");
+
         const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/order/create-order`,
           newOrder
         );
+        console.log(response, "response");
         if (response.data.statusCode === 200) {
           if (newOrder.mode_of_payment === 'E_PAY') {
             generateHash(response.data.order)
@@ -244,7 +360,27 @@ const Billingdetails = () => {
             )
             console.log('yes');
           } else {
+            if (redeem) {
+
+              const body = {
+                bonus: bonusPoints?.bonusPoints
+              };
+              const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/admin/check-coupon`,
+                body
+              );
+              console.log(response, "response")
+            }
+            let orderDetails = {
+              id: response.data.order.id,
+            };
+            addorderDetails(
+              orderDetails
+            )
+            handleSuccess(response.data.order.id)
+
             toast("order placed successfully.")
+            navigate('/thankYou')
           }
         }
 
@@ -258,6 +394,15 @@ const Billingdetails = () => {
     } catch (error) { }
   };
 
+  useEffect(() => {
+
+    if (formData.state === 'Tamil Nadu') {
+      setDeliveryCharge(50);
+    } else {
+      setDeliveryCharge(150);
+    }
+  }, [formData.state]);
+
   // if (remember === true) {
   //   handleClick();
   // } else {
@@ -265,6 +410,7 @@ const Billingdetails = () => {
   // }
 
   // const coupen = async()=>{
+
 
   // }
 
@@ -288,15 +434,20 @@ const Billingdetails = () => {
         `${process.env.REACT_APP_API_URL}/admin/check-coupon`,
         body
       );
+      setRes(response.data);
       if (response.data.statusCode === 400) {
         setError(response.data.message);
         setCoupen('');
         return
       }
-      setRes(response.data);
+
+      setNewOrder({
+        ...newOrder,
+        discount: response?.data.data[0]?.discount_percent
+      });
       setDiscount(response?.data.data[0]?.discount_percent)
 
-      console.log(response, "response");
+      console.log(discount, "response");
 
     } catch (error) {
       // Handle error
@@ -309,8 +460,62 @@ const Billingdetails = () => {
   const handleInputChange = (e) => {
     setCoupen(e.target.value);
     setError('');
+
   };
 
+  const handleRedeem = () => {
+    setRedeem(true)
+  }
+
+  const handleToggleBtn = (toggleOption) => {
+    if (toggleOption === "coupon") {
+      setCoupon(true)
+      setRedeem(false)
+      setRes([])
+    } else {
+      setCoupon(false)
+      setRedeem(true)
+      setDiscount(0)
+      setCoupen("")
+      setRes([])
+    }
+  }
+
+  const indianStates = [
+    { name: 'Andhra Pradesh', value: 'Andhra Pradesh' },
+    { name: 'Arunachal Pradesh', value: 'Arunachal Pradesh' },
+    { name: 'Assam', value: 'Assam' },
+    { name: 'Bihar', value: 'Bihar' },
+    { name: 'Chhattisgarh', value: 'Chhattisgarh' },
+    { name: 'Goa', value: 'Goa' },
+    { name: 'Gujarat', value: 'Gujarat' },
+    { name: 'Haryana', value: 'Haryana' },
+    { name: 'Himachal Pradesh', value: 'Himachal Pradesh' },
+    { name: 'Jharkhand', value: 'Jharkhand' },
+    { name: 'Karnataka', value: 'Karnataka' },
+    { name: 'Kerala', value: 'Kerala' },
+    { name: 'Madhya Pradesh', value: 'Madhya Pradesh' },
+    { name: 'Maharashtra', value: 'Maharashtra' },
+    { name: 'Manipur', value: 'Manipur' },
+    { name: 'Meghalaya', value: 'Meghalaya' },
+    { name: 'Mizoram', value: 'Mizoram' },
+    { name: 'Nagaland', value: 'Nagaland' },
+    { name: 'Odisha', value: 'Odisha' },
+    { name: 'Punjab', value: 'Punjab' },
+    { name: 'Rajasthan', value: 'Rajasthan' },
+    { name: 'Sikkim', value: 'Sikkim' },
+    { name: 'Tamil Nadu', value: 'Tamil Nadu' },
+    { name: 'Telangana', value: 'Telangana' },
+    { name: 'Tripura', value: 'Tripura' },
+    { name: 'Uttar Pradesh', value: 'Uttar Pradesh' },
+    { name: 'Uttarakhand', value: 'Uttarakhand' },
+    { name: 'West Bengal', value: 'West Bengal' }
+  ];
+
+
+  console.log(coupon, "coupen");
+  console.log(res?.data?.length ? res?.data[0].discount_percent : "", "res");
+  console.log(formData, "formData")
 
 
   return (
@@ -413,7 +618,7 @@ const Billingdetails = () => {
 
                       <div className="d-flex">
                         <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
-                          <input
+                          {/* <input
                             type="text"
                             className="form-control"
                             id="floatingInput"
@@ -432,7 +637,27 @@ const Billingdetails = () => {
                             }}
                             required
                           />
-                          <label for="floatingInput">State *</label>
+                          <label for="floatingInput">State *</label> */}
+                          <select
+                            className="form-select border-e-0 border-s-0 border-t-0 rounded-none border-b-2 border-gray-400"
+                            id="stateSelect"
+                            value={formData.state}
+                            onChange={(e) => {
+                              const selectedState = e.target.value;
+                              setFormData({
+                                ...formData,
+                                state: selectedState,
+                              });
+                            }}
+                            required
+                          >
+                            <option value="">Select a state</option>
+                            {indianStates.map((state, index) => (
+                              <option key={index} value={state.value}>
+                                {state.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
 
                         <div className="form-floating mb-3 col-6 pe-md-5 pe-2">
@@ -546,34 +771,107 @@ const Billingdetails = () => {
                         </div>
                         <div>
                           <div className="bg-white rounded pt-6 flex justify-between items-center">
-                            <div className="mb-6">
-                              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                                Coupon Code
-                              </label>
+
+
+                          </div>
+
+                          <div className="mt-3">
+                            <div className="form-check mt-3">
                               <input
-                                className="appearance-none border border-red-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="password"
-                                type="text"
-                                placeholder="Please Enter the code."
-                                value={coupen}
-                                onChange={handleInputChange}
+                                className="form-check-input"
+                                type="radio"
+                                name="gridRadios233"
+                                id="gridRadios12"
+                                value={coupon}
+                                onClick={() => handleToggleBtn("coupon")}
+
                               />
-                              {/* {error && <p className="text-red-500 text-xs italic">{error}</p>} */}
+                              <label
+                                className="form-check-label"
+                                for="gridRadios12"
+                              >
+                                Coupon
+                              </label>
+                              {
+                                coupon === true ?
+                                  (
+                                    <>
+                                      <div className="bg-white rounded flex justify-between items-center mt-3">
+                                        <div className="">
+                                          <input
+                                            className="appearance-none border border-red-500 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="password"
+                                            type="text"
+                                            placeholder="Please Enter the code."
+                                            value={coupen}
+
+                                            onChange={handleInputChange}
+                                          />
+                                          {/* {error && <p className="text-red-500 text-xs italic">{error}</p>} */}
+                                        </div>
+                                        <button
+                                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                          onClick={handleCoupen}
+                                        >
+                                          Apply Now
+                                        </button>
+
+                                      </div>
+                                      {
+                                        res &&
+                                          (res.statusCode === 200) ? (
+                                          <p className="text-green-500 text-xs italic">{res.message}</p>
+                                        ) : <p className="text-red-500 text-xs italic">{res.message}</p>
+
+                                      }
+
+                                    </>
+                                  )
+                                  : <></>
+                              }
                             </div>
-                            <button
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                              onClick={handleCoupen}
-                            >
-                              Apply Now
-                            </button>
                           </div>
                           {
-                            res.statusCode === 200 ? (
-                              <p className="text-green-500 text-xs italic">{res.message}</p>
+                            Number(bonusPoints?.bonusPoints) > 500 && total > 500 && total > Number(bonusPoints?.bonusPoints) ? (
+                              <>
+                                <div className="form-check mt-3">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="gridRadios233"
+                                    id="gridRadios23"
+                                    onClick={() => handleToggleBtn("redeem")}
+
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    for="gridRadios23"
+                                  >
+                                    <div className="d-flex ">
+                                      <p>REDEEM</p>
+                                    </div>
+                                  </label>
+
+                                  {
+                                    redeem === true ?
+                                      (
+                                        <>
+                                          <p>Your bonus points {bonusPoints?.bonusPoints}</p>
+                                          {/* <button className="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Redeem Now</button> */}
+                                        </>
+                                      ) : <>
+
+                                      </>
+                                  }
+                                </div>
+                              </>
                             ) : (
-                              <p className="text-red-500 text-xs italic">{res.message}</p>
+                              <></>
                             )
                           }
+
+                          {/* <p>*if only your bonus points is abouve 500 you can redeem </p> */}
+
                         </div>
 
                         <hr className="mt-3" />
@@ -581,10 +879,18 @@ const Billingdetails = () => {
                         <div className=" mt-4 d-flex justify-content-between fw-bold">
                           <span className="widget-title">Subtotal</span>
                           <div className="d-flex flex-column">
-                            <span className="price text-end">{currencyType.symbol}{discount?  currencyConversion(total-Number(discount)) : currencyConversion(total) }</span>
+                            <span className="price text-end">₹{
+                              coupon === true ? total - Number(discount) : redeem === true ? total - Number(bonusPoints?.bonusPoints) : total
+                            }
+                              {/* 
+                            {
+                              redeem && discount ?  : total
+                            } */}
+
+                            </span>
                             {console.log(total)}
                             <span className="totalSavings text-end">
-                              *Totally {currencyType.symbol}{currencyConversion(totalDiscount +Number(discount))} saved !!
+                              *Totally ₹{coupon === true ? totalDiscount + Number(discount) : redeem === true ? totalDiscount + Number(bonusPoints?.bonusPoints) : totalDiscount} saved !!
                             </span>
                           </div>
                         </div>
@@ -604,13 +910,17 @@ const Billingdetails = () => {
                                 *Orders above {currencyType.symbol}{currencyConversion(999)} to avail free delivery
                               </span>
                             </div>
-                          ) : null}
+                          ) : <p>
+                            <span className="totalSavings text-end">
+                              *Orders delivary fee {currencyType.symbol}{currencyConversion(deliveryCharge)}
+                            </span>
+                          </p>}
                         </div>
                         <hr className="mt-3" />
                         <div className=" mt-3">
                           <div className="d-flex justify-content-between">
                             <span className="widget-title">Total</span>
-                            <span className="price">{currencyType?.symbol}{currencyConversion(total)}</span>
+                            <span className="price">₹{coupon === true ? total - Number(discount) : redeem === true ? total - Number(bonusPoints?.bonusPoints) : total}</span>
                           </div>
                           <div className="mt-3">
                             <h5>Payments</h5>
@@ -621,7 +931,7 @@ const Billingdetails = () => {
                                 name="gridRadios"
                                 id="gridRadios1"
                                 value={formData.cash}
-                                checked={formData.cash}
+                                checked
                                 onChange={() => {
                                   setNewOrder({
                                     ...newOrder,
@@ -647,8 +957,10 @@ const Billingdetails = () => {
                                 onChange={() => {
                                   setNewOrder({
                                     ...newOrder,
+
                                     mode_of_payment: "E_PAY"
                                   });
+
                                 }}
                               />
                               <label
@@ -688,28 +1000,7 @@ const Billingdetails = () => {
                               </label>
                             </div>
                             {/* <p>*if only your bonus points is abouve 500 you can redeem </p> */}
-                            <div className="form-check">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="gridRadios"
-                                id="gridRadios1"
-                                value={formData.cash}
-                                checked={formData.cash}
-                              // onChange={() => {
-                              //   setNewOrder({
-                              //     ...newOrder,
-                              //     mode_of_payment:"COD"
-                              //   });
-                              // }}
-                              />
-                              <label
-                                className="form-check-label"
-                                for="gridRadios1"
-                              >
-                                Redeem your Points
-                              </label>
-                            </div>
+
                           </div>
                         </div>
                       </div>
@@ -748,7 +1039,6 @@ const Billingdetails = () => {
                 </form>
               </div>
             </section>
-
           </div>
         </div>
       </div>

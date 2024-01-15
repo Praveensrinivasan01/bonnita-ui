@@ -11,17 +11,14 @@ import Queries from "./LandingPage/Queries";
 const Home = () => {
   return (
     <div>
-                
- 
       <HeroSection />
-      <Categories/>
+      <Categories />
       <NewArrivals />
       <BestSellers />
       <About />
       <LoomBook />
       <WhyUs />
-      <Queries/>
-  
+      <Queries />
     </div>
   );
 };

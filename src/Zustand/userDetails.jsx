@@ -10,7 +10,7 @@ const initialValue = {
 export const UserDetails = create(
   persist(() => initialValue, {
     name: "UserDetails",
-    storage: createJSONStorage(() => localStorage),
+    storage: createJSONStorage(() => sessionStorage),
     partialize: (state) => ({ UserDetails: state.UserDetails }),
   })
 );

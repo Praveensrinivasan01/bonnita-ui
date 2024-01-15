@@ -42,14 +42,21 @@ const Cart = () => {
   const state = cartStore((state) => state.cart);
   // let totalQuantity = state.reduce((total, item) => total + item.cart_quantity, 0);
 
+
+
+
   const state2 = loginStore((state) => state.login);
   const state2Id = state2?.id;
 
   const [cartData, setCartData] = useState();
-
+  // console.log(cartData, "cartData")
+  const placeOrder = () => {
+    console.log(cartData, "cartData")
+    addToPlaceOrder(cartData);
+  }
   const currencyType = useCurrencyStore((state) => state?.currencyCode)
   const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
-
+  const [placeOrderValue, setPlaceOrderValue] = useState([]);
   const getCategories = async () => {
     if (state2Id) {
       const response = await axios
@@ -58,7 +65,8 @@ const Cart = () => {
         )
         .then((res) => {
           if (res?.data?.statusCode === 200) {
-            addToPlaceOrder(res?.data?.data);
+            setPlaceOrderValue(res?.data?.data);
+            // addToPlaceOrder(res?.data?.data);
             console.log(res?.data?.data, "data");
             setCartData(res?.data?.data);
           }
@@ -83,11 +91,12 @@ const Cart = () => {
         )
         .then((res) => {
           if (res?.data?.statusCode === 200) {
-            addToPlaceOrder(res?.data?.data);
+            setPlaceOrderValue(res?.data?.data);
+            // addToPlaceOrder(res?.data?.data);
             setCartData(res?.data?.data);
           } else {
             setCartData(null);
-            addToPlaceOrder(null);
+            // addToPlaceOrder(null);
           }
         });
     } else {
@@ -96,10 +105,10 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
     deleteData();
     getCategories();
-  },[state]);
+  }, [state]);
 
   console.log(state, "CartData");
 
@@ -174,18 +183,21 @@ const Cart = () => {
             </span>
           </div>
           <div className="col-md-2">
-           {currencyType?.symbol}{currencyConversion(cartDetails.selling_price) * cartDetails.cart_quantity }
+            {currencyType?.symbol}{currencyConversion(cartDetails.selling_price) * cartDetails.cart_quantity}
           </div>
         </div>
       ))}
       {state2Id && cartData?.length ? (
         <div className="text-end mb-4 pb-5 mt-4">
-          <Button
+          <Link to="/billingdetails">
+          <button className="button1  color-2" onClick={placeOrder}>Place Order</button>
+          </Link>
+          {/* <Button
             btnName={"PLACE ORDER"}
-            btnStyle={"button1  color-2"}
+            btnStyle={""}
             link={"/billingdetails"}
             linkNeeded={"yes"}
-          />
+          /> */}
         </div>
       ) : (
         <></>

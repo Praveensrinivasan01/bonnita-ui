@@ -21,6 +21,7 @@ const Categories = () => {
     setImage(null);
     setName(null);
   };
+  const [TotalCount, SetTotalCount] = useState()
   const [image, setImage] = useState(null);
   const [catogories, setCatogories] = useState([]);
   const [file, setFile] = useState(null);
@@ -30,8 +31,8 @@ const Categories = () => {
   const [editid, setEditid] = useState("");
   const [searchParam, setSearchParams] = useState("");
   const [data, sendData] = useState([]);
-  const [page, setPage] = useState(1);
-  const debounceSearchValue = useDebounce(searchParam,1000)
+  const [page, setPage] = useState(0);
+  const debounceSearchValue = useDebounce(searchParam, 1000)
 
 
 
@@ -42,11 +43,11 @@ const Categories = () => {
   const getcatogories = async () => {
     // setSearchParams()
     const res = await axios.post(
-      `${
-        process.env.REACT_APP_API_URL
-      }/admin/get-all-category?search=${searchParam}&offset=${15 * (page - 1)} `,"admin");
+      `${process.env.REACT_APP_API_URL
+      }/admin/get-all-category?search=${searchParam}&offset=${15 * (page)} `, "admin");
     if (res.data.statusCode == 200) {
       setCatogories(res.data.data);
+      SetTotalCount(res.data.count)
       console.log(res, "rest");
     }
   };
@@ -55,7 +56,7 @@ const Categories = () => {
   useEffect(() => {
     console.log("page changed")
     getcatogories();
-  }, [debounceSearchValue,page]);
+  }, [debounceSearchValue, page]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -199,7 +200,7 @@ const Categories = () => {
             placeholder="Search"
             value={searchParam}
             class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200  md:w-80 placeholder-gray-400/70 pl-11 focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-            onChange={(e)=>setSearchParams(e?.target?.value)}
+            onChange={(e) => setSearchParams(e?.target?.value)}
 
           />
         </div>
@@ -250,7 +251,7 @@ const Categories = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {catogories?.map((catogories, index) => (
-                    <tr key={index}>
+                    <tr key={index} className="align-top">
                       <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                         <div>
                           <h2 className="font-medium text-gray-800">
@@ -265,7 +266,7 @@ const Categories = () => {
                           </h4>
                         </div>
                       </td>
-                      <td className="px-0 py-4 text-sm ">
+                      <td className="px-0 py-2 text-sm ">
                         <div className="flex items-center">
                           <img
                             className="object-cover w-16 mx-1 border-2 border-white rounded-full shrink-0"
@@ -317,7 +318,7 @@ const Categories = () => {
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <button
                           type="button"
-                          className="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg flex hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                          className="px-3 py-2 text-sm font-medium text-center rounded-none text-white bg-slate-900 flex  focus:ring-4 focus:outline-none focus:ring-slate-300 "
                           onClick={() =>
                             navigate(
                               `/admin/categories/${catogories.category_id}`
@@ -349,56 +350,67 @@ const Categories = () => {
         </div>
       </div>
 
-      <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
-        <div class="text-sm text-gray-500">
-          Page <span class="font-medium text-gray-700">1 of 10</span>
-        </div>
+      <div className="d-flex justify-content-end">
+        <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
 
-        <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-          <Link
-            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-            onClick={() => page !== 1 && setPage((prev) => prev - 1)}
-        >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-              />
-            </svg>
+          {
+            Math.floor(TotalCount / 15) >= page &&
+            <>
+              {
+                page !== 0 && (
+                  <button
+                    className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                    onClick={() => setPage((prev) => prev - 1)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+                      />
+                    </svg>
 
-            <span>Previous</span>
-          </Link>
+                    <span>Previous</span>
+                  </button>
+                )
+              }
 
-          <Link
-            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-            onClick={() => page !== 1 && setPage((prev) => prev +1)}
+              {
+                Math.floor(TotalCount / 15) > page && (
 
-          >
-            <span>Next</span>
+                  <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                    onClick={() => setPage(page + 1)}>
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
-          </Link>
+
+                    <span>Next</span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                      />
+                    </svg>
+                  </button>
+                )
+              }
+
+            </>
+          }
         </div>
       </div>
 
@@ -409,7 +421,7 @@ const Categories = () => {
         isOpen={modal}
         onOpenChange={() => setModal(!modal)}
       >
-               <ModalContent>
+        <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
             {editmode ? "Edit Category" : "Add Category"}
           </ModalHeader>
@@ -460,12 +472,11 @@ const Categories = () => {
                   onChange={handleFileChange}
                   type="file"
                   class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
-                            "
+                  file:mr-4 file:py-2 file:px-4
+                  file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-slate-900 file:text-white
+                  hover:file:bg-slate-800 file:cursor-pointer"
                 />
               </label>
             </div>
@@ -482,21 +493,21 @@ const Categories = () => {
           <ModalFooter>
             <button
               type="button"
-              class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              className="px-3 py-2 text-sm font-medium text-center text-red-400 border-2  border-red-400  bg-white  hover:bg-red-300 focus:outline-none"
+              onClick={handleClose}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="px-3 py-2 text-sm font-medium text-center text-white bg-red-400  hover:bg-red-300 "
               onClick={() => {
                 handleUpload(catogories);
               }}
             >
               Save
             </button>
-            <button
-              type="button"
-              class="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
-              className="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
-              onClick={handleClose}
-            >
-              Cancel
-            </button>
+
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -12,10 +12,11 @@ import axios from "axios";
 
 const Banner = () => {
   const [image, setImage] = useState(null);
-  const [banner , setBanner] = useState([])
+  const [banner, setBanner] = useState([])
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [TotalCount, SetTotalCount] = useState()
 
   const handleFileChange = (e) => {
     console.log("image", e.target.files[0])
@@ -36,6 +37,7 @@ const Banner = () => {
         formData
       );
       if (response.data.statusCode == 200) {
+        SetTotalCount(response?.count)
         handleClose()
       }
     } catch (e) {
@@ -49,13 +51,13 @@ const Banner = () => {
     setImage(null);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getBanner()
   }, [])
 
   const getBanner = async () => {
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/landingpage/get-banner-image?offset=${15 * (page - 1)}`
+      `${process.env.REACT_APP_API_URL}/landingpage/get-banner-image?offset=${15 * (page)}`
     )
     if (response?.data.statusCode === 200) {
       setBanner(response?.data?.data)
@@ -122,7 +124,7 @@ const Banner = () => {
                       Action
                     </th>
 
-                   
+
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -135,7 +137,7 @@ const Banner = () => {
                           </h2>
                         </div>
                       </td>
-                      
+
                       <td className="px-0 py-4 text-sm ">
                         <div className="flex items-center">
                           <img
@@ -185,7 +187,7 @@ const Banner = () => {
                           </svg>
                         </button>
                       </td>
-                      
+
                     </tr>
                   ))}
                 </tbody>
@@ -195,56 +197,67 @@ const Banner = () => {
         </div>
       </div>
 
-      <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
-        <div class="text-sm text-gray-500">
-          Page <span class="font-medium text-gray-700">1 of 10</span>
-        </div>
+      <div className="d-flex justify-content-end">
+        <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
 
-        <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-          <Link
-            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-            onClick={() => page !== 1 && setPage((prev) => prev - 1)}
-        >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-              />
-            </svg>
+          {
+            Math.floor(TotalCount / 15) >= page &&
+            <>
+              {
+                page !== 0 && (
+                  <button
+                    className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                    onClick={() => setPage((prev) => prev - 1)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+                      />
+                    </svg>
 
-            <span>Previous</span>
-          </Link>
+                    <span>Previous</span>
+                  </button>
+                )
+              }
 
-          <Link
-            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-            onClick={() => page !== 1 && setPage((prev) => prev +1)}
+              {
+                Math.floor(TotalCount / 15) > page && (
 
-          >
-            <span>Next</span>
+                  <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                    onClick={() => setPage(page + 1)}>
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
-          </Link>
+
+                    <span>Next</span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                      />
+                    </svg>
+                  </button>
+                )
+              }
+
+            </>
+          }
         </div>
       </div>
 
@@ -262,7 +275,7 @@ const Banner = () => {
           <h2 className="pt-4 ps-4 pb-2">Add Home Banner</h2>
           <ModalBody>
             <div className="">
-            
+
               <label class="block">
                 <span class="sr-only">Choose Home Banner image</span>
                 <input
@@ -270,12 +283,11 @@ const Banner = () => {
                   onChange={handleFileChange}
                   type="file"
                   class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
-                            "
+                  file:mr-4 file:py-2 file:px-4
+                  file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-slate-900 file:text-white
+                  hover:file:bg-slate-800 file:cursor-pointer"
                 />
               </label>
             </div>
@@ -292,7 +304,7 @@ const Banner = () => {
           <ModalFooter>
             <button
               type="button"
-              class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              class="px-3 py-2 text-sm font-medium text-center text-white bg-red-400  hover:bg-red-300 "
               onClick={() => {
                 handleUpload(banner);
               }}
@@ -301,7 +313,8 @@ const Banner = () => {
             </button>
             <button
               type="button"
-              class="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
+
+              className="px-3 py-2 text-sm font-medium text-center text-red-400 border-2  border-red-400  bg-white  hover:bg-red-300 focus:outline-none"
               onClick={handleClose}
             >
               Cancel

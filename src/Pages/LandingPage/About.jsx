@@ -13,7 +13,7 @@ const About = () => {
           <img src={leftImg} alt="#" className="img-fluid " />
         </div>
         <div className="col-lg-4 mx-auto my-auto p-md-1 p-3" >
-          <h3 className="text-center mt-md-0 mt-3 mb-md-5" data-aos="fade-left" data-aos-duration="1700">About</h3>
+          <h3 className="text-center mt-md-0 mt-3 mb-md-5 " data-aos="fade-left" data-aos-duration="1700">About</h3>
           <p className="pt-3" data-aos="fade-right" data-aos-duration="600">
             Established in the year 2022.There is revolution happening in the
             Indian fashion industry. Witnessing the surge Bonnita the evolved as

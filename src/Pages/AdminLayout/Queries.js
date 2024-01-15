@@ -5,17 +5,21 @@ import { Link } from 'react-router-dom';
 const Queries = () => {
 
     const [data, setData] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [filter, setFilter] = useState("pending");
     const [filterData, setFilterData] = useState([]);
+    const [TotalCount, SetTotalCount] = useState()
 
     const getCoustomerQuery = async ()=>{
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/landingpage/get-query?offset=${
-            (page - 1) * 15
+            (page ) * 15
           }&status=${filter}`)
           if(response.data.statusCode===200){
             console.log(response);
             setFilterData(response.data.data)
+            SetTotalCount(response.data.count)
+          } else if (response.data.statusCode === 400) {
+            setFilterData([])
           }
     }
 
@@ -35,13 +39,19 @@ const Queries = () => {
     },[page,filter])
   return (
     <div>
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <div>
+          <div class="flex items-center gap-x-3">
+            <h2 class="text-lg font-medium text-gray-800">Queries</h2>
+
+           
+          </div>
+
+          <p class="mt-1 text-sm text-gray-500">A List Of All Enquiries</p>
+        </div>
+      </div>
         <div class="relative flex items-center mt-4 md:mt-0">
-          <label
-            for="countries"
-            class="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Queries
-          </label>
+          
           <select
             id="countries"
             class="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  ml-2 p-2.5"
@@ -49,7 +59,7 @@ const Queries = () => {
               setFilter(e.target.value);
             }}
           >
-            <option selected>Select</option>
+            
             {/* <option value="All" selected>All</option> */}
             <option value="completed" >Completed</option>
             <option value="pending" selected>Pending</option>
@@ -144,7 +154,7 @@ const Queries = () => {
                           <button
                             type="button"
                             className={`px-3 py-2 text-sm font-medium text-center text-white focus:outline-none rounded-md ${
-                                user.status==="completed" ? "bg-green-700" : "bg-red-700"
+                                user.status==="completed" ? "bg-green-700" : "bg-yellow-500"
                             }`}
                             onClick={() => {
                               
@@ -220,59 +230,69 @@ const Queries = () => {
             </div>
           </div>
         </div>
-        <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
-        <div class="text-sm text-gray-500">
-          Page <span class="font-medium text-gray-700">1 of 10</span>
-        </div>
+        <div className="d-flex justify-content-end">
+                        <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
 
-        <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-          <Link
-            href="#"
-            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-            onClick={() => page !== 1 && setPage((prev) => prev - 1)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-              />
-            </svg>
+                            {
+                                Math.floor(TotalCount / 15) >= page &&
+                                <>
+                                    {
+                                        page !== 0 && (
+                                            <button
+                                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                                                onClick={() => setPage((prev) => prev - 1)}
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                    className="w-5 h-5"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+                                                    />
+                                                </svg>
 
-            <span>Previous</span>
-          </Link>
+                                                <span>Previous</span>
+                                            </button>
+                                        )
+                                    }
 
-          <Link
-            href="#"
-            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-            onClick={() => page !== 1 && setPage((prev) => prev + 1)}
-          >
-            <span>Next</span>
+                                    {
+                                        Math.floor(TotalCount / 15) > page && (
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
-          </Link>
-        </div>
-      </div>
+                                            <button className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
+                                                onClick={() => setPage(page + 1)}>
+
+
+                                                <span>Next</span>
+
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                    className="w-5 h-5"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        )
+                                    }
+
+                                </>
+                            }
+                        </div>
+                    </div>
     </div>
   )
 }

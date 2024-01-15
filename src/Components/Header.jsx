@@ -117,7 +117,7 @@ const Header = () => {
             {toggler && (
               <div className="flex items-center justify-between gap-md-4 bg-black px-4 py-3 text-white ">
                 <p className="md:text-sm text-xs font-medium col-md-2 col-6">
-                  Call Us: +91 00 00000000
+                  Call Us: +91 8220773182
                 </p>
                 <p className="text-sm text-xs  font-medium">
                   Get Up to 50% Off on Wallets !!{" "}
@@ -153,7 +153,7 @@ const Header = () => {
             <div className="wrapper">
               <div className="logo">
                 <Link to="/">
-                  <img src={logo} className="h-8" alt="#" />
+                  <img src={logo} className="" alt="#" />
                 </Link>
               </div>
               <input type="radio" name="slider" id="menu-btn" />

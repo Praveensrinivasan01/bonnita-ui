@@ -119,14 +119,13 @@
 
   .category-name {
     position: absolute;
-    bottom: 10px;
-    left: 32px;
+   right: 50%;
     opacity: 1;
-    transition: opacity 0.7s ease-in-out;
+   
   }
 
   .image-container .image {
-    opacity: 1; /* Adjust the opacity on hover as desired */
+    opacity: 1; 
   }
   
   .image-container .category-name {
@@ -421,26 +420,26 @@ a {
 
 .image-container {
   position: relative;
+  transition: .5s;
   display: inline-block;
 }
 
-.image {
-  transition: opacity 1s ease-in-out;
-}
 
 .category-name {
   position: absolute;
-  bottom: 10px;
-  left: 32px;
-  opacity: 0;
+  right: 44%;
+  bottom: 30px;
+  font-size: 20px;
+  /* opacity: 0; */
+
   transition: opacity 0.7s ease-in-out;
 }
 
 .image-container:hover .image {
-  opacity: 1; /* Adjust the opacity on hover as desired */
-}
-
-.image-container:hover .category-name {
   opacity: 1;
 }
 
+.image-container:hover{
+  transform: translateY(-7px);
+  transition: .5s;
+}

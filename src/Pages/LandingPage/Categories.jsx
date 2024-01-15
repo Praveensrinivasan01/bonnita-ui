@@ -69,15 +69,15 @@ const Categories = () => {
         {categoriesData.map((category, index) => (
           <Link
             to={`/shoppage?category=${category.name}`}
-            className="position-relative image-container"
+            className="position-relative image-container text-center"
           >
             <img
               key={index}
-              className="col-lg-12 w-96 h-[350px] shadow-md image"
+              className="col-lg-12 w-96 h-[350px] shadow-md image "
               src={category.imageData}
               alt={category.name}
             />
-            <span className="category-name position-absolute rounded-sm bg-slate-300 p-1 text-black bottom-8 md:left-35 left-28">
+            <span className="category-name position-absolute rounded-sm p-1 text-black ">
               {category.name}
             </span>
           </Link>

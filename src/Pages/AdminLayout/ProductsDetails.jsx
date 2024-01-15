@@ -189,13 +189,16 @@ console.log("CHECK", category)
                 onChange={(e) => handleFileChange(e, "frontSideImage")}
                 type="file"
                 class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
+                file:mr-4 file:py-2 file:px-4
+                file:border-0
+                file:text-sm file:font-semibold
+                file:bg-slate-900 file:text-white
+                hover:file:bg-slate-800 file:cursor-pointer
                             "
               />  </label>
+          </div>
+          <div className='mt-2'> 
+            {frontSideImage && <img className="  rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={frontSideImage} alt="Image " />}
           </div>
 
           <div className='mt-4'>
@@ -206,13 +209,17 @@ console.log("CHECK", category)
                 onChange={(e) => handleFileChange(e, "leftSideImage")}
                 type="file"
                 class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
+                file:mr-4 file:py-2 file:px-4
+                file:border-0
+                file:text-sm file:font-semibold
+                file:bg-slate-900 file:text-white
+                hover:file:bg-slate-800 file:cursor-pointer
                             "
               />  </label>
+          </div>
+
+          <div className='mt-2 d-flex'>
+            {leftSideImage && <img className=" rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={leftSideImage} alt="Image Description" />}
           </div>
 
           <div className='mt-4'>
@@ -223,13 +230,16 @@ console.log("CHECK", category)
                 onChange={(e) => handleFileChange(e, "backSideImage")}
                 type="file"
                 class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
+                file:mr-4 file:py-2 file:px-4
+                file:border-0
+                file:text-sm file:font-semibold
+                file:bg-slate-900 file:text-white
+                hover:file:bg-slate-800 file:cursor-pointer
                             "
               />  </label>
+          </div>
+          <div>
+          {backSideImage && <img className=" rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={backSideImage} alt="Image Description" />}
           </div>
 
           <div className='mt-4'>
@@ -240,23 +250,20 @@ console.log("CHECK", category)
                 onChange={(e) => handleFileChange(e, "rightSideImage")}
                   type="file"
                   class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
+                  file:mr-4 file:py-2 file:px-4
+                  file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-slate-900 file:text-white
+                  hover:file:bg-slate-800 file:cursor-pointer
                             "
                 />  </label>
           </div>
+          <div>
+          {rightSideImage && <img className=" rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={rightSideImage} alt="Image Description" />}
+          </div>
 
-          <div className='mt-2'> 
-            {frontSideImage && <img className="  rounded-xl sm:w-48 sm:h-48 lg:w-60 lg:h-60" src={frontSideImage} alt="Image " />}
-          </div>
-          <div className='mt-2 d-flex'>
-            {leftSideImage && <img className="rounded-xl sm:w-20 sm:h-20 lg:w-20 lg:h-20" src={leftSideImage} alt="Image Description" />}
-            {backSideImage && <img className="rounded-xl sm:w-20 sm:h-20 lg:w-20 lg:h-20" src={backSideImage} alt="Image Description" />}
-            {rightSideImage && <img className="rounded-xl sm:w-20 sm:h-20 lg:w-20 lg:h-20" src={rightSideImage} alt="Image Description" />}
-          </div>
+          
+
         </div>
 
         <div className="lg:col-span-2">
@@ -462,7 +469,7 @@ console.log("CHECK", category)
 
             <div className="md:col-span-5 text-right">
               <div className="inline-flex items-end">
-                <button  type='submit' onClick={(e)=>{handleUpload()}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                <button  type='submit' onClick={(e)=>{handleUpload()}} class="px-3 py-2 text-sm font-medium text-center text-white bg-red-400  hover:bg-red-300 ">Submit</button>
               </div>
             </div>
           </div>

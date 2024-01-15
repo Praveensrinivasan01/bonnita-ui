@@ -10,7 +10,7 @@ const initialValue = {
 export const loginStore = create(
   persist(() => initialValue, {
     name: "login",
-    storage: createJSONStorage(() => localStorage),
+    storage: createJSONStorage(() => sessionStorage),
     partialize: (state) => ({ login: state.login }),
   })
 );

@@ -13,7 +13,7 @@ import { button } from "@nextui-org/theme";
 
 const Coupon = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [buttonValue, setButtonValue] = useState("active");
   const [modal, setModal] = useState(false);
   const handleClose = () => {
@@ -53,7 +53,7 @@ const Coupon = () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/admin/get-all-coupons?offset=${
-          15 * (page - 1)
+          15 * (page)
         }`
       );
       if (response?.data?.statusCode === 200) {
@@ -114,7 +114,7 @@ const Coupon = () => {
           class="flex items-center justify-center w-1/2 px-3 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-slate-900 shrink-0 sm:w-auto gap-x-2 hover:border-gray-700 border-transparent border-2"
           onClick={() => setModal(!modal)}
         >
-          <svg
+          <svg  
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -218,10 +218,22 @@ const Coupon = () => {
                         </td>
                         <td>
                           <button
-                            className="btn btn-danger"
+                          className="px-3 py-2 text-sm font-medium text-center text-white border-2 border-red-200 focus:ring-1 focus:outline-none focus:ring-red-200"
                             onClick={() => deleteCoupon(item.id)}
                           >
-                            delete
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M4.66666 14C4.29999 14 3.98599 13.8693 3.72466 13.608C3.46332 13.3467 3.33288 13.0329 3.33332 12.6667V4H2.66666V2.66667H5.99999V2H9.99999V2.66667H13.3333V4H12.6667V12.6667C12.6667 13.0333 12.536 13.3473 12.2747 13.6087C12.0133 13.87 11.6995 14.0004 11.3333 14H4.66666ZM11.3333 4H4.66666V12.6667H11.3333V4ZM5.99999 11.3333H7.33332V5.33333H5.99999V11.3333ZM8.66666 11.3333H9.99999V5.33333H8.66666V11.3333Z"
+                              fill="#EE7B7B"
+                            />
+                          </svg>
+                            
                           </button>
                         </td>
                       </tr>
@@ -240,10 +252,10 @@ const Coupon = () => {
         </div>
 
         <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-          <Link
-            href="#"
+          <button
+           
             class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
-            onClick={() => page !== 1 && setPage((prev) => prev - 1)}
+            onClick={() => page !== 0 && setPage((prev) => prev - 1)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -261,10 +273,10 @@ const Coupon = () => {
             </svg>
 
             <span>Previous</span>
-          </Link>
+          </button>
 
-          <Link
-            href="#"
+          <button
+           
             class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100"
             onClick={() => page !== 1 && setPage((prev) => prev - 1)}
           >
@@ -284,7 +296,7 @@ const Coupon = () => {
                 d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
               />
             </svg>
-          </Link>
+          </button>
         </div>
       </div>
       <Modal
@@ -335,23 +347,23 @@ const Coupon = () => {
                   placeholder=" Discount in Amount"
                 />
               </div>
-
-              <button
-                type="submit"
-                class="px-3 py-2 mt-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
-              >
-                Save
-              </button>
-              <button
+             
+            </form>
+          </ModalBody>
+          <ModalFooter><button
                 type="button"
-                class="px-3 py-2 mt-3 ms-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
+                className="px-3 py-2 text-sm font-medium text-center text-red-400 border-2  border-red-400  bg-white  hover:bg-red-300 focus:outline-none"
                 onClick={handleClose}
               >
                 Cancel
               </button>
-            </form>
-          </ModalBody>
-          <ModalFooter></ModalFooter>
+
+              <button
+                type="submit"
+                class="px-3 py-2 text-sm font-medium text-center text-white bg-red-400  hover:bg-red-300 "
+              >
+                Save
+              </button></ModalFooter>
         </ModalContent>
       </Modal>
     </>

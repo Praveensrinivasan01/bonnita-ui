@@ -12,7 +12,7 @@
 body {
   font-family: 'Lexend', sans-serif;
   background-color: #fff !important;
-  overflow-x: hidden !important;
+ overflow: hidden;
   margin: 0; 
 }
 
@@ -284,4 +284,13 @@ html{
 
 .loading {
   animation: loadingAnimation 2s infinite;
+}
+
+.dash_cards:hover{
+  transform: translateY(-7px);
+  transition: .5s;
+  cursor: pointer;
+}
+.dash_cards{
+  transition: .5s;
 }

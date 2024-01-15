@@ -5,12 +5,12 @@ import { Routes } from "./Routes/Routes";
 import "./styles.scss"
 
 function App() {
-  const  path = window.location.pathname
+  const path = window.location.pathname
   return (
     <>
-      {path.startsWith("/admin") ? null : <Header  />}
-        <Routes />
-      {/* {path.startsWith("/admin") ? null : <Footer />} */}
+      {path.startsWith("/admin") ? null : <Header />}
+      <Routes />
+      {path.startsWith("/admin") ? null : <Footer />}
     </>
   );
 

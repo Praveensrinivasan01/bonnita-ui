@@ -38,7 +38,8 @@ const WhyUs = () => {
     const [editid, setEditid] = useState("");
     const [searchParam, setSearchParams] = useState("");
     const [data, sendData] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
+    const [TotalCount, SetTotalCount] = useState()
     const debounceSearchValue = useDebounce(searchParam, 1000)
 
     const handleFileChange = (e, type,api) => {
@@ -73,6 +74,7 @@ const WhyUs = () => {
             }/landingpage/get-whyus-image`, "admin");
         if (res.data.statusCode == 200) {
             setwhyus(res.data.data);
+            SetTotalCount(res.data.count)
             console.log(res, "rest");
         }
     };
@@ -193,7 +195,7 @@ const WhyUs = () => {
                                 d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                             />
                         </svg>
-                        <span>Add Why Us</span>
+                        <span>Edit Lookbook</span>
                     </button>
                 </div>
 
@@ -401,9 +403,11 @@ const WhyUs = () => {
             >
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">
-                        {editmode ? "Edit WhyUs" : "Add WhyUs"}
+                        {editmode ? "Edit WhyUs" : "Add Lookbook"}
                     </ModalHeader>
                     <ModalBody>
+                    <div className="row">
+                        <div className="col-md-6">
                         <div>
                             <label
                                 for="default-input"
@@ -425,8 +429,38 @@ const WhyUs = () => {
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 placeholder="Left Content"
                             />
+
+<div className="mt-2 mb-2">
+                            <label class="block">
+                                <span class="sr-only">Choose Left image</span>
+                                <input
+                                    accept="image/*"
+                                    onChange={(e)=>handleFileChange(e,'leftSideImage')}
+                                    type="file"
+                                    class="block w-full text-sm text-gray-500
+                            file:mr-4 file:py-2 file:px-4
+                             file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-slate-900 file:text-white
+                            hover:file:bg-slate-800 file:cursor-pointer"
+                                />
+                            </label>
                         </div>
-                        <div>
+                     
+                        </div>
+                        {leftSideImage && (
+                            <div>
+                                <img
+                                    class="rounded-xl sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+                                    src={leftSideImage}
+                                    alt="Image Description"
+                                />
+                            </div>
+                        )}
+                        </div>
+
+                    <div className="col-md-6">
+                    <div>
                             <label
                                 for="message"
                                 class="block mb-2 text-sm font-medium text-gray-900"
@@ -441,6 +475,23 @@ const WhyUs = () => {
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="Right Content"
                             />
+
+<div className="mt-2 mb-2">
+                            <label class="block">
+                                <span class="sr-only">Choose Left image</span>
+                                <input
+                                    accept="image/*"
+                                    onChange={(e)=>handleFileChange(e,'rightSideImage')}
+                                    type="file"
+                                    class="block w-full text-sm text-gray-500
+                                    file:mr-4 file:py-2 file:px-4
+                                     file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-slate-900 file:text-white
+                                    hover:file:bg-slate-800 file:cursor-pointer"
+                                />
+                            </label>
+                        </div>
                         </div>
                         {/* <div>
                             <label
@@ -458,77 +509,41 @@ const WhyUs = () => {
                                 placeholder="Write thoughts here..."
                             ></textarea>
                         </div> */}
-                        <div>
-                            <label class="block">
-                                <span class="sr-only">Choose Left image</span>
-                                <input
-                                    accept="image/*"
-                                    onChange={(e)=>handleFileChange(e,'leftSideImage')}
-                                    type="file"
-                                    class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
-                            "
-                                />
-                            </label>
-                        </div>
-                        <div>
-                            <label class="block">
-                                <span class="sr-only">Choose Left image</span>
-                                <input
-                                    accept="image/*"
-                                    onChange={(e)=>handleFileChange(e,'rightSideImage')}
-                                    type="file"
-                                    class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-500 file:text-white
-                            hover:file:bg-blue-600
-                            "
-                                />
-                            </label>
-                        </div>
-                        {leftSideImage && (
-                            <div>
-                                <img
-                                    class="rounded-xl sm:w-48 sm:h-48 lg:w-60 lg:h-60"
-                                    src={leftSideImage}
-                                    alt="Image Description"
-                                />
-                            </div>
-                        )}
+                      
+                      
+                       
                         {rightSideImage && (
                             <div>
                                 <img
-                                    class="rounded-xl sm:w-48 sm:h-48 lg:w-60 lg:h-60"
+                                    class="rounded-xl sm:w-28 sm:h-28 lg:w-32 lg:h-32"
                                     src={rightSideImage}
                                     alt="Image Description"
                                 />
                             </div>
                         )}
+                    </div>
+                    </div>
+                   
                     </ModalBody>
                     <ModalFooter>
+                    <button
+                            type="button"
+                            class="px-3 py-2 text-sm font-medium text-center text-red-400 border-2  border-red-400  bg-white  hover:bg-red-300 focus:outline-none"
+                            className="px-3 py-2 text-sm font-medium text-center text-red-400 border-2  border-red-400  bg-white  hover:bg-red-300 focus:outline-none"
+                            onClick={handleClose}
+                        >
+                            Cancel
+                        </button>
                         <button
                             type="button"
-                            class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                            class="px-3 py-2 text-sm font-medium text-center text-white bg-red-400  hover:bg-red-300 "
                             onClick={() => {
                                 handleUpload(whyus);
                             }}
                         >
                             Save
                         </button>
-                        <button
-                            type="button"
-                            class="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
-                            className="px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none"
-                            onClick={handleClose}
-                        >
-                            Cancel
-                        </button>
+                       
                     </ModalFooter>
                 </ModalContent>
             </Modal>
