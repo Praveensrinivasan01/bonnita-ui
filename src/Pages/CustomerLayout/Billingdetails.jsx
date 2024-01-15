@@ -528,7 +528,7 @@ const Billingdetails = () => {
           <div id="main-content" className="site-main clearfix">
             <section className="checkout">
               <div className="themesflat-container">
-                <form className="form-checkout" onSubmit={handleSubmit}>
+                {/* <form className="form-checkout" > */}
                   <div className="row">
                     <div className="col-lg-7 col-md-6">
                       <h3 className="mb-4">Billing details</h3>
@@ -809,12 +809,12 @@ const Billingdetails = () => {
                                           />
                                           {/* {error && <p className="text-red-500 text-xs italic">{error}</p>} */}
                                         </div>
-                                        <button
+                                        <p
                                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                           onClick={handleCoupen}
                                         >
                                           Apply Now
-                                        </button>
+                                        </p>
 
                                       </div>
                                       {
@@ -1027,8 +1027,9 @@ const Billingdetails = () => {
                         </div> */}
                         <div className="btn-center">
                           <button
-                            type="submit"
+                            // type="submit"
                             className="text-bg-secondary p-3"
+                            onClick={handleSubmit}
                           >
                             NEXT STEP
                           </button>
@@ -1036,7 +1037,7 @@ const Billingdetails = () => {
                       </div>
                     </div>
                   </div>
-                </form>
+                {/* </form> */}
               </div>
             </section>
           </div>
