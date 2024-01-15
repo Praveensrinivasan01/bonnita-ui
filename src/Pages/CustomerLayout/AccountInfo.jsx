@@ -38,7 +38,7 @@ const AccountInfo = () => {
 
   useEffect(() => {
     getPrdouctDetails()
-  }, [])
+  }, [page])
 
   console.log(orderDetails, "orderDetails")
 
@@ -147,10 +147,10 @@ const AccountInfo = () => {
                                   <Link to={`/orderDetails/${item.order_id}`}>
                                     <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                       <div className="flex justify-center items-center">
-                                        <img
+                                        {/* <img
                                           className="font-medium text-gray-800 w-36"
                                           src={item.front_side}
-                                        />
+                                        /> */}
                                         <h2 className="font-medium text-gray-800 ms-3">
                                           {
                                             item.product_name[0]

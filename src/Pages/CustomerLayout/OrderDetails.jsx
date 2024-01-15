@@ -17,7 +17,7 @@ export const CustomerOrderDetails = () => {
         setOrderDetails(response.data.data);
         console.log(orderDetails, "orderDetails");
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -40,69 +40,72 @@ export const CustomerOrderDetails = () => {
         </div>
       </div> */}
       <div className="font-bold text-xl">Product Info</div>
-       <div className="title">
-                <div className="flex flex-col mt-6">
-                  <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                      <div className="overflow-hidden border border-gray-200 md:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-200">
-                          <thead className="bg-gray-50">
-                            <tr>
-                              <th
-                                scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
-                              >
-                                Product Name
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
-                              >
-                                Quantity
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
-                              >
-                                Price
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
-                            {orderDetails?.map((item) => {
-                            return (
+      <div className="title pb-10">
+        <div className="flex flex-col mt-6">
+          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+              <div className="overflow-hidden border border-gray-200 md:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200 ">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
+                      >
+                        Product Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
+                      >
+                        Quantity
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
+                      >
+                        Price
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200 ">
+                    {orderDetails?.map((item) => {
+                      return (
 
-                            <tr style={{ cursor: "pointer" }}>
-                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap flex item-center">
-                                  <img src={item.front_side} alt="#" className="w-32" />
-                                  <p className="text-gray-700 text-base lg:mt-10 lg:ms-3">{item.name}</p>
-                                </td>
-                              <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                <div>
-                                <p>{item.quantity}</p>
-                                </div>
-                              </td>
+                        <tr style={{ cursor: "pointer" }}>
+                          <td className="px-4 py-4 text-sm font-medium whitespace-nowrap flex item-center">
+                            <img src={item.front_side} alt="#" className="w-32" />
+                            <div className="flex flex-col">
+                              <p className="text-gray-700 text-base lg:mt-10 lg:ms-3">{item.name}</p>
+                              <p className="text-gray-700 text-base  lg:ms-3">{item.created_date}</p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                            <div>
+                              <p>{item.quantity}</p>
+                            </div>
+                          </td>
 
-                              <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                <div>
-                                  <h2 className="font-medium text-gray-800 ">
-                                  <p>{currencyType.symbol}{currencyConversion(item.price)}</p>
-                                  </h2>
-                                </div>
-                              </td>
-                            </tr>
+                          <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                            <div>
+                              <h2 className="font-medium text-gray-800 ">
+                                <p>{currencyType.symbol}{currencyConversion(item.price)}</p>
+                              </h2>
+                            </div>
+                          </td>
+                        </tr>
 
-                            )
-                            })}      
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-          
+
     </div>
   );
 };
