@@ -56,6 +56,7 @@ const Orders = () => {
                         <option value="RETURN">Returned</option>
                         <option value="REFUNDED">Refunded</option>
                         <option value="CANCELLED">Cancelled</option>
+                        <option value="RAISEDAREQUEST">REQUEST</option>
                     </select>
                 </div>
 
@@ -160,6 +161,8 @@ const Orders = () => {
                     </div>
                 </div>
             </div>
+
+            
 
             <div className="d-flex justify-content-end">
                 <div className="flex items-center mt-4 gap-x-4 sm:mt-0">

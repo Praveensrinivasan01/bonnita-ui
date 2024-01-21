@@ -133,7 +133,7 @@ const Banner = () => {
                       <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                         <div>
                           <h2 className="font-medium text-gray-800">
-                            {((page - 1) * 15) + (index + 1)}
+                            {(((page == 0 ? 1 : page) - 1) * 15) + (index + 1)}
                           </h2>
                         </div>
                       </td>

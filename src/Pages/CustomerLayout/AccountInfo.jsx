@@ -121,6 +121,12 @@ const AccountInfo = () => {
                             <tr>
                               <th
                                 scope="col"
+                                className="px-4 py-3.5 text-sm font-normal text-center text-gray-500"
+                              >
+                                SI No
+                              </th>
+                              <th
+                                scope="col"
                                 className="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
                               >
                                 Product Name
@@ -137,13 +143,32 @@ const AccountInfo = () => {
                               >
                                 Status
                               </th>
+                              <th
+                                scope="col"
+                                className="px-4 py-3.5 text-sm font-normal text-center text-gray-500"
+                              >
+                                Order Date
+                              </th>
                             </tr>
                           </thead>
                           <tbody className="bg-white divide-y divide-gray-200">
-                            {orderDetails?.map((item) => {
+                            {orderDetails?.map((item, index) => {
                               return (
 
                                 <tr style={{ cursor: "pointer" }}>
+                                  <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                    <div className="flex justify-center items-center">
+                                      {/* <img
+                                          className="font-medium text-gray-800 w-36"
+                                          src={item.front_side}
+                                        /> */}
+                                      <h2 className="font-medium text-gray-800 ">
+                                        {
+                                          (((page == 0 ? 1 : page) - 1) * 15) + (index + 1)
+                                        }
+                                      </h2>
+                                    </div>
+                                  </td>
                                   <Link to={`/orderDetails/${item.order_id}`}>
                                     <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                       <div className="flex justify-center items-center">
@@ -170,13 +195,25 @@ const AccountInfo = () => {
 
                                   <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                     <div>
+                                      <h2 className="font-medium text-gray-800  ">
+                                        {item?.status === "PENDING" ? "ORDER PLACED" : item?.status}
+                                      </h2>
+                                    </div>
+                                  </td>
+                                  <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                    <div className="flex justify-center items-center">
+                                      {/* <img
+                                          className="font-medium text-gray-800 w-36"
+                                          src={item.front_side}
+                                        /> */}
                                       <h2 className="font-medium text-gray-800 ">
-                                        {item.status}
+                                        {
+                                          item.created_date
+                                        }
                                       </h2>
                                     </div>
                                   </td>
                                 </tr>
-
                               )
                             })}
                           </tbody>

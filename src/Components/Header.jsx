@@ -44,6 +44,9 @@ const Header = () => {
           response1 = await axios.get(
             `${process.env.REACT_APP_API_URL}/product/get-all-favourites/${state2?.id}`
           );
+
+
+          // if (state.length !== response1.data.count) {
           if (response1 && response1?.data?.data?.length > 0) {
             if (favData.length !== response1.data.data?.length) {
               response1?.data?.data?.forEach((item) => {
@@ -51,16 +54,17 @@ const Header = () => {
               });
             }
           }
+          // }
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     };
-  
-    fetchDataFav();
-  }, [1]);
 
- 
+    fetchDataFav();
+  }, [state]);
+
+
 
   useEffect(() => {
     if (favData?.length) {
@@ -68,14 +72,17 @@ const Header = () => {
     }
   }, [favData]);
 
+
   useEffect(() => {
     const fetchData = async () => {
+
       try {
         let cartResponse;
         if (state2?.id) {
           cartResponse = await axios.get(
             `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
           );
+          // const state = cartStore((state) => state?.cart);
           if (cartResponse && cartResponse?.data?.data?.length > 0) {
             if (state?.length !== cartResponse.data.data?.length) {
               cartResponse?.data?.data?.forEach((item) => {
@@ -88,10 +95,10 @@ const Header = () => {
         console.error("Error fetching data: ", error);
       }
     };
-  
+
     fetchData();
   }, [1]);
-  
+
 
   useEffect(() => {
     if (totalQuantity12) {
@@ -105,7 +112,7 @@ const Header = () => {
     window.location.reload();
     clearData();
   };
-  
+
   // console.log(state2.id);
   const path1 = useLocation();
   console.log(path1.pathname[1], "path1");
@@ -156,8 +163,6 @@ const Header = () => {
                   <img src={logo} className="" alt="#" />
                 </Link>
               </div>
-              <input type="radio" name="slider" id="menu-btn" />
-              <input type="radio" name="slider" id="close-btn" />
               <ul className="nav-links">
                 <label htmlFor="close-btn" className="btn close-btn">
                   <FontAwesomeIcon icon={faTimes} />
@@ -264,7 +269,7 @@ const Header = () => {
                       </NewLink>
                     </li>
 
-                    {}
+                    { }
                     <li>
                       <Link to="" className="d-md-none d-block">
                         <p className="m-0 fw-medium">Account Details</p>
@@ -302,10 +307,10 @@ const Header = () => {
                 >
                   <img src={HearIcon} alt="#" className="img-fluid" />
                   <p className="position-absolute text-black totalcount">
-                    {state2.id && totalFav ?totalFav :0}
+                    {state2.id && totalFav ? totalFav : 0}
                   </p>
                 </Link>
-                
+
                 <Link
                   to="/cart"
                   className="position-relative d-md-block d-none"

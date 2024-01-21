@@ -11,29 +11,83 @@ const OrderDetails = () => {
 
     console.log(id, "id")
 
+
+    useEffect(() => {
+        getAllOrders()
+    }, [id])
+
     useEffect(() => {
         getOrdersDetails()
     }, [id])
-
     const getOrdersDetails = async () => {
         const usersResponse = await axios.post(`${process.env.REACT_APP_API_URL}/admin/get-order-details/${id}`,)
         if (usersResponse?.data?.statusCode === 200) {
-            console.log(usersResponse.data.customers[0].firstname)
-            setData(usersResponse.data.customers)
+            console.log(usersResponse, "usersResponse")
+            console.log(usersResponse?.data?.customers[0]?.compaints?.firstname)
+            setData(usersResponse?.data?.customers)
         }
     }
     const PostStatus = async (Status) => {
         const body = {
-            order_id:id,
-            status:Status
+            order_id: id,
+            status: Status
         }
-        const usersResponse = await axios.post(`${process.env.REACT_APP_API_URL}/admin/change-order-status`,body)
+        const usersResponse = await axios.post(`${process.env.REACT_APP_API_URL}/admin/change-order-status`, body)
         if (usersResponse?.data?.statusCode === 200) {
             console.log(usersResponse)
             // setData(usersResponse.data.customers)
         }
     }
-   
+
+    const [orderStatus, setOrderStatus] = useState([])
+    const getAllOrders = async () => {
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/order/get-complaints/${id}`)
+            console.log(res, "responseGell")
+            if (res?.data?.statusCode === 200) {
+                setOrderStatus(res?.data)
+
+            } else {
+                setOrderStatus([])
+            }
+        } catch (error) {
+
+        }
+    }
+
+    const handleAccept = async (e) => {
+        try {
+
+            const body = {
+                status: "APPROVED",
+                order_id: id,
+                response: ""
+            }
+
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/order/update-complaint`, body)
+            console.log(response)
+
+        } catch (error) {
+
+        }
+    }
+
+    const handleReject = async () => {
+        try {
+            const body = {
+                status: "REJECTED",
+                order_id: id,
+                response: ""
+            }
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/order/update-complaint`, body)
+            console.log(response)
+        } catch (error) {
+
+        }
+    }
+
+    console.log(orderStatus?.image?.imageData, "orderStatus")
+
     return (
         <>
             <div class="bg-white group grid w-full grid-cols-12 overflow-hidden rounded-lg border py-8 text-gray-700 shadow transition hover:shadow-lg sm:mx-auto">
@@ -65,11 +119,39 @@ const OrderDetails = () => {
                             <option value="DELIVERED">Delivered</option>
                             <option value="RETURN">Returned</option>
                             <option value="REFUNDED">REFUNDED</option>
-                            <option value="CANCELLED">CANCELLED</option>
+                            {/* <option value="CANCELLED">CANCELLED</option> */}
                         </select>
                     </div>
                 </div>
             </div>
+            {
+                orderStatus?.statusCode === 200 ?
+                    <div class="bg-white group  mt-3 w-full flex flex-col  rounded-lg border py-8 text-gray-700 shadow transition hover:shadow-lg sm:mx-auto">
+                        <div class=" flex flex-col justify-center  items-center ps-5">
+                            <h3 class="text-sm text-gray-600">Complaints</h3>
+                            <p>Complain Type : {orderStatus?.compaints?.complaint_type}</p>
+                            <p>Reason :{orderStatus?.compaints?.reason}</p>
+                            {/* <p>{`${orderStatus?.image?.imageData}`} </p> */}
+                            <img src={orderStatus?.image?.imageData} alt="" className='img-fluid' />
+                        </div>
+
+                        {
+                            orderStatus?.compaints?.status === "PENDING" &&
+                            <div className='flex justify-center items-center  mt-3'>
+                                <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                    onClick={(e) => handleAccept()}
+                                >Accept</button>
+                                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                                    onClick={(e) => handleReject()}
+                                >Reject</button>
+
+                            </div>
+                        }
+
+                    </div>
+                    : ""
+            }
+
 
             <div class="flex flex-col mt-6">
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -96,39 +178,39 @@ const OrderDetails = () => {
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                {
-                                    data?.map((item) => (
-                                    <tr>
-                                        <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                            <div>
-                                                <h2 class="font-medium text-gray-800 ">{item?.name}</h2>
-                                                <p class="text-sm font-normal text-gray-600">{item?.features}</p>
-                                            </div>
-                                        </td>
+                                    {
+                                        data?.map((item) => (
+                                            <tr>
+                                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                    <div>
+                                                        <h2 class="font-medium text-gray-800 ">{item?.name}</h2>
+                                                        <p class="text-sm font-normal text-gray-600">{item?.features}</p>
+                                                    </div>
+                                                </td>
 
-                                        <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                            <div>
-                                                <h2 class="font-medium text-gray-800 ">{item?.quantity}</h2>
-                                            </div>
-                                        </td>
+                                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                    <div>
+                                                        <h2 class="font-medium text-gray-800 ">{item?.quantity}</h2>
+                                                    </div>
+                                                </td>
 
-                                        <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                            <div>
-                                                <h2 class="font-medium text-gray-800 ">{item?.price}</h2>
-                                                {/* <p class="text-sm font-normal text-gray-600">{item?.mrp}</p> */}
-                                            </div>
-                                        </td>
+                                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                    <div>
+                                                        <h2 class="font-medium text-gray-800 ">{item?.price}</h2>
+                                                        {/* <p class="text-sm font-normal text-gray-600">{item?.mrp}</p> */}
+                                                    </div>
+                                                </td>
 
 
-                                        {/* <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                {/* <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div>
                                             <h2 class="font-medium text-gray-800 ">123</h2>
                                             <p class="text-sm font-normal text-gray-600">123</p>
                                         </div>
                                     </td> */}
-                                    </tr>
-                                    ))
-                                }
+                                            </tr>
+                                        ))
+                                    }
                                     <tr>
                                         <td colSpan={1}>
                                         </td>

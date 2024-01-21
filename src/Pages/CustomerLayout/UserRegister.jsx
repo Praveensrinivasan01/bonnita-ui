@@ -27,40 +27,47 @@ const UserRegister = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     console.log(process.env.REACT_APP_API_URL);
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/signup`,
-        {
-          email,
-          firstname,
-          lastname,
-          mobile,
-          password,
-        }
-      );
-
-      console.log(response, "test");
-      if (password === ConfirmPassword) {
-        if (response.data.statusCode === 200) {
-          console.log("success");
-          setUserData({
+    if (mobile?.length === 10) {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}/users/signup`,
+          {
             email,
             firstname,
             lastname,
             mobile,
-          })
-          Navigate("/userLogin");
-        } else if (response.data.statusCode === 400) {
-          console.log("Email already exists");
-          toast.error(response.data.message);
+            password,
+          }
+        );
+
+        console.log(response, "test");
+        if (password === ConfirmPassword) {
+          if (response.data.statusCode === 200) {
+            console.log("success");
+            setUserData({
+              email,
+              firstname,
+              lastname,
+              mobile,
+            })
+            Navigate("/userLogin");
+          } else if (response.data.statusCode === 400) {
+            console.log("Email already exists");
+            toast.error(response.data.message);
+          } else {
+            console.log("fucked");
+          }
         } else {
-          console.log("fucked");
+          toast.error("Password do not match");
         }
-      } else {
-        toast.error("Password do not match");
-      }
-    } catch (error) {}
+      } catch (error) { }
+
+    } else {
+      toast.error("Please enter valid mobile number");
+    }
   };
+
+  console.log(mobile, "mobile")
 
   const handlePassword = () => {
     setShowPassword(!showPassword);
@@ -173,14 +180,13 @@ const UserRegister = () => {
                   value={mobile}
                   onChange={(e) => {
                     const phNumber = e.target.value.replace(/[^0-9]/g, "");
-                    if (phNumber.length <= 10) {
-                      setMobile(phNumber);
-                    }
+                    setMobile(phNumber);
                   }}
                   className="w-full px-3 py-3 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                  autofocus
+                  autoFocus
                   required
                 />
+
               </div>
 
               <div className="mb-3">
@@ -200,6 +206,7 @@ const UserRegister = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     minlength="6"
+                    required
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -239,6 +246,7 @@ const UserRegister = () => {
                     value={ConfirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     minlength="6"
+                    required
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

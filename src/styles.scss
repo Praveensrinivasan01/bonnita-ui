@@ -55,6 +55,29 @@ html{
   scrollbar-width: none;
 }
 
+.tr-style{
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 100 !important;
+  border: none;
+  border-color: #E5E7EB !important;
+}
+
+.first-tr-style{
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 100 !important;
+}
+
+// .tr-style:last-child{
+//   padding-top: 30px !important; 
+// }
+
+// .tr-style td:last-child{
+//   padding-top: 30px !important;
+//   border: #EB3300 !important;
+// }
+
 .hide-scroll-bar::-webkit-scrollbar {
   width: 0; 
   height: 0; 
