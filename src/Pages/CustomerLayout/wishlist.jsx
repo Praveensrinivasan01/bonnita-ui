@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ import  {useState}  from "react";
 import axios from "axios";
 import { loginStore } from "../../Zustand/loginStore";
 import { useCurrencyStore } from "../../Zustand/currency";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Wishlist = () => {
 
@@ -27,6 +28,15 @@ const Wishlist = () => {
       getCategories();
     }
   },[]);
+
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   console.log(state2Id,"item")
   

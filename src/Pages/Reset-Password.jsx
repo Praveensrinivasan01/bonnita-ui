@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { AuthContext } from '../Context/AuthContext';
 
 
 function ResetPassword() {
@@ -12,7 +13,14 @@ function ResetPassword() {
     const search = location.search;
     const searchParams = new URLSearchParams(search);
     const user_id = searchParams.get("id");
-
+    const { fetchData, fetchDataFav } = useContext(AuthContext);
+    useEffect(() => {
+      fetchDataFav();
+    }, []);
+  
+    useEffect(() => {
+      fetchData();
+    }, []);
 
 
 

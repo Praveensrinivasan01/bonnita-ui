@@ -155,6 +155,12 @@ const Products = () => {
                     >
                       MRP
                     </th>
+                    <th
+                      scope="col"
+                      class="px-4 py-3.5 text-sm font-normal text-left text-gray-500"
+                    >
+                      Order Quantity
+                    </th>
 
                     <th
                       scope="col"
@@ -210,6 +216,14 @@ const Products = () => {
                         <div>
                           <h2 class="font-medium text-gray-800 ">
                             {product.mrp}
+                          </h2>
+                        </div>
+                      </td>
+
+                      <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                        <div>
+                          <h2 class="font-medium text-gray-800 ">
+                            {}
                           </h2>
                         </div>
                       </td>

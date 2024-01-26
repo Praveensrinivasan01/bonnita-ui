@@ -1,9 +1,15 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
+
+  const { fetchData } = useContext(AuthContext);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   faMinus,
   faPlus,
@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../Assets/LandingPageImages/product-35.jpg";
 import {
   cartStore,
@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { addToPlaceOrder } from "../../Zustand/placeOrderdetails";
 import { useCurrencyStore } from "../../Zustand/currency";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Cart = () => {
   const iconStyle = {
@@ -41,10 +42,17 @@ const Cart = () => {
   };
   const state = cartStore((state) => state.cart);
   // let totalQuantity = state.reduce((total, item) => total + item.cart_quantity, 0);
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
 
-
-
+  const navigate = useNavigate();
   const state2 = loginStore((state) => state.login);
   const state2Id = state2?.id;
 
@@ -141,7 +149,7 @@ const Cart = () => {
 
       {state2Id && state?.map((cartDetails) => (
         <div className="row tableForAddtoCart border-top-0 rounded-0 py-4 px-2 d-flex align-items-center">
-          <div className="col-md-4 col-12 d-flex align-items-center justify-center">
+          <div className="col-md-4 col-12 d-flex align-items-center justify-center" onClick={()=>navigate(`/product/${cartDetails.id}`)}>
             <img src={cartDetails.front_side} className="img-fluid w-28 md:w-36 pe-3 pb-md-0 pb-2" />
             <p className="">{cartDetails.name}</p>
           </div>
@@ -150,9 +158,9 @@ const Cart = () => {
             <span className="d-flex align-items-center">
               <p
                 className=""
-                style={{ color: Instock ? "#20C86D" : "#777" }}
+                style={{ color: cartDetails.cart_quantity < cartDetails.quantity ? "#20C86D" : "#777" }}
               >
-                Instock
+                {cartDetails.cart_quantity < cartDetails.quantity ? "In Stock" : "Out Of Stock"}
               </p>{" "}
               <FontAwesomeIcon
                 icon={faMinus}
@@ -166,6 +174,7 @@ const Cart = () => {
                 {cartDetails.cart_quantity}
                 {console.log(cartDetails.cart_quantity, "quantity")}
               </span>{" "}
+              { cartDetails.cart_quantity < cartDetails.quantity &&
               <FontAwesomeIcon
                 icon={faPlus}
                 style={{ ...iconStyle, cursor: "pointer" }}
@@ -173,7 +182,8 @@ const Cart = () => {
                 onClick={() => {
                   increment(cartDetails, state2);
                 }}
-              />{" "}
+              />
+              }{" "}
               <FontAwesomeIcon
                 icon={faTrash}
                 style={{ cursor: "pointer", ...iconStyles1 }}

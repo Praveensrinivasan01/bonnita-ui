@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
 import { toast } from 'react-toastify';
+import { AuthContext } from '../Context/AuthContext';
 
 const ChangePassword = () => {
   const [current_password, setcurpass] = useState('');
   const [new_password, setNewpassword] = useState('');
+
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handlereset = async(e)=>{
     e.preventDefault()

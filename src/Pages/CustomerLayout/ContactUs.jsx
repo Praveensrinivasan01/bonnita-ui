@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../Styles/LandingPage/Queries.css";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ContactUs = () => {
   const [feedBacks, setFeedBacks] = useState();
@@ -12,6 +13,15 @@ const ContactUs = () => {
   const [email, setemail] = useState("");
   const [query, setqueryType] = useState("");
   const [comments, setcomments] = useState("");
+
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleQueries = async (e) => {
     e.preventDefault();

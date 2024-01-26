@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../Assets/Logo/LogoForBonnita.jpg";
 import SearchIcon from "../Assets/Icons/search-normal.svg";
@@ -21,6 +21,7 @@ import axios from "axios";
 import CurrencySwitcher from "./CurrencySwitcher";
 import { clearData } from "../Zustand/userDetails";
 import CustomNavBar from "./CustomNavBar";
+import { AuthContext } from "../Context/AuthContext";
 
 const Header = () => {
   const pathurl = window.location.pathname;
@@ -35,34 +36,14 @@ const Header = () => {
   const state2 = loginStore((state) => state?.login);
   const favData = wishList((state) => state?.wishList);
   console.log(totalQuantity12, "totalQuantity12");
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
 
   useEffect(() => {
-    const fetchDataFav = async () => {
-      try {
-        let response1;
-        if (state2?.id) {
-          response1 = await axios.get(
-            `${process.env.REACT_APP_API_URL}/product/get-all-favourites/${state2?.id}`
-          );
-
-
-          // if (state.length !== response1.data.count) {
-          if (response1 && response1?.data?.data?.length > 0) {
-            if (favData.length !== response1.data.data?.length) {
-              response1?.data?.data?.forEach((item) => {
-                favourite(item, state2);
-              });
-            }
-          }
-          // }
-        }
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-
-    fetchDataFav();
-  }, [state]);
+    fetchData();
+  }, []);
 
 
 
@@ -73,31 +54,7 @@ const Header = () => {
   }, [favData]);
 
 
-  useEffect(() => {
-    const fetchData = async () => {
 
-      try {
-        let cartResponse;
-        if (state2?.id) {
-          cartResponse = await axios.get(
-            `${process.env.REACT_APP_API_URL}/product/get-all-cart/${state2?.id}`
-          );
-          // const state = cartStore((state) => state?.cart);
-          if (cartResponse && cartResponse?.data?.data?.length > 0) {
-            if (state?.length !== cartResponse.data.data?.length) {
-              cartResponse?.data?.data?.forEach((item) => {
-                increment(item, state2);
-              });
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-
-    fetchData();
-  }, [1]);
 
 
   useEffect(() => {
@@ -328,7 +285,7 @@ const Header = () => {
                       </span>
                       <div class="dropdown-content leading-10">
                         <Link to="accountinfo">
-                          <p className="m-0 fw-medium">Account Details</p>
+                          <p className="m-0 fw-medium w-32">Account Details</p>
                         </Link>
                         {/* <Link to="/userLogin"> */}
                         <p
@@ -348,7 +305,7 @@ const Header = () => {
                       <span className="profileImg">
                         <img src={ProfileIcon} alt="#" className="img-fluid" />
                       </span>
-                      <div class="dropdown-content">
+                      <div class="dropdown-content leading-10">
                         <Link to="/userRegister">
                           <p className="m-0 fw-medium">Register</p>
                         </Link>

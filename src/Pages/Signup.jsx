@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../Context/AuthContext';
 
 function Signup() {
   const [firstname, setFirstname] = useState('');
@@ -10,6 +11,15 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSignup = async (e) => {
     e.preventDefault()

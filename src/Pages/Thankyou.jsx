@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import thankYou from '../Assets/ThankYou/4431304.jpg'
-
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../Context/AuthContext'
 const ThankYou = ({ data }) => {
+    const navigate = useNavigate()
+    const { fetchData, fetchDataFav } = useContext(AuthContext);
+    useEffect(() => {
+        fetchDataFav();
+    }, []);
 
     useEffect(() => {
+        fetchData();
+    }, []);
+    useEffect(() => {
         setTimeout(() => {
-            window.location.href = '/';
+            navigate('/')
         }, 5500);
     }, [])
 

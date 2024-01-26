@@ -27,7 +27,7 @@ const ProductInfo = () => {
   const currencyConversion = useCurrencyStore((state) => state?.currencyConversion)
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
     let isMounted = true;
     if (id) {
 
@@ -58,7 +58,7 @@ const ProductInfo = () => {
     }
   }, [id]);
 
-  console.log(productDetails1,"productDetails1")
+  console.log(productDetails1, "productDetails1")
   const [imgChange, setImgaChange] = useState("");
 
   const backSide = () => {
@@ -83,7 +83,7 @@ const ProductInfo = () => {
   const notify3 = () => {
     if (state2?.id) {
       // toast(`🛒  ${products?.name} Added To Cart`, { draggable: true });
-      increment(productDetails1, state2,id);
+      increment(productDetails1, state2, id);
     } else {
       toast("User Needs to Login", { draggable: true });
       navigate("/userLogin");
@@ -92,17 +92,21 @@ const ProductInfo = () => {
 
   const notify4 = (products) => {
     if (state2?.id) {
-        favourite(products,state2)
+      favourite(products, state2)
     } else {
       toast("User Needs to Login", { draggable: true });
       navigate("/userLogin");
     }
   };
 
-  const notify5 = ()=>{
-    if(state2?.id){
-      navigate("/billingdetails")
-    }else{
+  const notify5 = (  ) => {
+    if (state2?.id) {
+      if(productDetails1?.quantity > 0){
+        navigate("/billingdetails")
+      }else{
+        toast(`${productDetails1.name} Is Out Of Stock`)
+      }
+    } else {
       toast("User Needs to Login", { draggable: true });
       navigate("/userLogin");
     }
@@ -136,7 +140,7 @@ const ProductInfo = () => {
       <div className="infor-product container-md">
         <div className="row ">
           <div className="col-md-4 ">
-          {/* <SliderforProduct {...settings}> */}
+            {/* <SliderforProduct {...settings}> */}
             <div className="" >
               {imageData && (
                 <img
@@ -145,48 +149,48 @@ const ProductInfo = () => {
                   className=""
                 />
               )}
-              </div>
-              
-           <div className="flex gap-3 ">
-              <div>
-              <img
-                src={imageData?.front_side}
-                alt="Image"
-                className=" cursor-pointer"
-                onClick={frontSide}
-              />
-              </div>
-              <div>
-
-              <img
-                src={imageData?.back_side}
-                alt="Image"
-                className="img-fluid cursor-pointer"
-                onClick={backSide}
-              />
-              </div>
-              <div>
-
-              <img
-                src={imageData?.left_side}
-                alt="Image"
-                className="img-fluid cursor-pointer"
-                onClick={leftSide}
-              />
-              </div>
-              <div>
-              <img
-                src={imageData?.right_side}
-                alt="Image"
-                className="img-fluid cursor-pointer"
-                onClick={rightSide}
-              />
-
             </div>
-           </div>
+
+            <div className="flex gap-3 ">
+              <div>
+                <img
+                  src={imageData?.front_side}
+                  alt="Image"
+                  className=" cursor-pointer"
+                  onClick={frontSide}
+                />
+              </div>
+              <div>
+
+                <img
+                  src={imageData?.back_side}
+                  alt="Image"
+                  className="img-fluid cursor-pointer"
+                  onClick={backSide}
+                />
+              </div>
+              <div>
+
+                <img
+                  src={imageData?.left_side}
+                  alt="Image"
+                  className="img-fluid cursor-pointer"
+                  onClick={leftSide}
+                />
+              </div>
+              <div>
+                <img
+                  src={imageData?.right_side}
+                  alt="Image"
+                  className="img-fluid cursor-pointer"
+                  onClick={rightSide}
+                />
+
+              </div>
+            </div>
             {/* </SliderforProduct> */}
           </div>
-            {/* <div className="img-thumnail d-flex justify-content-center mt-3 gap-1">
+          {/* <div className="img-thumnail d-flex justify-content-center mt-3 gap-1">
               <img
                 src={imageData?.front_side}
                 alt="Image"
@@ -260,7 +264,7 @@ const ProductInfo = () => {
               <div className="px-3 ml-2 flex justify-center align-items-center border border-black ">
                 <div
                   className="add-to-wishlist "
-                  style={{cursor:"pointer"}}
+                  style={{ cursor: "pointer" }}
                   onClick={() => notify4(productDetails1)}
                 >
                   <FontAwesomeIcon
@@ -286,6 +290,18 @@ const ProductInfo = () => {
                       </>)
                     })}
                   </tr></>) : ""}
+                <tr>
+                  <td className=" fw-medium mt-3 col-2 ">Product Left</td>
+                  <td>:</td>
+                  <td className=" mt-3">{productDetails1?.quantity}</td>
+                </tr>
+                {
+                  <tr>
+                    <td>
+                      { }
+                    </td>
+                  </tr>
+                }
 
                 <tr>
                   <td className=" fw-medium mt-3 ">SKU</td>

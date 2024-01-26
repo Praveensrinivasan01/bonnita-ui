@@ -29,18 +29,20 @@ export const increment = async (item, userId) => {
   if (userId?.id && userId) {
     if (itemIndex !== -1) {
       cartStore.setState((state) => {
-        state.cart[itemIndex].cart_quantity += 1;
+        let quantity = state.cart[itemIndex].cart_quantity + 1
         const fetchData = async () => {
           let body = {
             user_id: userId.id,
             product_id: item.id,
-            quantity: state.cart[itemIndex].cart_quantity,
+            quantity: quantity,
           };
           const response = await axios.post(
             `${process.env.REACT_APP_API_URL}/product/add-cart`,
             body
-          );
-          if (response.status === 200) {
+          );          
+          console.log("first", response)
+          if (response.data.statusCode === 200) {
+            state.cart[itemIndex].cart_quantity += 1;
             toast(
               <div>
                 <FontAwesomeIcon icon={faHeart} /> {state.cart[itemIndex].name}{" "}
@@ -49,12 +51,16 @@ export const increment = async (item, userId) => {
               { draggable: true }
             );
           } else {
-            toast("This product have been already added to your Cart", {
+            toast.error(`${state.cart[itemIndex].name} Is Out Of Stock`, {
               draggable: true,
             });
           }
         };
         fetchData();
+        console.log(
+          "Cart State (after state update):",
+          cartStore.getState().cart
+        );
         return { cart: [...state.cart] };
       });
     } else {
@@ -73,20 +79,26 @@ export const increment = async (item, userId) => {
             let response1 = await axios.get(
               `${process.env.REACT_APP_API_URL}/product/get-all-cart/${userId.id}`
             );
-            const data = [
-              ...state.cart,
-              { ...item, cart_quantity: 1, response1 },
-            ];
-            console.log(data, "updatedCart");
-
-            cartStore.setState({ cart: data });
-            toast(
-              <div>
-                <FontAwesomeIcon icon={faHeart} /> {item.name} Added To Your
-                Cart
-              </div>,
-              { draggable: true }
-            );
+            if(response.data.statusCode == 200){
+              const data = [
+                ...state.cart,
+                { ...item, cart_quantity: 1, response1 },
+              ];
+              console.log(data, "updatedCart");
+  
+              cartStore.setState({ cart: data });
+              toast(
+                <div>
+                  <FontAwesomeIcon icon={faHeart} /> {item.name} Added To Your
+                  Cart
+                </div>,
+                { draggable: true }
+              );
+            } else {
+              toast.error(`${item.name} Is Out Of Stock`, {
+                draggable: true,
+              });
+            }
             console.log(
               "Cart State (after state update):",
               cartStore.getState().cart

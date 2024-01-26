@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../Styles/Login.css";
 import { loginStore } from "../../Zustand/loginStore";
 import { UserDetails, setUserData } from "../../Zustand/userDetails";
+import { AuthContext } from "../../Context/AuthContext";
 
 const UserRegister = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,11 @@ const UserRegister = () => {
       Navigate("/");
     }
   });
+
+  const { fetchData } = useContext(AuthContext);
+  useEffect(() => {
+    fetchData();
+  }, []);
   const handleSignup = async (e) => {
     e.preventDefault();
     console.log(process.env.REACT_APP_API_URL);

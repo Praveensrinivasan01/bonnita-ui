@@ -1,7 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import ProductList from './Collections/ProductList';
+import { AuthContext } from '../../Context/AuthContext';
 
 const ShopPage = () => {
 
@@ -30,6 +31,11 @@ const ShopPage = () => {
       sendData([])
     }
   }
+
+  const { fetchData } = useContext(AuthContext);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const ShowMenuveganLeather = async () => {
     const response = await axios.get(

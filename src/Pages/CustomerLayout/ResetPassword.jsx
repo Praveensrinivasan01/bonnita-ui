@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ResetPassword = () => {
   const location = useLocation();
@@ -12,6 +13,11 @@ const ResetPassword = () => {
   const user_id = searchParams.get("id");
 
   const navigate = useNavigate()
+
+  const { fetchData } = useContext(AuthContext);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

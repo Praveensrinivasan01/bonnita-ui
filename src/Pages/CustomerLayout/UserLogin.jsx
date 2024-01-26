@@ -8,6 +8,7 @@ import { setLoginData } from "../../Zustand/loginStore";
 import { UserDetails, setUserData } from "../../Zustand/userDetails";
 import { AuthGet } from "../../Commons/httpService";
 import { Modal } from "@nextui-org/modal";
+import { AuthContext } from "../../Context/AuthContext";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
@@ -35,6 +36,11 @@ const UserLogin = () => {
   // console.log(location);
 
   // console.log(previousPageUrl)
+
+  const { fetchData } = useContext(AuthContext);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleClose = () => {
     localStorage.clear("userOrderDetails")

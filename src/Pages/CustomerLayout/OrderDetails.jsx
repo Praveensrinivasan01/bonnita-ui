@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useCurrencyStore } from "../../Zustand/currency";
 import { Modal } from 'flowbite-react';
@@ -8,6 +8,7 @@ import OrderTracking from "../../Components/OrderTrack";
 import { loginStore } from "../../Zustand/loginStore";
 import PaymentInformation from "./PaymentInformation";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../Context/AuthContext";
 // import {
 //   Modal,
 // } from "@nextui-org/modal";
@@ -23,12 +24,18 @@ export const CustomerOrderDetails = () => {
     getAllOrders()
   }, [])
 
+  const { fetchData } = useContext(AuthContext);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const getOrderDetails = async () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/order/get-order-items/${id}`
       );
       if (response?.data?.statusCode === 200) {
+        console.log(response?.data?.payment,"paymet")
         setOrderDetails(response?.data?.data);
         if (response?.data?.payments.length) {
           setPayment(response?.data?.payments[0])
@@ -123,14 +130,14 @@ export const CustomerOrderDetails = () => {
           console.log(res, "responsePost")
           if (response.data.statusCode === 200) {
             console.log(response, "in if")
-            toast.success(response.data.message);
+            toast.success(res.data.message);
             setReturnModel(false);
             setSelectedFile('')
             setSelectedFileName('')
-            getAllOrders();
+            getOrderDetails()
           } else {
             // toast.error(response.data.message)
-            console.log(response, "in else")
+            console.log(res.data.message, "in else")
           }
         }
         console.log(response, "response")
@@ -150,6 +157,10 @@ export const CustomerOrderDetails = () => {
       const usersResponse = await axios.post(`${process.env.REACT_APP_API_URL}/admin/change-order-status`, body)
       if (usersResponse?.data?.statusCode === 200) {
         console.log(usersResponse)
+        setDeleteModel(false);
+        getOrderDetails();
+        toast.success(usersResponse.data.message)
+        // getAllOrders();
       }
     } catch (error) {
 

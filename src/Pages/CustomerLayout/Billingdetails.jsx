@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import "../../Styles/Billingdetails.css";
 import { placeOrder } from "../../Zustand/placeOrderdetails";
@@ -14,6 +14,7 @@ import { AuthGet } from "../../Commons/httpService";
 import { addorderDetails, orderDetails } from "../../Zustand/orderDetails";
 import CoupenForm from "../../Components/CoupenForm";
 import { UserDetails } from "../../Zustand/userDetails";
+import { AuthContext } from "../../Context/AuthContext";
 // import Modal from "react-bootstrap/Modal"
 // import UserLogin from './UserLogin';
 // import { loginStore } from './../../Zustand/loginStore';
@@ -42,6 +43,15 @@ const Billingdetails = () => {
   const userDetails = loginStore((state) => state?.login)
 
   console.log(bonusPoints?.bonusPoints, "bonusPoints", userDetails);
+
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   let generateHash = async (data) => {
     const userData = sessionStorage.getItem("UserDetails")
@@ -88,6 +98,8 @@ const Billingdetails = () => {
   };
   const userId = sessionStorage.getItem("login")
   let opencf = (session, oi) => {
+
+    console.log(session, oi, "")
     // debugger
     let checkoutOptions = {
       paymentSessionId: session,
@@ -108,23 +120,24 @@ const Billingdetails = () => {
   let ordersave = async () => {
     await AuthGet('order/get-paydata/' + orderid, 'customer_token').then(async (res) => {
       // debugger
+      const orderDetails = localStorage.getItem('userOrderDetails')
       if (res.statusCode === 200) {
-        localStorage.removeItem("userOrderDetails")
+
         console.warn(res)
-        // handleSuccess()
-        // setRawResponse(res)
+
         if (res?.data?.order_status === 'PAID') {
           handleOrderResponse(res)
+          localStorage.removeItem("userOrderDetails")
           // handleSuccess()
           toast.success("Order successfully paid")
           navigate('/thankYou')
         } else {
+          handleDelete(orderDetails)
           toast.error("Payment failed Please try again")
         }
       }
     })
   }
-
 
   const [quantity, setQuantity] = useState()
 
@@ -379,9 +392,9 @@ const Billingdetails = () => {
               id: response.data.order.id,
               status: response.data.order.status
             };
-            if (response.data.order.status !== "PAID") {
-              handleDelete(orderDetails)
-            }
+            // if (response.data.order.status !== "PAID") {
+            //   handleDelete(orderDetails)
+            // }
             console.log(orderDetails, "orderDetails")
             debugger
             addorderDetails(
@@ -517,7 +530,7 @@ const Billingdetails = () => {
       setCoupon(true)
       setNewOrder({
         ...newOrder,
-        bounus: 0,
+        bonus: 0,
         discount: discount
       });
       setRedeem(false)

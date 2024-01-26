@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const OrderTracking = ({ orderStatus, orderDetails }) => {
 
+  console.log(orderStatus,"orderStatus")
+
   switch (orderStatus) {
     case "PENDING":
       orderStatus = "ORDERED"

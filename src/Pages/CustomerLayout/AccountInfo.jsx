@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../Styles/ordersummery.css";
 import { Link } from "react-router-dom";
 import { loginStore } from "../../Zustand/loginStore";
 import axios from "axios";
 import { useCurrencyStore } from "../../Zustand/currency";
+import { AuthContext } from "../../Context/AuthContext";
 
 const AccountInfo = () => {
   const [activeTab, setActiveTab] = useState("MyOrder");
@@ -19,6 +20,17 @@ const AccountInfo = () => {
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
   };
+
+  
+
+  const { fetchData, fetchDataFav } = useContext(AuthContext);
+  useEffect(() => {
+    fetchDataFav();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const getPrdouctDetails = async () => {
     try {
@@ -79,14 +91,14 @@ const AccountInfo = () => {
             >
               <span>My Order</span>
             </label>
-            {/* <label
+            <label
               htmlFor="Mycoupons"
               className={
                 activeTab === "Mycoupons" ? "Mycoupons active" : "Mycoupons"
               }
             >
-              <span>Manage Addresses</span>
-            </label> */}
+              <span>Coupons</span>
+            </label>
 
             {/* <label
               htmlFor="Profile"
@@ -293,7 +305,7 @@ const AccountInfo = () => {
                 }`}
             >
               <div className="title">
-                Manage Addresses
+                My Coupons
                 <div className="max-w-sm mt-4  rounded overflow-hidden shadow-md flex justify-between items-center">
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">Address</div>
