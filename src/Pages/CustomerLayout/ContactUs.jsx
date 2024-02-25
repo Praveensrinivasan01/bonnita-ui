@@ -79,14 +79,14 @@ const ContactUs = () => {
           <div className="row-span-2">
             <p className="font-bold">Phone</p>
             <p className="text-gray-500 pt-2">
-              <span>Phone 01:</span>
-              <Link to=""> +91 8220773182</Link>
+              <span>Phone</span>
+              <Link to="tel:+918220773182"> +91 8220773182</Link>
             </p>
           </div>
           <div className="row-span-2 ">
             <p className="font-bold">ADDRESS</p>
             <p className="text-gray-500 pt-2">
-              <Link>69 Halsey St, New York, Ny 10002, United States.</Link>
+              <Link>No.4. Noombal Main Road, ICL Home Town, Noombal, Velappanchavadi Chennai - 600 077.</Link>
             </p>
           </div>
           <div className="row-span-2">
@@ -94,7 +94,7 @@ const ContactUs = () => {
             <p className="text-gray-500 pt-2">
               <span></span>
 
-              <Link to=""> bonnita3182@gmail.com</Link>
+              <Link to="mailto:bonnita3182@gmail"> bonnita3182@gmail.com</Link>
             </p>
           </div>
         </div>

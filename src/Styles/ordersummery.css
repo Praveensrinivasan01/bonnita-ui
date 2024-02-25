@@ -1,17 +1,13 @@
-
-
 /* ::selection {
   background: rgba(187, 134, 252, 0.5);
   color: #fff;
 } */
 
-
-
 .orderSummery .topic {
   font-size: 30px;
   font-weight: 500;
   margin-bottom: 20px;
-  color:  #22272c;
+  color: #22272c;
 }
 
 .content123 input {
@@ -26,9 +22,9 @@
 
 .content123 .list {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   position: relative;
-  width: 20%;
+  /* width: 20%; */
   margin-right: 50px;
 }
 
@@ -38,7 +34,7 @@
   line-height: 60px;
   font-size: 22px;
   font-weight: 500;
-  color: #22272c ;
+  color: #22272c;
   padding-left: 25px;
   transition: all 0.5s ease;
   z-index: 10;
@@ -67,7 +63,7 @@
 /*   */
 
 .content123 .text-content {
-  width: 80%;
+  /* width: 80%; */
   height: 100%;
   color: #000;
 }

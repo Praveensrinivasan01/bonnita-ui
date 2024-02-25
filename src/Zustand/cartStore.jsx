@@ -20,96 +20,62 @@ export const cartStore = create(
 );
 
 export const increment = async (item, userId) => {
-  console.log(item,"item");
+  console.log(item?.quantity, "item");
   const itemIndex = cartStore
     .getState()
     .cart.findIndex((Product) => Product?.id === item?.id);
-  // console.log(userId, "itemm");
 
-  if (userId?.id && userId) {
-    if (itemIndex !== -1) {
-      cartStore.setState((state) => {
-        let quantity = state.cart[itemIndex].cart_quantity + 1
-        const fetchData = async () => {
-          let body = {
-            user_id: userId.id,
-            product_id: item.id,
-            quantity: quantity,
-          };
-          const response = await axios.post(
-            `${process.env.REACT_APP_API_URL}/product/add-cart`,
-            body
-          );          
-          console.log("first", response)
-          if (response.data.statusCode === 200) {
-            state.cart[itemIndex].cart_quantity += 1;
-            toast(
-              <div>
-                <FontAwesomeIcon icon={faHeart} /> {state.cart[itemIndex].name}{" "}
-                Added To Your Cart
-              </div>,
-              { draggable: true }
-            );
-          } else {
-            toast.error(`${state.cart[itemIndex].name} Is Out Of Stock`, {
-              draggable: true,
-            });
-          }
-        };
-        fetchData();
+  if (itemIndex !== -1) {
+    cartStore.setState((state) => {
+      if (state.cart[itemIndex].quantity > state.cart[itemIndex].cart_quantity) {
+        state.cart[itemIndex].cart_quantity += 1;
+        toast(
+          <div>
+            <FontAwesomeIcon icon={faHeart} /> {state.cart[itemIndex].name}{" "}
+            Added To Your Cart
+          </div>,
+          { draggable: true }
+        );
         console.log(
           "Cart State (after state update):",
           cartStore.getState().cart
         );
-        return { cart: [...state.cart] };
-      });
-    } else {
-      cartStore.setState(async (state) => {
-        if (userId) {
-          const fetchData1 = async () => {
-            let body = {
-              user_id: userId.id,
-              product_id: item.id,
-              quantity: 1,
-            };
-            const response = await axios.post(
-              `${process.env.REACT_APP_API_URL}/product/add-cart`,
-              body
-            );
-            let response1 = await axios.get(
-              `${process.env.REACT_APP_API_URL}/product/get-all-cart/${userId.id}`
-            );
-            if(response.data.statusCode == 200){
-              const data = [
-                ...state.cart,
-                { ...item, cart_quantity: 1, response1 },
-              ];
-              console.log(data, "updatedCart");
-  
-              cartStore.setState({ cart: data });
-              toast(
-                <div>
-                  <FontAwesomeIcon icon={faHeart} /> {item.name} Added To Your
-                  Cart
-                </div>,
-                { draggable: true }
-              );
-            } else {
-              toast.error(`${item.name} Is Out Of Stock`, {
-                draggable: true,
-              });
-            }
-            console.log(
-              "Cart State (after state update):",
-              cartStore.getState().cart
-            );
-          };
-
-          await fetchData1();
-        }
-      });
-    }
+      } else {
+        toast.error(
+          <div>
+            {state?.cart[itemIndex].name}{" "}
+            Out Of Stock
+          </div>,
+          { draggable: true }
+        );
+      }
+      return { cart: [...state.cart] };
+    });
   }
+  else {
+    cartStore.setState(async (state) => {
+      const data = [
+        ...state.cart,
+        { ...item, cart_quantity: 1, item },
+      ];
+      console.log(data, "updatedCart");
+
+      cartStore.setState({ cart: data });
+      toast(
+        <div>
+          <FontAwesomeIcon icon={faHeart} /> {item.name} Added To Your
+          Cart
+        </div>,
+        { draggable: true }
+      );
+
+      console.log(
+        "Cart State (after state update):",
+        cartStore.getState().cart
+      );
+    });
+  }
+  // }
 };
 
 export const decrement = (item, loginId) => {
@@ -125,22 +91,22 @@ export const decrement = (item, loginId) => {
       if (updatedCart[itemIndex].cart_quantity > 1) {
         state.cart[itemIndex].cart_quantity -= 1;
         console.log(state.cart[itemIndex].cart_quantity, "after");
-        const fetchData = async () => {
-          const response1 = await axios.delete(
-            `${process.env.REACT_APP_API_URL}/product/delete-cart/${loginId.id}/${item.id}`
-          );
-          let body = {
-            user_id: loginId.id,
-            product_id: item.id,
-            quantity: state.cart[itemIndex].cart_quantity,
-          };
-          const response = await axios.post(
-            `${process.env.REACT_APP_API_URL}/product/add-cart`,
-            body
-          );
-          console.log(response);
-        };
-        fetchData();
+        // const fetchData = async () => {
+        //   const response1 = await axios.delete(
+        //     `${process.env.REACT_APP_API_URL}/product/delete-cart/${loginId.id}/${item.id}`
+        //   );
+        //   let body = {
+        //     user_id: loginId.id,
+        //     product_id: item.id,
+        //     quantity: state.cart[itemIndex].cart_quantity,
+        //   };
+        //   const response = await axios.post(
+        //     `${process.env.REACT_APP_API_URL}/product/add-cart`,
+        //     body
+        //   );
+        //   console.log(response);
+        // };
+        // fetchData();
         return { cart: [...state.cart] };
       } else {
         return state;

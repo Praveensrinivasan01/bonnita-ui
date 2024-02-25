@@ -71,6 +71,14 @@ const Header = () => {
   };
 
   // console.log(state2.id);
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Function to toggle the sidebar
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   const path1 = useLocation();
   console.log(path1.pathname[1], "path1");
   return (
@@ -78,7 +86,7 @@ const Header = () => {
       <header id="site-header">
         <div id="site-header-inner" className="">
           <nav className="stroke">
-            {toggler && (
+            {/* {toggler && (
               <div className="flex items-center justify-between gap-md-4 bg-black px-4 py-3 text-white ">
                 <p className="md:text-sm text-xs font-medium col-md-2 col-6">
                   Call Us: +91 8220773182
@@ -113,20 +121,20 @@ const Header = () => {
                   </svg>
                 </button>
               </div>
-            )}
+            )} */}
             <div className="wrapper">
               <div className="logo">
                 <Link to="/">
                   <img src={logo} className="" alt="#" />
                 </Link>
               </div>
-              <ul className="nav-links">
-                <label htmlFor="close-btn" className="btn close-btn">
+              <ul className="nav-links" style={{ left: sidebarOpen ? '0' : '-100%' }}>
+                <label htmlFor="close-btn" className="btn close-btn" onClick={toggleSidebar}>
                   <FontAwesomeIcon icon={faTimes} />
                 </label>
                 <li>
-                  <Link to="/" smooth={true} duration={500}>
-                    Home
+                  <Link to="/" smooth={true} duration={500} className="text-black">
+                    <p>Home</p>
                   </Link>
                 </li>
 
@@ -136,8 +144,9 @@ const Header = () => {
                     smooth={true}
                     duration={500}
                     offset={-100}
+                    className="text-black"
                   >
-                    Contact
+                    <p>Contact</p>
                   </Link>
                 </li>
 
@@ -264,7 +273,7 @@ const Header = () => {
                 >
                   <img src={HearIcon} alt="#" className="img-fluid" />
                   <p className="position-absolute text-black totalcount">
-                    {state2.id && totalFav ? totalFav : 0}
+                    {state2?.id && totalFav ? totalFav : 0}
                   </p>
                 </Link>
 
@@ -274,7 +283,7 @@ const Header = () => {
                 >
                   <img src={CartIcon} alt="#" className="img-fluid" />
                   <p className="position-absolute text-black totalcount">
-                    {state2.id && totalCart ? totalCart : 0}
+                    {totalCart ? totalCart : 0}
                   </p>
                 </Link>
                 {state2?.id ? (
@@ -285,7 +294,7 @@ const Header = () => {
                       </span>
                       <div class="dropdown-content leading-10">
                         <Link to="accountinfo">
-                          <p className="m-0 fw-medium w-32">Account Details</p>
+                          <p className="m-0 fw-medium w-32">Order Details</p>
                         </Link>
                         {/* <Link to="/userLogin"> */}
                         <p
@@ -324,7 +333,7 @@ const Header = () => {
                 )}
               </div>
 
-              <label htmlFor="menu-btn" className="btn menu-btn">
+              <label htmlFor="menu-btn" className="btn" onClick={toggleSidebar}>
                 <FontAwesomeIcon icon={faBars} />
               </label>
             </div>

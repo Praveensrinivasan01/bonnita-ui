@@ -383,7 +383,7 @@ const Billingdetails = () => {
         }
 
         console.log(response, "response");
-        debugger
+        // debugger
         if (response.data.statusCode === 200) {
           if (newOrder.mode_of_payment === 'E_PAY') {
             generateHash(response.data.order)
@@ -396,7 +396,7 @@ const Billingdetails = () => {
             //   handleDelete(orderDetails)
             // }
             console.log(orderDetails, "orderDetails")
-            debugger
+            // debugger
             addorderDetails(
               orderDetails
             )
@@ -425,6 +425,7 @@ const Billingdetails = () => {
             navigate('/thankYou')
           }
         }
+        toast(response?.data?.message)
 
         console.log(response, "response");
         console.log(formData, "set");

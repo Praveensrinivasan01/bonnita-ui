@@ -13,7 +13,7 @@ const Footer = () => {
               <p className="pt-lg-4">+91-8220773182</p>
               <p className="mt-3">bonnita3182@gmail.com</p>
               <p className="mt-3">
-                No: 123, Abc st, Mckingston<br /> main road Chennai - 118.
+                No.4. Noombal Main Road, ICL Home Town, <br /> Noombal, Velappanchavadi Chennai - 600 077
               </p>
               <div class="wrp mt-md-3">
                 <Link to="" class="icon icon-twitter">
@@ -53,8 +53,8 @@ const Footer = () => {
               </Link>
             </div>
             <div className="">
-              <Link to="/termsAndCondition" target="_blank">  <p className="mb-3">Privacy Policy</p></Link>
-              <Link to="/termsAndCondition" target="_blank"><p className="mb-3">Terms & Conditions</p></Link>
+              <Link to="../Assets/pdf/Privacy Policies Bonnita.pdf" target="_blank">  <p className="mb-3">Privacy Policy</p></Link>
+              <Link to="../Assets/pdf/Terms and conditions BONNITA.pdf" target="_blank"><p className="mb-3">Terms & Conditions</p></Link>
               <Link to="/termsAndCondition" target="_blank"><p className="mb-3">Return & Refund Policy</p></Link>
               <Link to="/UserLogin"> <p className="mb-3"> Sign In</p></Link>
             </div>

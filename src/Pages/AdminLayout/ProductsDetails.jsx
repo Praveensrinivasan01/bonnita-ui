@@ -3,7 +3,7 @@ import { CurrencyDollar, ArrowsExpand } from 'react-bootstrap-icons'
 import { AuthGet, Get, Post } from '../../Commons/httpService'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
 
 function ProductForm() {
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ function ProductForm() {
   const [rightSideImage, setRightSideImage] = useState(null);
   const [backSideImage, setBackSideImage] = useState(null);
   const [dropDown, setDropDown] = useState([])
-  const [dropDown2,setDropDown2] = useState([])
-  const {id}=useParams()
+  const [dropDown2, setDropDown2] = useState([])
+  const { id } = useParams()
   const [file, setFile] = useState({
     front: [],
     back: [],
@@ -35,79 +35,79 @@ function ProductForm() {
     right: [],
   });
 
-  const handleFileChange = (e, type,api) => {
+  const handleFileChange = (e, type, api) => {
     if (e) {
       switch (type) {
         case "frontSideImage":
-          setFrontSidetImage(api?e:URL.createObjectURL(e.target.files[0]))
-          if(!api){
-          file?.front.pop()
-          file?.front.push(e.target.files[0])
+          setFrontSidetImage(api ? e : URL.createObjectURL(e.target.files[0]))
+          if (!api) {
+            file?.front.pop()
+            file?.front.push(e.target.files[0])
           }
           break;
         case "backSideImage":
-          setBackSideImage(api?e:URL.createObjectURL(e.target.files[0]))
-          if(!api){
-          file?.back.pop()
-          file?.back.push(e.target.files[0])
+          setBackSideImage(api ? e : URL.createObjectURL(e.target.files[0]))
+          if (!api) {
+            file?.back.pop()
+            file?.back.push(e.target.files[0])
           }
           break;
         case "leftSideImage":
-          setLeftSideImage(api?e:URL.createObjectURL(e.target.files[0]))
-          if(!api){
-          file?.left.pop()
-          file?.left.push(e.target.files[0])
+          setLeftSideImage(api ? e : URL.createObjectURL(e.target.files[0]))
+          if (!api) {
+            file?.left.pop()
+            file?.left.push(e.target.files[0])
           }
           break;
         case "rightSideImage":
-          setRightSideImage(api?e:URL.createObjectURL(e.target.files[0]))
-          if(!api){
-          file?.right.pop()
-          file?.right.push(e.target.files[0])
+          setRightSideImage(api ? e : URL.createObjectURL(e.target.files[0]))
+          if (!api) {
+            file?.right.pop()
+            file?.right.push(e.target.files[0])
           }
           break;
       }
     }
-};
+  };
 
   useEffect(() => {
     getDropDownData()
-    
-  }, [])
-const getproductdetails=async()=>{
-await AuthGet('product/product-mapping/'+id,'admin').then((res)=>{
-  debugger
-  console.log('res::: ', res);
-  if (res.statusCode==200) {
-    let resData=res.data
-  setProductName(resData.name)
-  setDescription(resData.description)
-  setproductCode(resData.code)
-  handleCategoryChange(resData.category_id)
-  setFeatures(resData.features)
-  setMrp(resData.mrp)
-  setPrice(resData.selling_price)
-  setQuantity(resData.quantity)
-  setAboutItems(resData.about)
-  setLength(resData.size?.split('/')[0])
-  setWidth(resData.size?.split('/')[1])
-  setColorName(resData.color)
-  setColor(resData.color)
-  let file=resData?.imageDetails?.[0]
-  handleFileChange(file.front_side,"frontSideImage",'api');
-  handleFileChange(file.back_side,"backSideImage",'api');
-  handleFileChange(file.left_side,"leftSideImage",'api');
-  handleFileChange( file.right_side,"rightSideImage",'api');
-  }
-}).catch((err)=>{
-  console.log('err::: ', err);
-})
 
-}
+  }, [])
+  const getproductdetails = async () => {
+    await AuthGet('product/product-mapping/' + id, 'admin').then((res) => {
+      // debugger
+      console.log('res::: ', res);
+      if (res.statusCode == 200) {
+        let resData = res.data
+        setProductName(resData.name)
+        setDescription(resData.description)
+        setproductCode(resData.code)
+        handleCategoryChange(resData.category_id)
+        setFeatures(resData.features)
+        setMrp(resData.mrp)
+        setPrice(resData.selling_price)
+        setQuantity(resData.quantity)
+        setAboutItems(resData.about)
+        setLength(resData.size?.split('/')[0])
+        setWidth(resData.size?.split('/')[1])
+        setColorName(resData.color)
+        setColor(resData.color)
+        let file = resData?.imageDetails?.[0]
+        handleFileChange(file.front_side, "frontSideImage", 'api');
+        handleFileChange(file.back_side, "backSideImage", 'api');
+        handleFileChange(file.left_side, "leftSideImage", 'api');
+        handleFileChange(file.right_side, "rightSideImage", 'api');
+      }
+    }).catch((err) => {
+      console.log('err::: ', err);
+    })
+
+  }
 
   const getDropDownData = async () => {
     let dropDownRes = await axios.get(`${process.env.REACT_APP_API_URL}/product/category-mapping`);
-debugger
+    debugger
     if (dropDownRes.data.statusCode === 200) {
       setDropDown(dropDownRes.data.data)
       console.log("VALUE", dropDownRes.data.data);
@@ -115,64 +115,65 @@ debugger
     }
   }
 
-const handleCategoryChange = ( id ) => {
-  setCategory(id)
-  let subcategory = dropDown.find((e) => e.category_id==id)?.subcategories
-  setDropDown2(subcategory)
-}
+  const handleCategoryChange = (id) => {
+    setCategory(id)
+    let subcategory = dropDown.find((e) => e.category_id == id)?.subcategories
+    setDropDown2(subcategory)
+  }
 
 
-const handleUpload = async () => {
-  const formData = new FormData();
-  formData.append("files[]", file.front[0]);
-  formData.append("files[]", file.back[0]);
-  formData.append("files[]", file.left[0]);
-  formData.append("files[]", file.right[0]);
+  const handleUpload = async () => {
+    const formData = new FormData();
+    formData.append("files[]", file.front[0]);
+    formData.append("files[]", file.back[0]);
+    formData.append("files[]", file.left[0]);
+    formData.append("files[]", file.right[0]);
 
-  const isFormDataValid = !Array.from(formData.values()).some(
-    (value) => value === null || value === undefined
-  );
-  if (isFormDataValid) {
-    try {
-      
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/product/upload-product-image/${undefined}`, formData);
+    const isFormDataValid = !Array.from(formData.values()).some(
+      (value) => value === null || value === undefined
+    );
+    if (isFormDataValid) {
+      try {
 
-      console.log("response",response)
-      if (response?.data?.statusCode == 200) {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}/product/upload-product-image/${undefined}`, formData);
 
-        const productData = {
-          product_code: productCode,
-          name:productName,
-          product_description:description,
-          category_id:category,
-          subcategory_id:subcategory,
-          product_mrp:mrp,
-          product_selling_price:price,
-          product_quantity:quantity,
-          product_features: features,
-          product_about: aboutItems,
-          product_size:length+'/'+width,
-          product_color:color,
-          product_image_id:response.data.image.id,
-          product_color_name: colorName,
-        };
+        console.log("response", response)
+        if (response?.data?.statusCode == 200) {
 
-        let resp = await axios.post(`${process.env.REACT_APP_API_URL}/product/add-product`, productData)
-         if (resp.data.statusCode == 200) {
-           //  navigate("admin/products");
-              }
-            }else{
-              console.log("image upload Failed");
-            }
-  }catch{
-    console.log('error')
-  }}else {
+          const productData = {
+            product_code: productCode,
+            name: productName,
+            product_description: description,
+            category_id: category,
+            subcategory_id: subcategory,
+            product_mrp: mrp,
+            product_selling_price: price,
+            product_quantity: quantity,
+            product_features: features,
+            product_about: aboutItems,
+            product_size: length + '/' + width,
+            product_color: color,
+            product_image_id: response.data.image.id,
+            product_color_name: colorName,
+          };
+
+          let resp = await axios.post(`${process.env.REACT_APP_API_URL}/product/add-product`, productData)
+          if (resp.data.statusCode == 200) {
+            //  navigate("admin/products");
+          }
+        } else {
+          console.log("image upload Failed");
+        }
+      } catch {
+        console.log('error')
+      }
+    } else {
       alert("Please fill all fields");
     }
-}
+  }
 
-console.log("CHECK", category)
+  console.log("CHECK", category)
 
   return (
     <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
@@ -197,7 +198,7 @@ console.log("CHECK", category)
                             "
               />  </label>
           </div>
-          <div className='mt-2'> 
+          <div className='mt-2'>
             {frontSideImage && <img className="  rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={frontSideImage} alt="Image " />}
           </div>
 
@@ -239,30 +240,30 @@ console.log("CHECK", category)
               />  </label>
           </div>
           <div>
-          {backSideImage && <img className=" rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={backSideImage} alt="Image Description" />}
+            {backSideImage && <img className=" rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={backSideImage} alt="Image Description" />}
           </div>
 
           <div className='mt-4'>
             <label className="block">
               <span className="sr-only">Choose Right Side</span>
               <input className='product-image-input'
-                  accept="image/*"
+                accept="image/*"
                 onChange={(e) => handleFileChange(e, "rightSideImage")}
-                  type="file"
-                  class="block w-full text-sm text-gray-500
+                type="file"
+                class="block w-full text-sm text-gray-500
                   file:mr-4 file:py-2 file:px-4
                   file:border-0
                   file:text-sm file:font-semibold
                   file:bg-slate-900 file:text-white
                   hover:file:bg-slate-800 file:cursor-pointer
                             "
-                />  </label>
+              />  </label>
           </div>
           <div>
-          {rightSideImage && <img className=" rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={rightSideImage} alt="Image Description" />}
+            {rightSideImage && <img className=" rounded-xl sm:w-48 sm:h-48 lg:w-20 lg:h-20" src={rightSideImage} alt="Image Description" />}
           </div>
 
-          
+
 
         </div>
 
@@ -310,12 +311,12 @@ console.log("CHECK", category)
               >
                 <option value={null}>Choose a category</option>
                 {
-                 dropDown ? dropDown?.map((e) => {
+                  dropDown ? dropDown?.map((e) => {
                     return <option value={e?.category_id}>{e?.category_name}</option>
-                  }):''
+                  }) : ''
                 }
               </select>
-            </div> 
+            </div>
 
             <div className="md:col-span-2">
               <label className="block mb-2 text-sm font-medium text-gray-900">Select Sub Category</label>
@@ -326,9 +327,9 @@ console.log("CHECK", category)
               >
                 <option value={null}>Choose a Subcategory</option>
                 {
-                  dropDown2?dropDown2.map((e) => {
+                  dropDown2 ? dropDown2.map((e) => {
                     return <option value={e?.subcategory_id}>{e?.subcategory_name}</option>
-                  }):''
+                  }) : ''
                 }
               </select>
             </div>
@@ -379,19 +380,24 @@ console.log("CHECK", category)
             <div className="md:col-span-1">
               <label className="block mb-2 text-sm font-medium text-gray-900">Quantity</label>
               <div className="h-10 w-28 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                <button tabIndex="-1" htmlFor="quantity" className="cursor-pointer outline-none focus:outline-none border-r border-gray-200 transition-all text-gray-500 hover:text-blue-600">
+                <button tabIndex="-1" htmlFor="quantity" className="cursor-pointer outline-none focus:outline-none border-r border-gray-200 transition-all text-gray-500 hover:text-blue-600"
+                  onClick={() => setQuantity((prevState) => prevState === 0 ? prevState : prevState - 1)}
+
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mx-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
                 <input
-                  type="number"
+                  type="tel"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder="0"
                   className="px-2 text-center appearance-none outline-none text-gray-800 w-full bg-transparent"
                 />
-                <button tabIndex="-1" htmlFor="quantity" className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-500 hover:text-blue-600">
+                <button tabIndex="-1" htmlFor="quantity" className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-500 hover:text-blue-600"
+                  onClick={() => setQuantity((prevState) => prevState + 1)}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mx-2 fill-current" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
                   </svg>
@@ -469,7 +475,7 @@ console.log("CHECK", category)
 
             <div className="md:col-span-5 text-right">
               <div className="inline-flex items-end">
-                <button  type='submit' onClick={(e)=>{handleUpload()}} class="px-3 py-2 text-sm font-medium text-center text-white bg-red-400  hover:bg-red-300 ">Submit</button>
+                <button type='submit' onClick={(e) => { handleUpload() }} class="px-3 py-2 text-sm font-medium text-center text-white bg-red-400  hover:bg-red-300 ">Submit</button>
               </div>
             </div>
           </div>

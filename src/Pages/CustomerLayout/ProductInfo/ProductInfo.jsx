@@ -81,13 +81,13 @@ const ProductInfo = () => {
 
 
   const notify3 = () => {
-    if (state2?.id) {
-      // toast(`🛒  ${products?.name} Added To Cart`, { draggable: true });
-      increment(productDetails1, state2, id);
-    } else {
-      toast("User Needs to Login", { draggable: true });
-      navigate("/userLogin");
-    }
+    increment(productDetails1, state2, id);
+    // if (state2?.id) {
+    //   // toast(`🛒  ${products?.name} Added To Cart`, { draggable: true });
+    // } else {
+    //   toast("User Needs to Login", { draggable: true });
+    //   navigate("/userLogin");
+    // }
   };
 
   const notify4 = (products) => {
@@ -99,11 +99,11 @@ const ProductInfo = () => {
     }
   };
 
-  const notify5 = (  ) => {
+  const notify5 = () => {
     if (state2?.id) {
-      if(productDetails1?.quantity > 0){
+      if (productDetails1?.quantity > 0) {
         navigate("/billingdetails")
-      }else{
+      } else {
         toast(`${productDetails1.name} Is Out Of Stock`)
       }
     } else {

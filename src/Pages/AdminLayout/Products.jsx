@@ -223,7 +223,7 @@ const Products = () => {
                       <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                         <div>
                           <h2 class="font-medium text-gray-800 ">
-                            {}
+                            {product?.order_quantity}
                           </h2>
                         </div>
                       </td>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const OrderTracking = ({ orderStatus, orderDetails }) => {
 
-  console.log(orderStatus,"orderStatus")
+  console.log(orderStatus, "orderStatus")
 
   switch (orderStatus) {
     case "PENDING":
@@ -48,7 +48,7 @@ const OrderTracking = ({ orderStatus, orderDetails }) => {
   return (
     <div className="container">
 
-      <div className={`flex ${orderStatus === "CANCELLED" || orderStatus === "RAISEDAREQUEST" || orderStatus === "REFUNDED" ? "justify-center items-center" : "justify-between"} `}>
+      <div className={`flex flex-md-row flex-col ${orderStatus === "CANCELLED" || orderStatus === "RAISEDAREQUEST" || orderStatus === "REFUNDED" ? "justify-md-center  items-center" : "justify-md-between justify-center items-center"} `}>
         {tracker.map((status, index) => (
           <div
             key={index}
@@ -162,6 +162,13 @@ const OrderTracking = ({ orderStatus, orderDetails }) => {
           }
           .order-tracking:first-child:before { display: none; }
           .order-tracking.completed:before { background-color: #27aa80; }
+        
+          @media (max-width: 600px) {
+      .order-tracking::before {
+        height: 0px;
+      }
+    }
+        
         `}
       </style>
     </div>

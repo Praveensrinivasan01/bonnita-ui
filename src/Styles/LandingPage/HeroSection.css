@@ -1,46 +1,45 @@
-@import url("https://fonts.googleapis.com/css2?family=Give+You+Glory&family=Lexend:wght@400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Give+You+Glory&family=Lexend:wght@400;500;600;700;800&display=swap');
 
 .CaroselBgImg {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 73vh;
-  margin-top: 7%;
-  box-shadow: 500px 500px 500px rgba(0,0,0,0.4) inset;
+  margin-top: 5.8%;
+  box-shadow: 500px 500px 500px rgba(0, 0, 0, 0.4) inset;
 }
 
 .CaroselBgImg1 {
-  background-image: url("../../Assets/LandingPageImages/two-excited-friends-having-great-time-together.jpg");
+  background-image: url('../../Assets/LandingPageImages/two-excited-friends-having-great-time-together.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 73vh;
-  margin-top: 7%;
+  margin-top: 5.8%;
 }
 
 .CaroselBgImg2 {
-  background-image: url("../../Assets/LandingPageImages/beautiful-casual-woman-fashion-set.jpg");
+  background-image: url('../../Assets/LandingPageImages/beautiful-casual-woman-fashion-set.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 73vh;
-  margin-top: 7%;
+  margin-top: 5.8%;
 }
 
-.CaroselContent  h4 {
+.CaroselContent h4 {
   font-size: 24px;
   font-weight: 400;
 }
 
-.CaroselContent  h3 {
+.CaroselContent h3 {
   font-size: 56px;
   font-style: normal;
   font-weight: 500;
 }
 
-.CaroselContent  span {
+.CaroselContent span {
   font-size: 66px;
   font-style: normal;
   font-weight: 400;
 }
-
 
 .carosel {
   padding-bottom: 1em;
@@ -58,7 +57,7 @@
 }
 
 .button::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -133,7 +132,9 @@
   right: 10px;
 }
 @media only screen and (max-width: 991px) {
-  .CaroselBgImg , .CaroselBgImg1 , .CaroselBgImg2 {
+  .CaroselBgImg,
+  .CaroselBgImg1,
+  .CaroselBgImg2 {
     height: 30vh;
     margin-top: 12%;
   }
@@ -146,9 +147,11 @@
   }
 }
 @media only screen and (max-width: 600px) {
-  .CaroselBgImg , .CaroselBgImg1 , .CaroselBgImg2{
+  .CaroselBgImg,
+  .CaroselBgImg1,
+  .CaroselBgImg2 {
     height: 30vh;
-    margin-top: 35%;
+    margin-top: 16%;
   }
 
   .carosel {
@@ -183,5 +186,4 @@
   .CaroselBgImg2 span {
     font-size: 33px;
   }
- 
 }

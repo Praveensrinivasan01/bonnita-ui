@@ -46,6 +46,7 @@ import WhyUs from '../Pages/AdminLayout/WhyUs'
 import TermsAndCondition from '../Pages/TermsAndCondition'
 import NewsLetter from '../Pages/AdminLayout/NewsLetter'
 import ThankYou from '../Pages/Thankyou'
+import UserMobileLogin from '../Pages/CustomerLayout/UserMobileLogin'
 // import WhyUs from '../Pages/AdminLayout/WhyUs'
 
 export const Routes = () => {
@@ -114,6 +115,10 @@ export const Routes = () => {
         {
           path: "/userLogin",
           element: <UserLogin />,
+        },
+        {
+          path: "/userLoginPhone",
+          element: <UserMobileLogin />,
         },
         {
           path: "/forgotPassword",

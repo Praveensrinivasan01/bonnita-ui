@@ -113,7 +113,7 @@ const Categories = () => {
             category_description: description,
             category_image_id: response?.data?.image?.id,
           };
-          debugger;
+          // debugger;
           let url = editmode
             ? "product/update-category"
             : "product/add-category";

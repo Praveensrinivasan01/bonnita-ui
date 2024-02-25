@@ -210,7 +210,7 @@ export const CustomerOrderDetails = () => {
       </div> */}
       <OrderTracking orderStatus={orderDetails[0]?.status} orderDetails={orderDetails.length ? orderDetails[0] : {}} />
       <PaymentInformation data={orderDetails.length ? orderDetails[0] : {}} paymentDetails={payment ? payment : {}} />
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center ">
         <div className="font-bold text-xl">Product Info</div>
         {(
           orderDetails[0]?.status === "PENDING" ||

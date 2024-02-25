@@ -99,7 +99,7 @@ const Orders = () => {
                                         </th>
 
                                         <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
-                                            Date
+                                            Date & Time
                                         </th>
 
                                         <th scope="col" class="relative py-3.5 px-4">
@@ -143,6 +143,7 @@ const Orders = () => {
 
                                             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                 <div>
+                                                    <p class="text-sm font-normal text-gray-600">{ele?.created_date}</p>
                                                     <p class="text-sm font-normal text-gray-600">{ele?.created_date}</p>
                                                 </div>
                                             </td>

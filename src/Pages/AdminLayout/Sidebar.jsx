@@ -9,7 +9,9 @@ const Sidebar = () => {
   const [count, setCount] = useState(0);
 
   const AdminlogOut = () => {
+    console.log("logout");
     sessionStorage.clear();
+    navigate('admin/login')
   };
 
   let getcount = async () => {
@@ -218,8 +220,9 @@ const Sidebar = () => {
                 "block   px-4 py-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
               }
               style={{ cursor: "pointer" }}
+              onClick={AdminlogOut}
             >
-              <button className="btn-danger" onClick={() => AdminlogOut}>
+              <button className="btn-danger" >
                 {" "}
                 Logout
               </button>

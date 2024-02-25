@@ -35,7 +35,7 @@ const ProductList = ({ productsData }) => {
   useEffect(() => {
     // getProduct()
   }, [productsData]);
-  
+
   // const notify = (category) =>{
   //   increment(category,state2?.id)
   // }
@@ -121,68 +121,67 @@ const ProductList = ({ productsData }) => {
 
         <div className="row g-4">
 
-{productsData?.map((product) => (
-<div className="col-md-3">
-  <div className="product-single-card">
-    <div className="product-top-area">
-      <div className="product-discount -z-10">
-       {product.new}
-      </div>
-      <Link to={`/product/${product.id}`}>
-      <div className="product-img">
-        <div className="first-view">
+          {productsData?.map((product) => (
+            <div className="col-md-3">
+              <div className="product-single-card">
+                <div className="product-top-area">
+                  <div className="product-discount -z-10">
+                    {product.new}
+                  </div>
+                  <Link to={`/product/${product.id}`}>
+
+                    <div className="">
+                      <img src={product.front_side} alt="logo" className="" />
+                    </div>
+                    {/* <div className="hover-view">
           <img src={product.front_side} alt="logo" className=""/>
-        </div>
-        <div className="hover-view">
-          <img src={product.front_side} alt="logo" className=""/>
-        </div>
-      </div>
-      </Link>
-      <div className="sideicons">
-              <button className="sideicons-btn">
-              <FontAwesomeIcon
+        </div> */}
+                  </Link>
+                  <div className="sideicons">
+                    <button className="sideicons-btn">
+                      <FontAwesomeIcon
                         icon={faHeart}
                         style={{ cursor: "pointer" }}
-                        onClick={ ()=>
-                          handleFavDataInShop(product,state2)
+                        onClick={() =>
+                          handleFavDataInShop(product, state2)
                         }
                       />
-              </button>
-              <button className="sideicons-btn">
-              <FontAwesomeIcon
+                    </button>
+                    <button className="sideicons-btn">
+                      <FontAwesomeIcon
                         icon={faShoppingCart}
                         style={{ cursor: "pointer" }}
-                        onClick={ ()=>handleAddToCartInShop(product, state2)}
+                        onClick={() => handleAddToCartInShop(product, state2)}
                       />
-              </button>
+                    </button>
+                  </div>
+                </div>
+                <div className="product-info">
+                  <h6 className=" text-xs font-semibold">{product.name}</h6>
+                  <div className="align-items-center justify-content-between flex">
+                    <div className=" me-1 flex">
+                      <ul className="ratings active text-xs">
+                        {[...Array(Number(product.total_rating))].map((_, index) => (
+                          <li key={index} className="star">
+                            <FontAwesomeIcon icon={faStar} />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="d-flex">
+                      <div className="new-price text-md font-semibold">
+                        {currencyCode?.symbol}{currencyConversion(product.selling_price)}
+                      </div>
+                      <div className="old-price text-md font-semibold">
+                        {currencyCode?.symbol}{currencyConversion(product.mrp)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-    </div>
-    <div className="product-info">
-      <h6 className=" text-xs font-semibold">{product.name}</h6>
-      <div className="align-items-center justify-content-between flex">
-        <div className=" me-1 flex">
-        <ul className="ratings active text-xs">
-                      {[...Array(Number(product.total_rating))].map((_, index) => (
-                        <li key={index} className="star">
-                          <FontAwesomeIcon icon={faStar} />
-                        </li>
-                      ))}
-                    </ul>
+          ))}
         </div>
-        <div className="d-flex">
-          <div className="new-price text-md font-semibold">
-          {currencyCode?.symbol}{currencyConversion(product.selling_price)}
-        </div>
-        <div className="old-price text-md font-semibold">
-          {currencyCode?.symbol}{currencyConversion(product.mrp)}
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-))}
-</div>
       </section>
     </>
   );

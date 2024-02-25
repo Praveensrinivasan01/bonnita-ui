@@ -53,7 +53,7 @@ const PaymentInformation = ({ data, paymentDetails }) => {
                                     <tbody className="bg-white divide-y divide-gray-200 ">
                                         {<>
                                             <tr style={{ cursor: "pointer" }}>
-                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap flex item-center">
+                                                <td className="px-4 py-4 text-sm font-medium text-black whitespace-nowrap flex item-center">
                                                     <div>
                                                         <p className='text-uppercase'>{data?.username}</p>
                                                         <p className='text-lowercase'>{data?.email}</p>
@@ -61,20 +61,20 @@ const PaymentInformation = ({ data, paymentDetails }) => {
                                                         <p className='text-capitalize'>{data?.city} <span className='ps-1'>{data?.country}</span> <span className='ps-1'> {data?.zip_code}</span></p>
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap text-black">
                                                     <div>
                                                         <p>{paymentDetails?.mode_of_payment}</p>
                                                     </div>
                                                 </td>
 
-                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap text-black">
                                                     <div>
                                                         <h2 className="font-medium text-gray-800 ">
                                                             <p>{currencyType.symbol}{currencyConversion(paymentDetails?.total)}</p>
                                                         </h2>
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap text-black">
                                                     <div>
                                                         <h2 className="font-medium text-gray-800 ">
                                                             <p>{paymentDetails?.mode_of_payment == "E_PAY" ? paymentDetails.payment_status : paymentDetails.status == "DELIVERED" ? "PAID" :
@@ -83,7 +83,7 @@ const PaymentInformation = ({ data, paymentDetails }) => {
                                                         </h2>
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap text-black">
                                                     <div>
                                                         <h2 className="font-medium text-gray-800 ">
                                                             <p>{paymentDetails?.mode_of_payment == "E_PAY" ? paymentDetails.e_pay_date : paymentDetails.status == "DELIVERED" ? (paymentDetails.updated_at) : paymentDetails?.status == "REFUNDED" ? paymentDetails.payment_date :
