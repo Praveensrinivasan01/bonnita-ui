@@ -35,7 +35,7 @@ export const CustomerOrderDetails = () => {
         `${process.env.REACT_APP_API_URL}/order/get-order-items/${id}`
       );
       if (response?.data?.statusCode === 200) {
-        console.log(response?.data?.payment,"paymet")
+        console.log(response?.data?.payment, "paymet")
         setOrderDetails(response?.data?.data);
         if (response?.data?.payments.length) {
           setPayment(response?.data?.payments[0])
@@ -195,7 +195,7 @@ export const CustomerOrderDetails = () => {
   console.log(orderStatus, "payment?.discount + payment?.bounus")
   return (
     <div className=" container-md">
-      <h1 className="pt-48 font-semibold pb-10">
+      <h1 className="md:pt-32 pt-20 font-semibold pb-10">
         <Link to={-1} className="text-gray-600">
           OrderDetails
         </Link>

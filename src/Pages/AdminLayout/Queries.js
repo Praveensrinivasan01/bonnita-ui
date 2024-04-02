@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Queries = () => {
 
@@ -30,7 +31,7 @@ const Queries = () => {
             status:status
         })
         if(response.data.statusCode===200){
-            getCoustomerQuery()   
+            getCoustomerQuery().then(r=>toast.success("Status Updated"))
         }
     }
 

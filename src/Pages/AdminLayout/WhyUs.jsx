@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/modal";
 import axios from "axios";
 import useDebounce from "../../hooks/useDebounce";
+import { toast } from "react-toastify";
 
 const WhyUs = () => {
 
@@ -42,24 +43,24 @@ const WhyUs = () => {
     const [TotalCount, SetTotalCount] = useState()
     const debounceSearchValue = useDebounce(searchParam, 1000)
 
-    const handleFileChange = (e, type,api) => {
+    const handleFileChange = (e, type, api) => {
         if (e) {
-          switch (type) {
-            case "leftSideImage":
-              setLeftSideImage(api?e:URL.createObjectURL(e.target.files[0]))
-              if(!api){
-              file?.left.pop()
-              file?.left.push(e.target.files[0])
-              }
-              break;
-            case "rightSideImage":
-              setRightSideImage(api?e:URL.createObjectURL(e.target.files[0]))
-              if(!api){
-              file?.right.pop()
-              file?.right.push(e.target.files[0])
-              }
-              break;
-          }
+            switch (type) {
+                case "leftSideImage":
+                    setLeftSideImage(api ? e : URL.createObjectURL(e.target.files[0]))
+                    if (!api) {
+                        file?.left.pop()
+                        file?.left.push(e.target.files[0])
+                    }
+                    break;
+                case "rightSideImage":
+                    setRightSideImage(api ? e : URL.createObjectURL(e.target.files[0]))
+                    if (!api) {
+                        file?.right.pop()
+                        file?.right.push(e.target.files[0])
+                    }
+                    break;
+            }
         }
     };
 
@@ -123,6 +124,18 @@ const WhyUs = () => {
     };
 
     const handleUpload = async () => {
+        if (!name) {
+            toast.error("Please enter left content");
+            return;
+        }
+        if (!description) {
+            toast.error("Please enter right content");
+            return;
+        }
+        if (!file?.left[0] || !file?.right[0]) {
+            toast.error("Please select image");
+            return;
+        }
         const formData = new FormData();
         formData.append("files[]", file.left[0]);
         formData.append("files[]", file.right[0])
@@ -195,7 +208,7 @@ const WhyUs = () => {
                                 d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                             />
                         </svg>
-                        <span>Edit Lookbook</span>
+                        <span>Add Lookbook</span>
                     </button>
                 </div>
 
@@ -399,101 +412,101 @@ const WhyUs = () => {
                 scrollBehavior="inside"
                 backdrop="blur"
                 isOpen={modal}
-                onOpenChange={() => setModal(!modal)}
+                onOpenChange={() => { handleClose() }}
             >
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">
                         {editmode ? "Edit WhyUs" : "Add Lookbook"}
                     </ModalHeader>
                     <ModalBody>
-                    <div className="row">
-                        <div className="col-md-6">
-                        <div>
-                            <label
-                                for="default-input"
-                                class="block mb-2 text-sm font-medium text-gray-900"
-                                htmlFor="default-input"
-                                className="block mb-2 text-sm font-medium text-gray-900"
-                            >
-                                Left Content
-                            </label>
-                            <input
-                                value={name}
-                                onChange={(e) => {
-                                    setTitle(e.target.value);
-                                }}
-                                // onChange={(e) => setTitle(e.target.value)}
-                                type="text"
-                                id="default-input"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="Left Content"
-                            />
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div>
+                                    <label
+                                        for="default-input"
+                                        class="block mb-2 text-sm font-medium text-gray-900"
+                                        htmlFor="default-input"
+                                        className="block mb-2 text-sm font-medium text-gray-900"
+                                    >
+                                        Left Content
+                                    </label>
+                                    <input
+                                        value={name}
+                                        onChange={(e) => {
+                                            setTitle(e.target.value);
+                                        }}
+                                        // onChange={(e) => setTitle(e.target.value)}
+                                        type="text"
+                                        id="default-input"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        placeholder="Left Content"
+                                    />
 
-<div className="mt-2 mb-2">
-                            <label class="block">
-                                <span class="sr-only">Choose Left image</span>
-                                <input
-                                    accept="image/*"
-                                    onChange={(e)=>handleFileChange(e,'leftSideImage')}
-                                    type="file"
-                                    class="block w-full text-sm text-gray-500
+                                    <div className="mt-2 mb-2">
+                                        <label class="block">
+                                            <span class="sr-only">Choose Left image</span>
+                                            <input
+                                                accept="image/*"
+                                                onChange={(e) => handleFileChange(e, 'leftSideImage')}
+                                                type="file"
+                                                class="block w-full text-sm text-gray-500
                             file:mr-4 file:py-2 file:px-4
                              file:border-0
                             file:text-sm file:font-semibold
                             file:bg-slate-900 file:text-white
                             hover:file:bg-slate-800 file:cursor-pointer"
-                                />
-                            </label>
-                        </div>
-                     
-                        </div>
-                        {leftSideImage && (
-                            <div>
-                                <img
-                                    class="rounded-xl sm:w-28 sm:h-28 lg:w-32 lg:h-32"
-                                    src={leftSideImage}
-                                    alt="Image Description"
-                                />
+                                            />
+                                        </label>
+                                    </div>
+
+                                </div>
+                                {leftSideImage && (
+                                    <div>
+                                        <img
+                                            class="rounded-xl sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+                                            src={leftSideImage}
+                                            alt="Image Description"
+                                        />
+                                    </div>
+                                )}
                             </div>
-                        )}
-                        </div>
 
-                    <div className="col-md-6">
-                    <div>
-                            <label
-                                for="message"
-                                class="block mb-2 text-sm font-medium text-gray-900"
-                            >
-                                Right Content
-                            </label>
-                            <input
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                id="message"
-                                rows="4"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Right Content"
-                            />
+                            <div className="col-md-6">
+                                <div>
+                                    <label
+                                        for="message"
+                                        class="block mb-2 text-sm font-medium text-gray-900"
+                                    >
+                                        Right Content
+                                    </label>
+                                    <input
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        id="message"
+                                        rows="4"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Right Content"
+                                    />
 
-<div className="mt-2 mb-2">
-                            <label class="block">
-                                <span class="sr-only">Choose Left image</span>
-                                <input
-                                    accept="image/*"
-                                    onChange={(e)=>handleFileChange(e,'rightSideImage')}
-                                    type="file"
-                                    class="block w-full text-sm text-gray-500
+                                    <div className="mt-2 mb-2">
+                                        <label class="block">
+                                            <span class="sr-only">Choose Left image</span>
+                                            <input
+                                                accept="image/*"
+                                                onChange={(e) => handleFileChange(e, 'rightSideImage')}
+                                                type="file"
+                                                class="block w-full text-sm text-gray-500
                                     file:mr-4 file:py-2 file:px-4
                                      file:border-0
                                     file:text-sm file:font-semibold
                                     file:bg-slate-900 file:text-white
                                     hover:file:bg-slate-800 file:cursor-pointer"
-                                />
-                            </label>
-                        </div>
-                        </div>
-                        {/* <div>
+                                            />
+                                        </label>
+                                    </div>
+                                </div>
+                                {/* <div>
                             <label
                                 for="message"
                                 class="block mb-2 text-sm font-medium text-gray-900"
@@ -509,24 +522,24 @@ const WhyUs = () => {
                                 placeholder="Write thoughts here..."
                             ></textarea>
                         </div> */}
-                      
-                      
-                       
-                        {rightSideImage && (
-                            <div>
-                                <img
-                                    class="rounded-xl sm:w-28 sm:h-28 lg:w-32 lg:h-32"
-                                    src={rightSideImage}
-                                    alt="Image Description"
-                                />
+
+
+
+                                {rightSideImage && (
+                                    <div>
+                                        <img
+                                            class="rounded-xl sm:w-28 sm:h-28 lg:w-32 lg:h-32"
+                                            src={rightSideImage}
+                                            alt="Image Description"
+                                        />
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
-                    </div>
-                   
+                        </div>
+
                     </ModalBody>
                     <ModalFooter>
-                    <button
+                        <button
                             type="button"
                             class="px-3 py-2 text-sm font-medium text-center text-red-400 border-2  border-red-400  bg-white  hover:bg-red-300 focus:outline-none"
                             className="px-3 py-2 text-sm font-medium text-center text-red-400 border-2  border-red-400  bg-white  hover:bg-red-300 focus:outline-none"
@@ -543,7 +556,7 @@ const WhyUs = () => {
                         >
                             Save
                         </button>
-                       
+
                     </ModalFooter>
                 </ModalContent>
             </Modal>

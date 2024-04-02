@@ -16,6 +16,29 @@ body {
   margin: 0; 
 }
 
+::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0.1em grey;
+  border-radius: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(0deg, #88c5f3 0%, #ee7b7b 100%);
+  border-radius: 1em;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #008cff;
+}
+
 .width_80{
   width: 80% !important;
 }

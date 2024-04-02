@@ -9,6 +9,7 @@ import axios from "axios";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
+import { handleInputValidation } from './../../Helper/validator';
 
 const Queries = () => {
   const carouselSettings = {
@@ -29,8 +30,8 @@ const Queries = () => {
   const [query, setqueryType] = useState("");
   const [comments, setcomments] = useState("");
 
-  
-  
+
+
   useEffect(() => {
     getCustomerFeedBacks()
   }, [])
@@ -47,10 +48,10 @@ const Queries = () => {
     e.preventDefault();
 
     if (!name || !mobile || !email || !query || !comments) {
-      toast('Please fill in all the required fields.');
+      toast.error('Please fill in all the required fields.');
       return;
     }
-  
+
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/landingpage/post-query`, {
         name,
@@ -116,7 +117,7 @@ const Queries = () => {
                       // id="your-name"
                       placeholder="name@example.com"
                       value={name}
-                      onChange={(e)=>setname(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setname, 0)}
                     />
                     <label htmlFor="your-name" className="lable text-light">Name</label>
                   </div>
@@ -127,7 +128,7 @@ const Queries = () => {
                       // id="your-phone"
                       placeholder="PhoneNumber"
                       value={mobile}
-                      onChange={(e)=>setphonenumber(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setphonenumber, 2)}
                     />
                     <label htmlFor="your-phone" className="lable text-light">Phone No</label>
                   </div>
@@ -138,7 +139,7 @@ const Queries = () => {
                       // id="your-email"
                       placeholder="email"
                       value={email}
-                      onChange={(e)=>setemail(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setemail, 4)}
                     />
                     <label htmlFor="your-email" className="lable text-light">E-mail Address</label>
                   </div>
@@ -149,7 +150,7 @@ const Queries = () => {
                       // id="query-type"
                       placeholder="Type Your Query"
                       value={query}
-                      onChange={(e)=>setqueryType(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setqueryType, 0)}
                     />
                     <label htmlFor="query-type" className="lable  text-light">Type of Query</label>
                   </div>
@@ -160,7 +161,7 @@ const Queries = () => {
                       // id="your-comments"
                       style={{ height: "100px" }}
                       value={comments}
-                      onChange={(e)=>setcomments(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setcomments, 0)}
                     ></textarea>
                     <label htmlFor="your-comments" className="lable text-light">Comments</label>
                   </div>

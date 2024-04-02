@@ -5,7 +5,7 @@ import Items from '../Pages/Items'
 import Profile from '../Pages/Profile'
 import Favourites from '../Pages/Favourites'
 // import Cart from '../Pages/Cart'
-import Customer from '../Pages/CustomerLayout/Customer';
+import Customer from '../Pages/CustomerLayout/Customer'
 import Admin from '../Pages/AdminLayout/Admin'
 import Dashboard from '../Pages/AdminLayout/Dashboard'
 import Signup from '../Pages/Signup'
@@ -16,7 +16,7 @@ import Categories from '../Pages/AdminLayout/Categories'
 import SubCategories from '../Pages/AdminLayout/SubCategories'
 import Products from '../Pages/AdminLayout/Products'
 import ProductsDetails from '../Pages/AdminLayout/ProductsDetails'
-import Shop from '../Pages/CustomerLayout/Collections/Shopsidebar';
+import Shop from '../Pages/CustomerLayout/Collections/Shopsidebar'
 import ProductInformation from '../Pages/CustomerLayout/ProductInfo/productDetails'
 import Billingdetails from '../Pages/CustomerLayout/Billingdetails'
 import UserLogin from '../Pages/CustomerLayout/UserLogin'
@@ -47,198 +47,204 @@ import TermsAndCondition from '../Pages/TermsAndCondition'
 import NewsLetter from '../Pages/AdminLayout/NewsLetter'
 import ThankYou from '../Pages/Thankyou'
 import UserMobileLogin from '../Pages/CustomerLayout/UserMobileLogin'
+import DownloadInvoice from '../Pages/CustomerLayout/DownloadInvoice'
+import DeliveryCharges from '../Pages/AdminLayout/DeliveryCharges'
 // import WhyUs from '../Pages/AdminLayout/WhyUs'
 
 export const Routes = () => {
-  const AdminComponent = withAuth(Admin); // Wrap the Admin component
+  const AdminComponent = withAuth(Admin) // Wrap the Admin component
 
   const routes = useRoutes([
     {
-      path: "*",
-      element: <NotFoundPage />,
+      path: '*',
+      element: <NotFoundPage />
     },
     {
-      path: "/",
-      element: <Home />,
+      path: '/',
+      element: <Home />
     },
     {
-      path: "/signup",
-      element: <Signup />,
+      path: '/signup',
+      element: <Signup />
     },
     // {
     //   path: "/reset-password",
     //   element: <ResetPassword />,
     // },
     {
-      path: "/change-password",
-      element: <ChangePassword />,
+      path: '/change-password',
+      element: <ChangePassword />
     },
     // {
     //   path: "/admin/signup",
     //   element: <AdminSignup />,
     // },
     {
-      path: "/admin/login",
-      element: <Adminlogin />,
+      path: '/admin/login',
+      element: <Adminlogin />
     },
     {
-      path: "/admin/forgot-Password",
-      element: <AdminforgotPassword />,
+      path: '/admin/forgot-Password',
+      element: <AdminforgotPassword />
     },
     {
-      path: "/admin/reset-password",
-      element: <AdminResetpassword />,
+      path: '/admin/reset-password',
+      element: <AdminResetpassword />
     },
     {
-      path: "/admin/change-password",
-      element: <AdminChangepassword />,
+      path: '/admin/change-password',
+      element: <AdminChangepassword />
     },
     {
       element: <Customer />,
       children: [
         {
-          path: "/shop?",
-          element: <Shop />,
+          path: '/shop?',
+          element: <Shop />
         },
         {
-          path: "/billingdetails",
-          element: <Billingdetails />,
+          path: '/billingdetails',
+          element: <Billingdetails />
         },
         {
-          path: "/billingdetails/:orderid",
-          element: <Billingdetails />,
+          path: '/billingdetails/:orderid',
+          element: <Billingdetails />
         },
         {
-          path: "/userRegister",
-          element: <UserRegister />,
+          path: '/userRegister',
+          element: <UserRegister />
         },
         {
-          path: "/userLogin",
-          element: <UserLogin />,
+          path: '/userLogin',
+          element: <UserLogin />
         },
         {
-          path: "/userLoginPhone",
-          element: <UserMobileLogin />,
+          path: '/userLoginPhone',
+          element: <UserMobileLogin />
         },
         {
-          path: "/forgotPassword",
-          element: <ForgotPassword />,
+          path: '/forgotPassword',
+          element: <ForgotPassword />
         },
         {
-          path: "/resetPassword",
-          element: <ResetPassword />,
-        },
-        // {
-        //   path: "/profile",
-        //   element: <Profile />,
-        // },
-        {
-          path: "/thankYou",
-          element: <ThankYou />,
+          path: '/resetPassword',
+          element: <ResetPassword />
         },
         {
-          path: "/cart",
-          element: <Cart />,
+          path: '/downloadReport',
+          element: <DownloadInvoice />
         },
         {
-          path: "/wishlist",
-          element: <Wishlist />,
+          path: '/thankYou',
+          element: <ThankYou />
         },
         {
-          path: "/product/:id",
-          element: <ProductInformation />,
+          path: '/cart',
+          element: <Cart />
         },
         {
-          path: "/accountinfo",
-          element: <Accountinfo />,
+          path: '/wishlist',
+          element: <Wishlist />
         },
         {
-          path: "/contactus",
+          path: '/product/:id',
+          element: <ProductInformation />
+        },
+        {
+          path: '/accountinfo',
+          element: <Accountinfo />
+        },
+        {
+          path: '/contactus',
           element: <ContactUs />
         },
         {
-          path: "/orderDetails/:id",
+          path: '/orderDetails/:id',
           element: <CustomerOrderDetails />
         },
         {
-          path: "/shopPage",
+          path: '/shopPage',
           element: <ShopPage />
         },
         {
-          path: "/termsAndCondition",
+          path: '/termsAndCondition',
           element: <TermsAndCondition />
-        },
-      ],
+        }
+      ]
     },
     {
       element: <AdminComponent />,
       children: [
         {
-          path: "/admin/dashboard",
-          element: <Dashboard />,
+          path: '/admin/dashboard',
+          element: <Dashboard />
         },
         {
-          path: "/admin/categories",
-          element: <Categories />,
+          path: '/admin/categories',
+          element: <Categories />
         },
         {
-          path: "/admin/categories/:id",
-          element: <SubCategories />,
+          path: '/admin/categories/:id',
+          element: <SubCategories />
         },
         {
-          path: "/admin/products",
-          element: <Products />,
+          path: '/admin/products',
+          element: <Products />
         },
         {
-          path: "/admin/products/add",
-          element: <ProductsDetails />,
+          path: '/admin/products/add',
+          element: <ProductsDetails />
         },
         {
-          path: "/admin/products/:id",
-          element: <ProductsDetails />,
+          path: '/admin/products/:id',
+          element: <ProductsDetails />
         },
         {
-          path: "/admin/users",
-          element: <Users />,
+          path: '/admin/users',
+          element: <Users />
         },
         {
-          path: "/admin/banner",
-          element: <Banner />,
+          path: '/admin/banner',
+          element: <Banner />
         },
         {
-          path: "/admin/whyus",
-          element: <WhyUs />,
+          path: '/admin/whyus',
+          element: <WhyUs />
         },
         {
-          path: "/admin/accountinfo",
-          element: <AdminAccountinfo />,
+          path: '/admin/accountinfo',
+          element: <AdminAccountinfo />
         },
         {
-          path: "/admin/orders",
-          element: <Orders />,
+          path: '/admin/orders',
+          element: <Orders />
         },
         {
-          path: "/admin/orders/:id",
-          element: <OrderDetails />,
+          path: '/admin/orders/:id',
+          element: <OrderDetails />
         },
         {
-          path: "/admin/coupon",
-          element: <Coupon />,
+          path: '/admin/coupon',
+          element: <Coupon />
         },
         {
-          path: "/admin/topfilter",
-          element: <TopFilters />,
+          path: '/admin/topfilter',
+          element: <TopFilters />
         },
         {
-          path: "/admin/queries",
-          element: <Queries />,
+          path: '/admin/queries',
+          element: <Queries />
         },
         {
-          path: "/admin/newsletter",
-          element: <NewsLetter />,
+          path: '/admin/newsletter',
+          element: <NewsLetter />
         },
-      ],
-    },
-  ]);
-  return <>{routes}</>;
+        {
+          path: '/admin/deliverycharges',
+          element: <DeliveryCharges />
+        }
+      ]
+    }
+  ])
+  return <>{routes}</>
 }

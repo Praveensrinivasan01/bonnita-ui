@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../Styles/LandingPage/Queries.css";
 import { AuthContext } from "../../Context/AuthContext";
+import { handleInputValidation } from "../../Helper/validator";
 
 const ContactUs = () => {
   const [feedBacks, setFeedBacks] = useState();
@@ -58,7 +59,7 @@ const ContactUs = () => {
     }
   };
   return (
-    <div className="container md:pt-52 pt-36">
+    <div className="container md:pt-28 pt-20">
       <h3>
         <Link to="/" className="text-gray-400">
           Home
@@ -120,11 +121,9 @@ const ContactUs = () => {
                       // id="your-name"
                       placeholder="name@example.com"
                       value={name}
-                      onChange={(e) => setname(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setname, 0)}
                     />
-                    <label htmlFor="your-name" className="lable text-light">
-                      Name
-                    </label>
+                    <label htmlFor="your-name" className="lable text-light">Name</label>
                   </div>
                   <div className="form-floating mb-3 col-md-6">
                     <input
@@ -133,11 +132,9 @@ const ContactUs = () => {
                       // id="your-phone"
                       placeholder="PhoneNumber"
                       value={mobile}
-                      onChange={(e) => setphonenumber(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setphonenumber, 2)}
                     />
-                    <label htmlFor="your-phone" className="lable text-light">
-                      Phone No
-                    </label>
+                    <label htmlFor="your-phone" className="lable text-light">Phone No</label>
                   </div>
                   <div className="form-floating mb-3 col-md-6">
                     <input
@@ -146,11 +143,9 @@ const ContactUs = () => {
                       // id="your-email"
                       placeholder="email"
                       value={email}
-                      onChange={(e) => setemail(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setemail, 4)}
                     />
-                    <label htmlFor="your-email" className="lable text-light">
-                      E-mail Address
-                    </label>
+                    <label htmlFor="your-email" className="lable text-light">E-mail Address</label>
                   </div>
                   <div className="form-floating mb-3 col-md-6">
                     <input
@@ -159,11 +154,9 @@ const ContactUs = () => {
                       // id="query-type"
                       placeholder="Type Your Query"
                       value={query}
-                      onChange={(e) => setqueryType(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setqueryType, 0)}
                     />
-                    <label htmlFor="query-type" className="lable  text-light">
-                      Type of Query
-                    </label>
+                    <label htmlFor="query-type" className="lable  text-light">Type of Query</label>
                   </div>
                   <div className="form-floating mb-3 col-12">
                     <textarea
@@ -172,17 +165,12 @@ const ContactUs = () => {
                       // id="your-comments"
                       style={{ height: "100px" }}
                       value={comments}
-                      onChange={(e) => setcomments(e.target.value)}
+                      onChange={(e) => handleInputValidation(e.target.value, setcomments, 0)}
                     ></textarea>
-                    <label htmlFor="your-comments" className="lable text-light">
-                      Comments
-                    </label>
+                    <label htmlFor="your-comments" className="lable text-light">Comments</label>
                   </div>
                   <div className="text-center pb-3">
-                    <button
-                      type="submit"
-                      className="btn button rounded-0 fw-bold ps-5 pe-5 text-light "
-                    >
+                    <button type="submit" className="btn button rounded-0 fw-bold ps-5 pe-5 text-light ">
                       Send
                     </button>
                   </div>
